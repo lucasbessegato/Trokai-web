@@ -1,0 +1,72 @@
+<div class="app-container">
+  <!-- Header só aparece quando necessário -->
+  <mat-toolbar class="app-header" *ngIf="showHeader" color="primary">
+    <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="logo-title">{{ title }}</span>
+  </mat-toolbar>
+  
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="over" class="sidenav">
+      
+      <div class="nav-section">
+        <h2 class="nav-section-title">Navegação</h2>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/products" routerLinkActive="active" (click)="sidenav.close()">
+            <mat-icon>storefront</mat-icon>
+            <span>Produtos</span>
+          </a>
+          <a mat-list-item *ngIf="isLoggedIn" routerLink="/proposals" routerLinkActive="active" (click)="sidenav.close()">
+            <mat-icon>swap_horiz</mat-icon>
+            <span>Propostas</span>
+          </a>
+        </mat-nav-list>
+      </div>
+      
+      <div class="sidenav-divider"></div>
+      
+      <div class="nav-section" *ngIf="!isLoggedIn">
+        <h2 class="nav-section-title">Acesso</h2>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/auth/login" routerLinkActive="active" (click)="sidenav.close()">
+            <mat-icon>login</mat-icon>
+            <span>Login</span>
+          </a>
+          <a mat-list-item routerLink="/auth/register" routerLinkActive="active" (click)="sidenav.close()">
+            <mat-icon>person_add</mat-icon>
+            <span>Cadastro</span>
+          </a>
+        </mat-nav-list>
+      </div>
+      
+      <div class="nav-section" *ngIf="isLoggedIn">
+        <h2 class="nav-section-title">Minha Conta</h2>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/profile" routerLinkActive="active" (click)="sidenav.close()">
+            <mat-icon>person</mat-icon>
+            <span>Perfil</span>
+          </a>
+          <a mat-list-item routerLink="/home" (click)="logout(); sidenav.close()" class="logout-item">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Sair</span>
+          </a>
+        </mat-nav-list>
+      </div>
+      
+      <div class="sidenav-footer">
+        <p>Versão 1.0.0</p>
+      </div>
+    </mat-sidenav>
+    
+    <mat-sidenav-content>
+      <main class="app-content" [ngClass]="{'no-header': !showHeader}">
+        <router-outlet></router-outlet>
+      </main>
+      
+      <footer class="app-footer">
+        <p>&copy; 2025 Trokaí - Product Exchange Platform</p>
+      </footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

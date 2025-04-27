@@ -1,0 +1,187 @@
+<div class="proposals-container">
+  <div class="page-header">
+    <h1>Minhas Propostas de Troca</h1>
+    <p>Gerencie as propostas de troca enviadas e recebidas</p>
+  </div>
+
+  <div class="proposals-content mat-elevation-z2">
+    <mat-tab-group (selectedIndexChange)="tabChanged($event)" animationDuration="0ms">
+      <mat-tab label="Propostas Recebidas">
+        <div class="tab-content">
+          <ng-container *ngIf="!isLoadingReceived; else loadingReceivedTemplate">
+            <div class="proposals-list" *ngIf="receivedProposals.length > 0; else noReceivedProposals">
+              <div class="proposal-card" *ngFor="let proposal of receivedProposals"
+                (click)="viewProposalDetails(proposal.id)">
+                <div class="proposal-header">
+                  <span class="proposal-status" [ngClass]="getStatusClass(proposal.status)">
+                    {{ getStatusText(proposal.status) }}
+                  </span>
+                  <span class="proposal-date">{{ proposal.createdAt | date:'dd/MM/yyyy' }}</span>
+                </div>
+
+                <div class="exchange-products">
+                  <div class="product-card">
+                    <img [src]="proposal.productRequested.imageUrl" [alt]="proposal.productRequested.title"
+                      class="product-image">
+                    <div class="product-info">
+                      <h3>Seu produto</h3>
+                      <p>{{ proposal.productRequested.title }}</p>
+                    </div>
+                  </div>
+
+                  <div class="exchange-icon">
+                    <mat-icon>swap_horiz</mat-icon>
+                  </div>
+
+                  <div class="product-card">
+                    <img [src]="proposal.productOffered.imageUrl" [alt]="proposal.productOffered.title"
+                      class="product-image">
+                    <div class="product-info">
+                      <h3>Produto oferecido</h3>
+                      <p>{{ proposal.productOffered.title }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="proposal-user">
+                  <img [src]="proposal.fromUser.avatar" [alt]="proposal.fromUser.fullName" class="user-avatar">
+                  <div class="user-info">
+                    <span class="user-name">{{ proposal.fromUser.fullName }}</span>
+                    <app-reputation-badge [level]="proposal.fromUser.reputationLevel" [small]="true">
+                    </app-reputation-badge>
+                  </div>
+                </div>
+
+                <div class="proposal-message">
+                  <p>{{ proposal.message }}</p>
+                </div>
+
+                <div class="proposal-actions" *ngIf="proposal.status === ProposalStatus.PENDING">
+                  <button mat-flat-button color="primary" (click)="acceptProposal(proposal, $event)">
+                    Aceitar
+                  </button>
+                  <button mat-stroked-button color="warn" (click)="rejectProposal(proposal, $event)">
+                    Recusar
+                  </button>
+                </div>
+
+                <div class="proposal-actions" *ngIf="proposal.status === ProposalStatus.ACCEPTED">
+                  <button mat-flat-button color="primary" (click)="completeExchange(proposal, $event)">
+                    Concluir Troca
+                  </button>
+                </div>
+
+                <div class="proposal-footer">
+                  <button mat-button color="accent" class="details-btn" (click)="viewProposalDetails(proposal.id)">
+                    Ver Detalhes
+                    <mat-icon>arrow_forward</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <ng-template #noReceivedProposals>
+              <div class="no-proposals">
+                <mat-icon>swap_horiz</mat-icon>
+                <h3>Nenhuma proposta recebida</h3>
+                <p>Quando alguém propuser uma troca para um dos seus produtos, ela aparecerá aqui.</p>
+
+                <button mat-flat-button color="primary" routerLink="/products">
+                  Explorar Produtos
+                </button>
+              </div>
+            </ng-template>
+          </ng-container>
+
+          <ng-template #loadingReceivedTemplate>
+            <div class="loading-container">
+              <mat-spinner diameter="40"></mat-spinner>
+              <p>Carregando propostas recebidas...</p>
+            </div>
+          </ng-template>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Propostas Enviadas">
+        <div class="tab-content">
+          <ng-container *ngIf="!isLoadingSent; else loadingSentTemplate">
+            <div class="proposals-list" *ngIf="sentProposals.length > 0; else noSentProposals">
+              <div class="proposal-card" *ngFor="let proposal of sentProposals"
+                (click)="viewProposalDetails(proposal.id)">
+                <div class="proposal-header">
+                  <span class="proposal-status" [ngClass]="getStatusClass(proposal.status)">
+                    {{ getStatusText(proposal.status) }}
+                  </span>
+                  <span class="proposal-date">{{ proposal.createdAt | date:'dd/MM/yyyy' }}</span>
+                </div>
+
+                <div class="exchange-products">
+                  <div class="product-card">
+                    <img [src]="proposal.productOffered.imageUrl" [alt]="proposal.productOffered.title"
+                      class="product-image">
+                    <div class="product-info">
+                      <h3>Seu produto</h3>
+                      <p>{{ proposal.productOffered.title }}</p>
+                    </div>
+                  </div>
+
+                  <div class="exchange-icon">
+                    <mat-icon>swap_horiz</mat-icon>
+                  </div>
+
+                  <div class="product-card">
+                    <img [src]="proposal.productRequested.imageUrl" [alt]="proposal.productRequested.title"
+                      class="product-image">
+                    <div class="product-info">
+                      <h3>Produto solicitado</h3>
+                      <p>{{ proposal.productRequested.title }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="proposal-user">
+                  <img [src]="proposal.toUser.avatar" [alt]="proposal.toUser.fullName" class="user-avatar">
+                  <div class="user-info">
+                    <span class="user-name">{{ proposal.toUser.fullName }}</span>
+                    <app-reputation-badge [level]="proposal.toUser.reputationLevel" [small]="true">
+                    </app-reputation-badge>
+                  </div>
+                </div>
+
+                <div class="proposal-message">
+                  <p>{{ proposal.message }}</p>
+                </div>
+
+                <div class="proposal-footer">
+                  <button mat-button color="accent" class="details-btn" (click)="viewProposalDetails(proposal.id)">
+                    Ver Detalhes
+                    <mat-icon>arrow_forward</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <ng-template #noSentProposals>
+              <div class="no-proposals">
+                <mat-icon>swap_horiz</mat-icon>
+                <h3>Nenhuma proposta enviada</h3>
+                <p>Quando você propuser uma troca, ela aparecerá aqui.</p>
+
+                <button mat-flat-button color="primary" routerLink="/products">
+                  Explorar Produtos
+                </button>
+              </div>
+            </ng-template>
+          </ng-container>
+
+          <ng-template #loadingSentTemplate>
+            <div class="loading-container">
+              <mat-spinner diameter="40"></mat-spinner>
+              <p>Carregando propostas enviadas...</p>
+            </div>
+          </ng-template>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

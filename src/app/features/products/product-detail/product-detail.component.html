@@ -1,0 +1,158 @@
+<div class="product-detail-container">
+  <div class="product-detail-content" *ngIf="product && !isLoading; else loadingTemplate">
+    <div class="back-link">
+      <a [routerLink]="['/products']">
+        <mat-icon>keyboard_backspace</mat-icon>
+        Voltar para produtos
+      </a>
+    </div>
+
+    <div class="product-main mat-elevation-z2">
+      <div class="product-image-carousel">
+        <!-- Imagem principal -->
+        <div class="carousel-container">
+          <div class="carousel-navigation prev" *ngIf="product.images && product.images.length > 1"
+            (click)="prevImage()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </div>
+
+          <div class="carousel-main-image">
+            <img [src]="currentImageUrl" [alt]="product.title">
+            <div class="product-status" *ngIf="product.status !== 'available'">
+              <span class="status-badge" [ngClass]="'status-' + product.status">
+                {{ product.status === 'reserved' ? 'Reservado' : 'Trocado' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="carousel-navigation next" *ngIf="product.images && product.images.length > 1"
+            (click)="nextImage()">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </div>
+        </div>
+
+        <!-- Miniaturas das imagens -->
+        <div class="carousel-thumbnails" *ngIf="product.images && product.images.length > 1">
+          <div *ngFor="let image of product.images; let i = index" class="thumbnail"
+            [class.active]="currentImageIndex === i" (click)="setCurrentImage(i)">
+            <img [src]="image.url" [alt]="product.title + ' imagem ' + (i + 1)">
+          </div>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h1 class="product-title">{{ product.title }}</h1>
+
+        <div class="owner-info">
+          <img [src]="product.user.avatar" [alt]="product.user.fullName" class="owner-avatar">
+          <div class="owner-details">
+            <span class="owner-name">{{ product.user.fullName }}</span>
+            <app-reputation-badge [level]="product.user.reputationLevel"></app-reputation-badge>
+          </div>
+        </div>
+
+        <p class="product-description">{{ product.description }}</p>
+
+        <div class="exchange-info">
+          <h2>Aceita trocar por:</h2>
+          <div class="exchange-tags">
+            <span class="exchange-tag" *ngFor="let tag of product.acceptableExchanges">{{ tag }}</span>
+          </div>
+        </div>
+
+        <div class="product-meta">
+          <span class="meta-item">
+            <mat-icon>event</mat-icon>
+            Anunciado em {{ product.createdAt | date:'dd/MM/yyyy' }}
+          </span>
+
+          <span class="meta-item" *ngIf="product.updatedAt !== product.createdAt">
+            <mat-icon>update</mat-icon>
+            Atualizado em {{ product.updatedAt | date:'dd/MM/yyyy' }}
+          </span>
+        </div>
+
+        <div class="product-actions" *ngIf="!isOwner">
+          <button mat-flat-button color="primary" class="exchange-btn" [disabled]="product.status !== 'available'"
+            (click)="toggleExchangeForm()">
+            <mat-icon>swap_horiz</mat-icon>
+            Propor Troca
+          </button>
+
+          <button mat-stroked-button color="accent" class="contact-btn" (click)="onContactOwner()">
+            <mat-icon>chat</mat-icon>
+            Contatar via WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exchange Proposal Form -->
+    <div class="exchange-form-container mat-elevation-z2" *ngIf="isExchangeFormVisible && !isOwner">
+      <h2>Propor troca</h2>
+
+      <div class="no-products" *ngIf="userProducts.length === 0">
+        <p>Você ainda não tem produtos anunciados para oferecer.</p>
+        <button mat-flat-button color="primary" [routerLink]="['/products/create']">
+          <mat-icon>add</mat-icon>
+          Anunciar um produto
+        </button>
+      </div>
+
+      <form [formGroup]="exchangeForm" (ngSubmit)="submitProposal()" *ngIf="userProducts.length > 0">
+        <h3>Selecione um produto para oferecer:</h3>
+
+        <div class="user-products-grid">
+          <div *ngFor="let userProduct of userProducts" class="user-product-card"
+            [class.selected]="selectedProductForExchange === userProduct.id" (click)="selectProduct(userProduct.id)">
+            <img [src]="userProduct.imageUrl" [alt]="userProduct.title" class="user-product-image">
+            <div class="user-product-info">
+              <h4>{{ userProduct.title }}</h4>
+            </div>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="message-field">
+          <mat-label>Mensagem para o proprietário</mat-label>
+          <textarea matInput formControlName="message"
+            placeholder="Descreva por que você está interessado nesse produto e por que seria uma boa troca"
+            rows="4"></textarea>
+          <mat-hint align="end">{{exchangeForm.get('message')?.value?.length || 0}}/500</mat-hint>
+          <mat-error *ngIf="exchangeForm.get('message')?.hasError('required')">
+            Mensagem é obrigatória
+          </mat-error>
+          <mat-error *ngIf="exchangeForm.get('message')?.hasError('minlength')">
+            Mensagem deve ter pelo menos 10 caracteres
+          </mat-error>
+          <mat-error *ngIf="exchangeForm.get('message')?.hasError('maxlength')">
+            Mensagem não pode ter mais de 500 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="toggleExchangeForm()">Cancelar</button>
+          <button mat-flat-button color="primary" type="submit" [disabled]="exchangeForm.invalid">
+            Enviar Proposta
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Owner message for own product -->
+    <div class="owner-message mat-elevation-z2" *ngIf="isOwner">
+      <h2>Este é seu produto</h2>
+      <p>Você pode gerenciar propostas recebidas na página de propostas.</p>
+      <button mat-flat-button color="primary" [routerLink]="['/proposals']">
+        <mat-icon>swap_horiz</mat-icon>
+        Ver Propostas
+      </button>
+    </div>
+  </div>
+
+  <ng-template #loadingTemplate>
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Carregando detalhes do produto...</p>
+    </div>
+  </ng-template>
+</div>

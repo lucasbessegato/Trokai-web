@@ -1,0 +1,16 @@
+/* Global Styles */
+html, body { 
+  height: 100%; 
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Material Design Theme */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Custom Styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}

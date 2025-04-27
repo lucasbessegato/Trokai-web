@@ -1,0 +1,6 @@
+<div class="reputation-badge" [class.small]="small" [matTooltip]="badgeInfo.description" [matTooltipDisabled]="!showTooltip">
+  <span class="badge-level">{{ badgeInfo.title }}</span>
+  <div class="badge-icon" [ngClass]="'level-' + level">
+    <img [src]="badgeInfo.imageUrl" [alt]="badgeInfo.title">
+  </div>
+</div>

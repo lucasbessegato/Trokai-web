@@ -1,0 +1,56 @@
+<div class="product-card mat-elevation-z2">
+  <div class="product-image" (click)="navigateToDetail()">
+    <img [src]="product.imageUrl" [alt]="product.title">
+    <div class="product-status" *ngIf="product.status !== 'available'">
+      <span class="status-badge" [ngClass]="'status-' + product.status">
+        {{ product.status === 'reserved' ? 'Reservado' : 'Trocado' }}
+      </span>
+    </div>
+  </div>
+  
+  <div class="product-info" (click)="navigateToDetail()">
+    <h3 class="product-title">{{ product.title }}</h3>
+    <p class="product-description">{{ product.description | slice:0:100 }}{{ product.description.length > 100 ? '...' : '' }}</p>
+    
+    <div class="product-owner">
+      <img [src]="product.ownerAvatar" [alt]="product.ownerName" class="owner-avatar">
+      <div class="owner-info">
+        <span class="owner-name">{{ product.ownerName }}</span>
+        <app-reputation-badge [level]="product.ownerReputationLevel" [small]="true"></app-reputation-badge>
+      </div>
+    </div>
+  </div>
+  
+  <div class="product-actions" *ngIf="showActions">
+    <div class="exchange-info">
+      <h4>Aceita trocar por:</h4>
+      <div class="exchange-tags">
+        <span class="exchange-tag" *ngFor="let tag of product.acceptableExchanges.slice(0, 3)">{{ tag }}</span>
+        <span class="more-tag" *ngIf="product.acceptableExchanges.length > 3">+{{ product.acceptableExchanges.length - 3 }}</span>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button 
+        mat-stroked-button
+        color="primary"
+        class="exchange-btn"
+        (click)="onProposeExchange()"
+        [disabled]="product.status !== 'available'"
+      >
+        <mat-icon>swap_horiz</mat-icon>
+        Propor Troca
+      </button>
+      
+      <button 
+        mat-icon-button
+        color="accent"
+        class="whatsapp-btn"
+        (click)="onContactOwner()"
+        title="Contatar via WhatsApp"
+      >
+        <mat-icon>chat</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

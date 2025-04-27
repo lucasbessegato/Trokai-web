@@ -1,0 +1,61 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Entrar no Trokaí</h2>
+      <p>Acesse sua conta para trocar itens</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email" 
+          placeholder="Seu email"
+        >
+        <div class="error-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          <span *ngIf="loginForm.get('email')?.hasError('required')">Email é obrigatório</span>
+          <span *ngIf="loginForm.get('email')?.hasError('email')">Email inválido</span>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="password">Senha</label>
+        <div class="password-input">
+          <input 
+            id="password" 
+            [type]="hidePassword ? 'password' : 'text'" 
+            formControlName="password"
+            placeholder="Sua senha"
+          >
+          <button 
+            type="button" 
+            class="toggle-password"
+            (click)="hidePassword = !hidePassword"
+          >
+            {{ hidePassword ? 'Mostrar' : 'Ocultar' }}
+          </button>
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <span *ngIf="loginForm.get('password')?.hasError('required')">Senha é obrigatória</span>
+          <span *ngIf="loginForm.get('password')?.hasError('minlength')">Senha deve ter no mínimo 6 caracteres</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="login-button" 
+          [disabled]="loginForm.invalid || isLoading"
+        >
+          {{ isLoading ? 'Entrando...' : 'Entrar' }}
+        </button>
+      </div>
+
+      <div class="form-footer">
+        <a routerLink="/auth/register">Não tem uma conta? Cadastre-se</a>
+      </div>
+    </form>
+  </div>
+</div>

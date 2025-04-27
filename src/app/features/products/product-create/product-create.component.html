@@ -1,0 +1,171 @@
+<div class="product-create-container">
+  <div class="page-header">
+    <h1>Anunciar um Produto</h1>
+    <p>Cadastre seu produto para troca na plataforma</p>
+  </div>
+  
+  <div class="form-container mat-elevation-z2">
+    <div class="back-link">
+      <a [routerLink]="['/products']">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar para produtos
+      </a>
+    </div>
+    
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading; else loadingTemplate">
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Título do produto</mat-label>
+          <input matInput formControlName="title" placeholder="Ex: Smartphone Samsung Galaxy S20">
+          <mat-hint align="end">{{productForm.get('title')?.value?.length || 0}}/100</mat-hint>
+          <mat-error *ngIf="productForm.get('title')?.hasError('required')">
+            Título é obrigatório
+          </mat-error>
+          <mat-error *ngIf="productForm.get('title')?.hasError('minlength')">
+            Título deve ter pelo menos 5 caracteres
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Descrição</mat-label>
+          <textarea 
+            matInput 
+            formControlName="description" 
+            placeholder="Descreva detalhes, estado de conservação e outros aspectos relevantes do seu produto"
+            rows="6"
+          ></textarea>
+          <mat-hint align="end">{{productForm.get('description')?.value?.length || 0}}/1000</mat-hint>
+          <mat-error *ngIf="productForm.get('description')?.hasError('required')">
+            Descrição é obrigatória
+          </mat-error>
+          <mat-error *ngIf="productForm.get('description')?.hasError('minlength')">
+            Descrição deve ter pelo menos 20 caracteres
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Categoria</mat-label>
+          <mat-select formControlName="categoryId">
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">
+            Categoria é obrigatória
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>O que aceita em troca?</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Itens aceitos para troca">
+            <mat-chip-row
+              *ngFor="let item of acceptableExchanges" 
+              (removed)="removeExchangeItem(item)"
+            >
+              {{item}}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+            <input 
+              placeholder="Ex: Fone de ouvido, Livros..."
+              [matChipInputFor]="chipGrid"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addExchangeItem($event)"
+            >
+          </mat-chip-grid>
+          <mat-hint>Pressione Enter após digitar cada item</mat-hint>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <h3>Imagens do Produto</h3>
+        <p class="upload-instruction">Envie até 5 imagens do seu produto. A primeira imagem será a imagem principal.</p>
+        
+        <div 
+          [class]="dragAreaClass" 
+          (dragover)="onDragOver($event)" 
+          (dragleave)="onDragLeave($event)" 
+          (drop)="onDrop($event)"
+        >
+          <div class="icon-text-container">
+            <mat-icon>cloud_upload</mat-icon>
+            <p>Arraste e solte suas imagens aqui ou</p>
+            <button type="button" mat-stroked-button (click)="fileInput.click()">
+              Selecionar Imagens
+            </button>
+            <input 
+              #fileInput 
+              type="file" 
+              accept="image/*" 
+              multiple 
+              style="display: none;" 
+              (change)="onFileSelected($event)"
+            >
+            <p class="limit-text">Máximo: 5 imagens (JPEG, PNG, GIF, WEBP)</p>
+          </div>
+        </div>
+        
+        <div class="image-previews" *ngIf="imagePreviewUrls.length > 0">
+          <div 
+            *ngFor="let imageUrl of imagePreviewUrls; let i = index" 
+            class="image-preview-item"
+            [class.main-image]="i === mainImageIndex"
+          >
+            <div class="image-preview-container">
+              <img [src]="imageUrl" alt="Imagem do produto {{ i + 1 }}">
+              <div class="image-actions">
+                <button 
+                  type="button" 
+                  mat-icon-button 
+                  color="primary" 
+                  (click)="setMainImage(i)"
+                  *ngIf="i !== mainImageIndex"
+                  title="Definir como imagem principal"
+                >
+                  <mat-icon>star</mat-icon>
+                </button>
+                <button 
+                  type="button" 
+                  mat-icon-button 
+                  color="warn" 
+                  (click)="removeImage(i)"
+                  title="Remover imagem"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+            <p *ngIf="i === mainImageIndex" class="main-badge">Principal</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button 
+          mat-flat-button 
+          color="primary" 
+          type="submit"
+          [disabled]="productForm.invalid || isSubmitting"
+        >
+          <mat-spinner *ngIf="isSubmitting" diameter="24" class="spinner"></mat-spinner>
+          <span *ngIf="!isSubmitting">Anunciar Produto</span>
+        </button>
+        <button mat-stroked-button type="button" [routerLink]="['/products']">Cancelar</button>
+      </div>
+    </form>
+    
+    <ng-template #loadingTemplate>
+      <div class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Carregando formulário...</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

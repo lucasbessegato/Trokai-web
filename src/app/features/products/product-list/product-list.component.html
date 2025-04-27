@@ -1,0 +1,149 @@
+<div class="product-list-container">
+  <div class="create-product-button-container">
+    <button class="create-product-btn" [routerLink]="['/products/create']">
+      <span class="button-icon">+</span> Anunciar Produto
+    </button>
+  </div>
+
+  <div class="content-section">
+    <div class="filters-section">
+      <div class="filters-header">
+        <h2>Filtros</h2>
+        <mat-icon class="filter-icon">filter_list</mat-icon>
+      </div>
+
+      <div class="filter-group">
+        <label for="search">Buscar por nome</label>
+        <div class="search-input-container">
+          <input type="text" id="search" [(ngModel)]="searchText" placeholder="Digite para buscar...">
+          <mat-icon class="search-icon">search</mat-icon>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label for="category">Categoria</label>
+        <div class="select-wrapper">
+          <select id="category" [(ngModel)]="selectedCategory">
+            <option value="">Todas as categorias</option>
+            <option value="1">Eletrônicos</option>
+            <option value="2">Esportes</option>
+            <option value="3">Casa e Decoração</option>
+            <option value="4">Vestuário</option>
+            <option value="5">Livros</option>
+          </select>
+          <mat-icon class="select-icon">expand_more</mat-icon>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label for="condition">Estado</label>
+        <div class="select-wrapper">
+          <select id="condition" [(ngModel)]="selectedCondition">
+            <option value="">Todos os estados</option>
+            <option value="novo">Novo</option>
+            <option value="usado-otimo">Usado - Ótimo</option>
+            <option value="usado-bom">Usado - Bom</option>
+            <option value="usado-regular">Usado - Regular</option>
+          </select>
+          <mat-icon class="select-icon">expand_more</mat-icon>
+        </div>
+      </div>
+
+      <div class="filter-divider"></div>
+
+      <div class="filter-actions">
+        <button class="filter-button" (click)="applyFilters()">
+          <mat-icon>check</mat-icon>
+          Aplicar
+        </button>
+        <button class="clear-button" (click)="clearFilters()">
+          <mat-icon>refresh</mat-icon>
+          Limpar
+        </button>
+      </div>
+    </div>
+
+    <div class="products-content">
+      <ng-container *ngIf="!isLoading && !error; else loadingOrError">
+        <div class="products-grid">
+          <div class="product-card" *ngFor="let product of products">
+            <div class="product-status-badge" *ngIf="product.status !== productStatus.AVAILABLE">
+              {{ product.status === productStatus.RESERVED ? 'Reservado' : 'Trocado' }}
+            </div>
+
+            <div class="product-image">
+              <img [src]="product.imageUrl" [alt]="product.title">
+              <div class="product-actions">
+                <button class="quick-view-btn" [routerLink]="['/products', product.id]">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="product-info">
+              <div class="product-category">
+                <span class="category-tag">
+                  <mat-icon class="category-icon">category</mat-icon>
+                  {{ product.category.name }}
+                </span>
+              </div>
+
+              <h3 class="product-name">{{ product.title }}</h3>
+
+              <p class="product-description">
+                {{ product.description | slice:0:100 }}{{ product.description.length > 100 ? '…' : '' }}
+              </p>
+
+              <div class="exchange-tags">
+                <p class="exchange-label">Aceita troca por:</p>
+                <div class="exchange-items">
+                  <span class="exchange-tag" *ngFor="let ex of getFirstExchanges(product.acceptableExchanges, 2)">
+                    {{ ex }}
+                  </span>
+                  <span class="exchange-more" *ngIf="product.acceptableExchanges.length > 2">
+                    +{{ product.acceptableExchanges.length - 2 }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <div class="owner-info">
+                  <div class="owner-avatar">
+                    <img [src]="product.user.avatar" [alt]="product.user.fullName" class="avatar-image">
+                  </div>
+                  <div class="owner-details">
+                    <span class="owner-name">{{ product.user.fullName }}</span>
+                    <div class="reputation-stars">
+                      <span class="star filled" *ngFor="let star of getReputationStars(product.user.reputationLevel)">
+                        ★
+                      </span>
+                      <span class="star" *ngFor="let star of getEmptyStars(product.user.reputationLevel)">
+                        ☆
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button class="view-details-btn" [routerLink]="['/products', product.id]">
+                  Ver Detalhes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <ng-template #loadingOrError>
+    <div class="loading-error-container">
+      <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Carregando produtos...</p>
+      </div>
+      <div *ngIf="error" class="error-container">
+        <p class="error-message">{{ error }}</p>
+        <button (click)="loadProducts()" class="retry-button">Tentar novamente</button>
+      </div>
+    </div>
+  </ng-template>
+</div>

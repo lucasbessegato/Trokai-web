@@ -1,0 +1,12 @@
+<!-- Parte superior do perfil -->
+<div class="container">
+  <div *ngIf="user && !isLoading; else loadingBlock">
+    <h1>Nome: {{user.fullName}}</h1>
+    <p>Usuário: {{user.username}}</p>
+    <button (click)="logout()">Sair</button>
+  </div>
+  
+  <ng-template #loadingBlock>
+    <p>Carregando perfil...</p>
+  </ng-template>
+</div>

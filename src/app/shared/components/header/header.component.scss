@@ -1,0 +1,161 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: white;
+  height: 64px;
+  
+  @media (max-width: 599px) {
+    height: 56px;
+  }
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: #3f51b5;
+}
+
+.nav-desktop {
+  display: flex;
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  
+  li {
+    margin: 0 8px;
+    
+    a {
+      display: block;
+      padding: 8px 12px;
+      color: #444;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+      
+      &:hover, &.active {
+        color: #3f51b5;
+      }
+      
+      &.active {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  
+  .notification-btn,
+  .proposal-btn {
+    margin-right: 8px;
+  }
+  
+  .user-menu-btn {
+    display: flex;
+    align-items: center;
+    
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 8px;
+      object-fit: cover;
+    }
+    
+    .username {
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
+      @media (max-width: 992px) {
+        display: none;
+      }
+    }
+  }
+  
+  .login-btn {
+    margin-right: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    .login-btn,
+    .register-btn {
+      display: none;
+    }
+  }
+}
+
+.mobile-menu-toggle {
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  
+  &.open {
+    display: block;
+    transform: translateX(0);
+  }
+  
+  .nav-mobile {
+    padding: 16px;
+    
+    .nav-links {
+      flex-direction: column;
+      
+      li {
+        margin: 0;
+        
+        a {
+          padding: 16px 0;
+          border-bottom: 1px solid #eee;
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+}

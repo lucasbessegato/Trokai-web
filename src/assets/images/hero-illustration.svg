@@ -1,0 +1,78 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f8faff" rx="20" ry="20"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="100" cy="350" r="80" fill="#e8eaf6"/>
+  <circle cx="500" cy="50" r="60" fill="#e8eaf6"/>
+  
+  <!-- Central illustration -->
+  <g transform="translate(250, 200)">
+    <!-- Platform/Ground -->
+    <ellipse cx="50" cy="70" rx="180" ry="30" fill="#c5cae9"/>
+    
+    <!-- People exchanging items -->
+    <!-- Person 1 -->
+    <g transform="translate(-80, 0)">
+      <!-- Body -->
+      <circle cx="0" cy="-10" r="25" fill="#5c6bc0"/>
+      <rect x="-15" y="15" width="30" height="45" rx="10" fill="#5c6bc0"/>
+      
+      <!-- Head -->
+      <circle cx="0" cy="-30" r="20" fill="#ffb74d"/>
+      
+      <!-- Arms -->
+      <line x1="-15" y1="25" x2="-45" y2="15" stroke="#5c6bc0" stroke-width="10" stroke-linecap="round"/>
+      <line x1="15" y1="25" x2="35" y2="40" stroke="#5c6bc0" stroke-width="10" stroke-linecap="round"/>
+      
+      <!-- Item being exchanged -->
+      <rect x="-60" y="0" width="25" height="25" rx="3" fill="#7986cb"/>
+    </g>
+    
+    <!-- Exchange arrows -->
+    <g stroke="#3f51b5" stroke-width="5" stroke-linecap="round" fill="none">
+      <path d="M-30,30 L30,30" />
+      <path d="M10,15 L30,30 L10,45" />
+    </g>
+    <g stroke="#3f51b5" stroke-width="5" stroke-linecap="round" fill="none">
+      <path d="M130,30 L70,30" />
+      <path d="M90,15 L70,30 L90,45" />
+    </g>
+    
+    <!-- Person 2 -->
+    <g transform="translate(80, 0)">
+      <!-- Body -->
+      <circle cx="0" cy="-10" r="25" fill="#7986cb"/>
+      <rect x="-15" y="15" width="30" height="45" rx="10" fill="#7986cb"/>
+      
+      <!-- Head -->
+      <circle cx="0" cy="-30" r="20" fill="#ffcc80"/>
+      
+      <!-- Arms -->
+      <line x1="-15" y1="25" x2="-35" y2="40" stroke="#7986cb" stroke-width="10" stroke-linecap="round"/>
+      <line x1="15" y1="25" x2="45" y2="15" stroke="#7986cb" stroke-width="10" stroke-linecap="round"/>
+      
+      <!-- Item being exchanged -->
+      <rect x="35" y="0" width="25" height="25" rx="3" fill="#5c6bc0"/>
+    </g>
+  </g>
+  
+  <!-- Abstract connections and nodes -->
+  <g stroke="#c5cae9" stroke-width="3" fill="none">
+    <path d="M50,100 C100,50 150,150 200,100"/>
+    <path d="M350,150 C400,200 450,100 500,150"/>
+    <path d="M150,300 C200,250 250,350 300,300"/>
+    <path d="M400,300 C450,350 500,250 550,300"/>
+  </g>
+  
+  <g fill="#7986cb">
+    <circle cx="50" cy="100" r="8"/>
+    <circle cx="200" cy="100" r="8"/>
+    <circle cx="350" cy="150" r="8"/>
+    <circle cx="500" cy="150" r="8"/>
+    <circle cx="150" cy="300" r="8"/>
+    <circle cx="300" cy="300" r="8"/>
+    <circle cx="400" cy="300" r="8"/>
+    <circle cx="550" cy="300" r="8"/>
+  </g>
+</svg>

@@ -1,0 +1,77 @@
+<header class="header mat-elevation-z2">
+  <div class="header-container">
+    <div class="header-brand" [routerLink]="['/']">
+      <h1 class="logo">Trokaí</h1>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="nav-desktop">
+      <ul class="nav-links">
+        <li><a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+        <li><a [routerLink]="['/products']" routerLinkActive="active">Produtos</a></li>
+        <li *ngIf="(isLoggedIn$ | async)"><a [routerLink]="['/products/create']" routerLinkActive="active">Anunciar</a></li>
+      </ul>
+    </nav>
+    
+    <!-- Mobile menu toggle -->
+    <button mat-icon-button class="mobile-menu-toggle" (click)="toggleMobileMenu()" aria-label="Toggle menu">
+      <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
+
+    <!-- User Actions -->
+    <div class="user-actions">
+      <ng-container *ngIf="(isLoggedIn$ | async); else notLoggedIn">
+        <button mat-icon-button [routerLink]="['/notifications']" class="notification-btn" aria-label="Notifications">
+          <mat-icon [matBadge]="unreadNotificationsCount" [matBadgeHidden]="unreadNotificationsCount === 0" matBadgeColor="warn">notifications</mat-icon>
+        </button>
+        
+        <button mat-icon-button [routerLink]="['/proposals']" class="proposal-btn" aria-label="Proposals">
+          <mat-icon [matBadge]="pendingProposalsCount" [matBadgeHidden]="pendingProposalsCount === 0" matBadgeColor="warn">swap_horiz</mat-icon>
+        </button>
+        
+        <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-btn">
+          <img [src]="(currentUser$ | async)?.avatar" class="avatar" alt="User avatar">
+          <span class="username">{{ (currentUser$ | async)?.fullName }}</span>
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        
+        <mat-menu #userMenu="matMenu">
+          <a mat-menu-item [routerLink]="['/profile']">
+            <mat-icon>person</mat-icon>
+            <span>Meu Perfil</span>
+          </a>
+          <a mat-menu-item [routerLink]="['/proposals']">
+            <mat-icon>swap_horiz</mat-icon>
+            <span>Propostas</span>
+          </a>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Sair</span>
+          </button>
+        </mat-menu>
+      </ng-container>
+      
+      <ng-template #notLoggedIn>
+        <a mat-button [routerLink]="['/auth/login']" class="login-btn">Entrar</a>
+        <a mat-flat-button color="primary" [routerLink]="['/auth/register']" class="register-btn">Cadastrar</a>
+      </ng-template>
+    </div>
+  </div>
+  
+  <!-- Mobile Navigation -->
+  <div class="mobile-menu" [class.open]="isMobileMenuOpen">
+    <nav class="nav-mobile">
+      <ul class="nav-links">
+        <li><a [routerLink]="['/']" (click)="toggleMobileMenu()">Home</a></li>
+        <li><a [routerLink]="['/products']" (click)="toggleMobileMenu()">Produtos</a></li>
+        <li *ngIf="(isLoggedIn$ | async)"><a [routerLink]="['/products/create']" (click)="toggleMobileMenu()">Anunciar</a></li>
+        <li *ngIf="(isLoggedIn$ | async)"><a [routerLink]="['/profile']" (click)="toggleMobileMenu()">Meu Perfil</a></li>
+        <li *ngIf="(isLoggedIn$ | async)"><a [routerLink]="['/proposals']" (click)="toggleMobileMenu()">Propostas</a></li>
+        <li *ngIf="(isLoggedIn$ | async)"><a [routerLink]="['/notifications']" (click)="toggleMobileMenu()">Notificações</a></li>
+        <li *ngIf="(isLoggedIn$ | async)"><a href="javascript:void(0)" (click)="logout(); toggleMobileMenu()">Sair</a></li>
+        <li *ngIf="!(isLoggedIn$ | async)"><a [routerLink]="['/auth/login']" (click)="toggleMobileMenu()">Entrar</a></li>
+        <li *ngIf="!(isLoggedIn$ | async)"><a [routerLink]="['/auth/register']" (click)="toggleMobileMenu()">Cadastrar</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
