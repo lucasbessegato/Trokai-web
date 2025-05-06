@@ -70,6 +70,7 @@
   
   mat-nav-list {
     padding: 0;
+    padding-right: 25px;
     
     a[mat-list-item] {
       height: 48px;
@@ -135,7 +136,7 @@ mat-sidenav-content {
 
 .app-content {
   flex: 1;
-  padding: 1rem;
+  padding: 0.2rem;
   
   &.no-header {
     padding-top: 0;
@@ -148,4 +149,8 @@ mat-sidenav-content {
   padding: 1rem;
   text-align: center;
   margin-top: auto; // Garante que o footer fique no final da página
+}
+
+::ng-deep .mdc-list-item__primary-text{
+  display: flex !important;
 }

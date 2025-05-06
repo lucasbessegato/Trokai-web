@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
   gap: 1.5rem;
 }
@@ -556,10 +556,15 @@
 @media (max-width: 768px) {
   .product-list-container {
     flex-direction: column;
+    padding: 0.2rem;
+  }
+
+  .content-section {
+    flex-direction: column;
   }
   
   .filters-section {
-    width: 100%;
+    width: auto;
     margin-bottom: 1rem;
   }
 }

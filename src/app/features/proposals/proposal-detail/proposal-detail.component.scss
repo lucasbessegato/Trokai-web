@@ -277,3 +277,10 @@
     color: #757575;
   }
 }
+.ex-buttons-container{
+  display: flex;
+}
+.ex-buttons-container button{
+  margin-right: 12px;
+  flex: 1;
+}
