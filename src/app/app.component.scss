@@ -154,3 +154,12 @@ mat-sidenav-content {
 ::ng-deep .mdc-list-item__primary-text{
   display: flex !important;
 }
+
+.star {
+  color: #bdbdbd;
+  font-size: 0.8rem;
+  
+  &.filled {
+    color: #ffc107;
+  }
+}

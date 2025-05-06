@@ -1,12 +1,97 @@
-<!-- Parte superior do perfil -->
 <div class="container">
-  <div *ngIf="user && !isLoading; else loadingBlock">
-    <h1>Nome: {{user.fullName}}</h1>
-    <p>Usuário: {{user.username}}</p>
-    <button (click)="logout()">Sair</button>
+  <div class="profile-container" *ngIf="user">
+    <div class="profile-card">
+      <div class="profile-banner"></div>
+      <img src="https://lirp.cdn-website.com/eda4ad32/dms3rep/multi/opt/41717CF9-288E-4F9C-BF86-9E35DA494F87-640w.jpg"
+        alt="Foto de perfil" class="avatar">
+      <div class="profile-info">
+        <h2>Emma Smith</h2>
+        <div class="reputation-stars">
+          <span class="star filled" *ngFor="let star of getReputationStars(user?.reputationLevel ?? 0)">
+            ★
+          </span>
+          <span class="star" *ngFor="let star of getEmptyStars(user?.reputationLevel ?? 0)">
+            ☆
+          </span>
+        </div>
+        <p class="location">Los Angeles, California</p>
+        <div class="actions">
+          <button class="btn dark">Edit Profile</button>
+          <button class="btn light">Settings</button>
+        </div>
+        <div class="labels">
+          <span class="label">HTML</span>
+          <span class="label">CSS</span>
+          <span class="label">Dart</span>
+          <span class="label">C++</span>
+          <span class="label">UI Design</span>
+        </div>
+      </div>
+      <div class="products-grid">
+        <div class="product-card" *ngFor="let product of products">
+          <div class="product-status-badge" *ngIf="product.status !== productStatus.AVAILABLE">
+            {{ product.status === productStatus.RESERVED ? 'Reservado' : 'Trocado' }}
+          </div>
+
+          <div class="product-image">
+            <img [src]="product.imageUrl" [alt]="product.title">
+            <div class="product-actions">
+              <button class="quick-view-btn" [routerLink]="['/products', product.id]">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="product-info">
+            <div class="product-category">
+              <span class="category-tag">
+                <mat-icon class="category-icon">category</mat-icon>
+                {{ product.category.name }}
+              </span>
+            </div>
+
+            <h3 class="product-name">{{ product.title }}</h3>
+
+            <p class="product-description">
+              {{ product.description | slice:0:100 }}{{ product.description.length > 100 ? '…' : '' }}
+            </p>
+
+            <div class="exchange-tags">
+              <p class="exchange-label">Aceita troca por:</p>
+              <div class="exchange-items">
+                <span class="exchange-tag" *ngFor="let ex of getFirstExchanges(product.acceptableExchanges, 2)">
+                  {{ ex }}
+                </span>
+                <span class="exchange-more" *ngIf="product.acceptableExchanges.length > 2">
+                  +{{ product.acceptableExchanges.length - 2 }}
+                </span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="owner-info">
+                <div class="owner-avatar">
+                  <img [src]="product.user.avatar" [alt]="product.user.fullName" class="avatar-image">
+                </div>
+                <div class="owner-details">
+                  <span class="owner-name">{{ product.user.fullName }}</span>
+                  <div class="reputation-stars">
+                    <span class="star filled" *ngFor="let star of getReputationStars(product.user.reputationLevel)">
+                      ★
+                    </span>
+                    <span class="star" *ngFor="let star of getEmptyStars(product.user.reputationLevel)">
+                      ☆
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <button class="view-details-btn" [routerLink]="['/products', product.id]">
+                Ver Detalhes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  
-  <ng-template #loadingBlock>
-    <p>Carregando perfil...</p>
-  </ng-template>
 </div>

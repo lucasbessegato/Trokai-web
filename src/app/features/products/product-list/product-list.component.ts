@@ -49,7 +49,6 @@ export class ProductListComponent implements OnInit {
         this.filteredProducts = [...this.allProducts];
         this.products = [...this.filteredProducts];
         this.isLoading = false;
-        console.log(this.products)
       },
       error: (err) => {
         this.error = 'Erro ao carregar produtos. Tente novamente.';

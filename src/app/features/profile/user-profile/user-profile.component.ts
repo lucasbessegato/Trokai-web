@@ -9,9 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
-
+import { Product, Category, ProductStatus } from '../../../core/models/product.model';
 import { User } from '../../../core/models/user.model';
-import { Product } from '../../../core/models/product.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { ProductService } from '../../../core/services/product.service';
@@ -41,6 +40,7 @@ export class UserProfileComponent implements OnInit {
   isLoading = true;
   isEditMode = false;
   isSaving = false;
+  productStatus = ProductStatus;
   
   // Avatar options for selection
   avatarOptions = [
@@ -105,10 +105,11 @@ export class UserProfileComponent implements OnInit {
     this.loadUserProducts();
   }
   
+  
   loadUserProducts(): void {
     if (!this.user) return;
     
-    this.productService.getProductsByUser(this.user.id).subscribe({
+    this.productService.getProductsByUser(2).subscribe({
       next: (products) => {
         this.products = products;
         this.isLoading = false;
@@ -164,6 +165,20 @@ export class UserProfileComponent implements OnInit {
         });
       }
     });
+  }
+
+  getFirstExchanges(exchanges: string[], count: number): string[] {
+    return exchanges.length
+      ? exchanges.slice(0, count)
+      : ['Qualquer item'];
+  }
+
+  getReputationStars(level: number): number[] {
+    return Array(level).fill(0);
+  }
+
+  getEmptyStars(level: number): number[] {
+    return Array(Math.max(0, 5 - level)).fill(0);
   }
   
   navigateToProduct(productId: number): void {
