@@ -12,7 +12,8 @@ export interface User {
   bio?: string;
   location?: string;
   phone?: string;
-  products?: Product[];            // agora a lista completa de produtos, não só IDs
+  products?: Product[];
+  password?: string;
 }
 export interface UserRating {
   id: number;
