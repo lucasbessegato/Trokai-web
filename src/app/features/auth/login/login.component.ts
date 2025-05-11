@@ -26,21 +26,12 @@ export class LoginComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   ngOnInit(): void {
-    console.log('Login component initialized');
-    
-    // Pré-preenchendo o formulário para demonstração
-    this.loginForm.setValue({
-      email: 'usuario@exemplo.com',
-      password: 'senha123'
-    });
-    
-    // Se já estiver logado, redireciona para a página de produtos
     if (this.authService.getCurrentUser()) {
       this.router.navigate(['/products']);
     }
@@ -54,13 +45,16 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     this.loginError = '';
     
-    const { email, password } = this.loginForm.value;
+    const { username, password } = this.loginForm.value;
     
     // Usando o authService para fazer login
-    this.authService.login(email, password).subscribe({
-      next: () => {
+    this.authService.login(username, password).subscribe({
+      next: (response) => {
         this.isLoading = false;
-        console.log('Login realizado com sucesso:', email);
+        localStorage.setItem('auth_token', response.token);
+        localStorage.setItem('currentUser', JSON.stringify(response.user));
+        this.authService.currentUserSubject.next(response.user)
+         this.authService.isLoggedInSubject.next(true)
         this.snackBar.open('Login realizado com sucesso!', 'Fechar', {
           duration: 3000
         });
@@ -68,7 +62,7 @@ export class LoginComponent implements OnInit {
       },
       error: (error: any) => {
         this.isLoading = false;
-        this.loginError = error.message || 'Erro ao fazer login. Tente novamente.';
+        this.loginError = 'Erro ao fazer login. Verifique suas credenciais e tente novamente.';
         this.snackBar.open(this.loginError, 'Fechar', {
           duration: 5000,
           panelClass: ['error-snackbar']

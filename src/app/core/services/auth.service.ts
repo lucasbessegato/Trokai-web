@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { delay, map, tap } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { usersMock } from '../mock-data/mocks';  // agora todos os mocks vêm do mesmo arquivo
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
+export interface LoginResponse {
+  token: string;
+  user: User;
+}
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
+  public isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
   constructor(private http: HttpClient) {
@@ -29,7 +34,7 @@ export class AuthService {
     return !!localStorage.getItem('auth_token');
   }
 
-  login(email: string, password: string): Observable<User> {
+  loginDummy(email: string, password: string): Observable<User> {
     const user = usersMock.find(u => u.email === email);
     if (!user) {
       return throwError(() => new Error('Credenciais inválidas. Por favor, tente novamente.'));
@@ -46,7 +51,14 @@ export class AuthService {
     );
   }
 
-  register(userData: Partial<User>): Observable<User> {
+  login(username: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(
+      `${environment.authApiUrl}`,
+      { username, password }
+    );
+  }
+
+  registerDummy(userData: Partial<User>): Observable<User> {
     const newUser: User = {
       id: usersMock.length + 1,
       username: userData.username ?? '',
@@ -84,7 +96,7 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  registerMultipart(data: FormData): Observable<User> {
+  register(data: FormData): Observable<User> {
     return this.http.post<User>(
       `${environment.apiUrl}/users/`,
       data

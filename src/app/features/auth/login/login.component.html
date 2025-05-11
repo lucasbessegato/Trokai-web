@@ -7,16 +7,15 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
       <div class="form-field">
-        <label for="email">Email</label>
+        <label for="username">Nome de usuário</label>
         <input 
-          id="email" 
-          type="email" 
-          formControlName="email" 
-          placeholder="Seu email"
+          id="username" 
+          type="text" 
+          formControlName="username" 
+          placeholder="Seu nome de usuário"
         >
-        <div class="error-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-          <span *ngIf="loginForm.get('email')?.hasError('required')">Email é obrigatório</span>
-          <span *ngIf="loginForm.get('email')?.hasError('email')">Email inválido</span>
+        <div class="error-message" *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+          <span *ngIf="loginForm.get('username')?.hasError('required')">Nome de usuário é obrigatório</span>
         </div>
       </div>
 

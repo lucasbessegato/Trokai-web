@@ -104,7 +104,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.authService
-      .registerMultipart(fd)
+      .register(fd)
       .subscribe({
         next: user => {
           this.router.navigate(['/']);
