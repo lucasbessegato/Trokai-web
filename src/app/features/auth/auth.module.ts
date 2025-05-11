@@ -1,24 +1,23 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
+import { RouterModule, Routes } from '@angular/router';
 
-// Vamos usar apenas o componente LoginComponent por enquanto
-// pois o componente RegisterComponent ainda não foi atualizado como standalone
+import { LoginComponent }    from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  // { path: 'register', component: RegisterComponent }
+  { path: 'login',    component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({
-  declarations: [
-    // Os componentes standalone não precisam ser declarados
-  ],
+  // declarations fica vazio quando todos os componentes são standalone
+  declarations: [],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    LoginComponent // Importar o componente standalone ao invés de declará-lo
+    LoginComponent,
+    RegisterComponent,
   ]
 })
 export class AuthModule { }

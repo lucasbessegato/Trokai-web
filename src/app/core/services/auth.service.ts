@@ -3,6 +3,8 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { usersMock } from '../mock-data/mocks';  // agora todos os mocks vêm do mesmo arquivo
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +12,11 @@ import { usersMock } from '../mock-data/mocks';  // agora todos os mocks vêm do
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
-  
+
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  constructor() {
+  constructor(private http: HttpClient) {
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
       const user: User = JSON.parse(storedUser);
@@ -80,5 +82,12 @@ export class AuthService {
 
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
+  }
+
+  registerMultipart(data: FormData): Observable<User> {
+    return this.http.post<User>(
+      `${environment.apiUrl}/users/`,
+      data
+    );
   }
 }
