@@ -6,7 +6,7 @@ import { usersMock } from '../mock-data/mocks';  // agora todos os mocks vêm do
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
-export interface Estado  { id: number; nome: string; sigla: string; }
+export interface Estado { id: number; nome: string; sigla: string; }
 export interface Cidade { id: number; nome: string; }
 
 export interface LoginResponse {
@@ -104,6 +104,12 @@ export class AuthService {
     return this.http.post<User>(
       `${environment.apiUrl}/users/`,
       data
+    );
+  }
+
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(
+      `${environment.apiUrl}/users/${id}/`
     );
   }
 

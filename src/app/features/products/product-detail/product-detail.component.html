@@ -43,7 +43,7 @@
       <div class="product-info">
         <h1 class="product-title">{{ product.title }}</h1>
 
-        <div class="owner-info">
+        <div (click)="viewUser(product.user.id)" class="owner-info">
           <img [src]="product.user.avatar" [alt]="product.user.fullName" class="owner-avatar">
           <div class="owner-details">
             <span class="owner-name">{{ product.user.fullName }}</span>

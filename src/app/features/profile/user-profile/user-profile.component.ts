@@ -14,6 +14,7 @@ import { User } from '../../../core/models/user.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { ProductService } from '../../../core/services/product.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -41,7 +42,7 @@ export class UserProfileComponent implements OnInit {
   isEditMode = false;
   isSaving = false;
   productStatus = ProductStatus;
-  
+
   // Avatar options for selection
   avatarOptions = [
     'https://images.unsplash.com/photo-1630910561339-4e22c7150093',
@@ -51,24 +52,35 @@ export class UserProfileComponent implements OnInit {
     'https://images.unsplash.com/photo-1507499036636-f716246c2c23',
     'https://images.unsplash.com/photo-1601388352547-2802c6f32eb8'
   ];
-  
+
   selectedAvatar = '';
   reputationBadgeInfo: any;
-  
+
+  isCurrentUser: boolean = true;
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private router: Router
-  ) {}
-  
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) { }
+
   ngOnInit(): void {
     this.initForm();
-    this.loadUserData();
+
+    this.activatedRoute.params.subscribe(params => {
+      if (params['id']) {
+        this.loadUserData(params['id'])
+      }
+      else {
+        this.loadCurrentUser()
+      }
+    })
   }
-  
+
   initForm(): void {
     this.profileForm = this.formBuilder.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
@@ -79,21 +91,50 @@ export class UserProfileComponent implements OnInit {
       phone: ['', [Validators.pattern('^[0-9]+$')]]
     });
   }
-  
-  loadUserData(): void {
+
+  loadUserData(id: number): void {
     this.isLoading = true;
-    
+
+    this.authService.getUserById(id).subscribe({
+      next: (user) => {
+        this.user = user;
+        this.isCurrentUser = false;
+        this.isLoading = false;
+        this.selectedAvatar = this.user.avatar;
+        this.reputationBadgeInfo = this.userService.getReputationBadgeInfo(this.user.reputation_level);
+
+        this.profileForm.patchValue({
+          fullName: this.user.fullName,
+          username: this.user.username,
+          email: this.user.email,
+          city: this.user.city || '',
+          state: this.user.state || '',
+          phone: this.user.phone || ''
+        });
+
+        this.loadUserProducts();
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.snackBar.open('Erro ao carregar usuário: ' + error.message, 'Fechar', {
+          duration: 5000
+        });
+      }
+    });
+  }
+
+  loadCurrentUser(): void {
+    this.isLoading = true;
     this.user = this.authService.getCurrentUser();
-    console.log(JSON.stringify(this.user))
-    
+
     if (!this.user) {
       this.router.navigate(['/auth/login']);
       return;
     }
-    
+
     this.selectedAvatar = this.user.avatar;
     this.reputationBadgeInfo = this.userService.getReputationBadgeInfo(this.user.reputation_level);
-    
+
     this.profileForm.patchValue({
       fullName: this.user.fullName,
       username: this.user.username,
@@ -102,15 +143,15 @@ export class UserProfileComponent implements OnInit {
       state: this.user.state || '',
       phone: this.user.phone || ''
     });
-    
+
     this.loadUserProducts();
   }
-  
-  
+
+
   loadUserProducts(): void {
     if (!this.user) return;
-    
-    this.productService.getProductsByUser(2).subscribe({
+
+    this.productService.getProductsByUser(4).subscribe({
       next: (products) => {
         this.products = products;
         this.isLoading = false;
@@ -123,31 +164,23 @@ export class UserProfileComponent implements OnInit {
       }
     });
   }
-  
-  toggleEditMode(): void {
-    this.isEditMode = !this.isEditMode;
-    
-    if (!this.isEditMode) {
-      this.loadUserData();
-    }
-  }
-  
+
   selectAvatar(avatarUrl: string): void {
     this.selectedAvatar = avatarUrl;
   }
-  
+
   saveProfile(): void {
     if (this.profileForm.invalid || this.isSaving) {
       return;
     }
-    
+
     this.isSaving = true;
-    
+
     const updatedUserData = {
       ...this.profileForm.getRawValue(),
       avatar: this.selectedAvatar
     };
-    
+
     this.userService.updateUserProfile(updatedUserData).subscribe({
       next: (updatedUser) => {
         this.user = updatedUser;
@@ -181,11 +214,11 @@ export class UserProfileComponent implements OnInit {
   getEmptyStars(level: number): number[] {
     return Array(Math.max(0, 5 - level)).fill(0);
   }
-  
+
   navigateToProduct(productId: number): void {
     this.router.navigate(['/products', productId]);
   }
-  
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);

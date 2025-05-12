@@ -18,6 +18,10 @@ const routes: Routes = [
     loadChildren: () => import('./features/proposals/proposals.module').then(m => m.ProposalsModule) 
   },
   { 
+    path: 'profile/:id', 
+    loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule) 
+  },
+   { 
     path: 'profile', 
     loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule) 
   },

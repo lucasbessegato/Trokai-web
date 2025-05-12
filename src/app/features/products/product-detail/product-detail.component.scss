@@ -193,6 +193,8 @@
     background: #f8f9fa;
     border-radius: 12px;
     margin-bottom: 24px;
+    transition: all ease 0.2s;
+    cursor: pointer;
     
     .owner-avatar {
       width: 56px;
@@ -211,6 +213,10 @@
         color: #424242;
         margin-bottom: 4px;
       }
+    }
+
+    &:hover{
+      background: #e6e6e6;;
     }
   }
   

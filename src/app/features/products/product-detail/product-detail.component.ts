@@ -139,6 +139,10 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
+  viewUser(id: number): void {
+    this.router.navigate([`/profile/${id}`])
+  }
+
   selectProduct(productId: number): void {
     this.selectedProductForExchange = productId;
     this.exchangeForm.patchValue({ productOfferedId: productId });
