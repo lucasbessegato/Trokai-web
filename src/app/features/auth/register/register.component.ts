@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService, Cidade, Estado } from '../../../core/services/auth.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-register',
@@ -27,6 +28,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatSelectModule,
     NgxMaskDirective,
     NgxMaskPipe
   ],
@@ -40,6 +42,8 @@ export class RegisterComponent implements OnInit {
   hidePassword = true;
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
+  estados: Estado[] = [];
+  cidades: Cidade[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,10 +59,14 @@ export class RegisterComponent implements OnInit {
       phone: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required]
+      confirmPassword: ['', Validators.required],
+      estado: [null, [Validators.required]],
+      cidade: [null, [Validators.required]],
     }, {
       validators: this.passwordMatchValidator
     });
+
+    this.authService.getEstados().subscribe(est => this.estados = est);
   }
 
   onFileSelected(event: Event) {
@@ -70,6 +78,15 @@ export class RegisterComponent implements OnInit {
         this.previewUrl = reader.result;
       };
       reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  onEstadoChange(estado: Estado) {
+    this.cidades = [];
+    this.registerForm.get('cidade')?.reset();
+    if (estado) {
+      this.authService.getCidades(estado.id)
+        .subscribe(c => this.cidades = c);
     }
   }
 
@@ -99,6 +116,8 @@ export class RegisterComponent implements OnInit {
     fd.append('email', f.email);
     fd.append('password', f.password);
     fd.append('phone', f.phone);
+    fd.append('state', f.estado.nome);
+    fd.append('city', f.cidade.nome);
     if (this.selectedFile) {
       fd.append('avatar_file', this.selectedFile, this.selectedFile.name);
     }
@@ -121,28 +140,5 @@ export class RegisterComponent implements OnInit {
           });
         }
       });
-
-    /* const { fullName, username, email, password } = this.registerForm.value;
-    this.authService.register({
-      fullName,
-      username,
-      email,
-      password
-    }).subscribe({
-      next: () => {
-        this.router.navigate(['/']);
-        this.snackBar.open('Cadastro realizado com sucesso!', 'Fechar', {
-          duration: 5000,
-          panelClass: ['success-snackbar']
-        });
-      },
-      error: (error) => {
-        this.isLoading = false;
-        this.snackBar.open(error.message || 'Falha ao criar conta. Tente novamente.', 'Fechar', {
-          duration: 5000,
-          panelClass: ['error-snackbar']
-        });
-      }
-    }); */
   }
 }

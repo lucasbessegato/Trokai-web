@@ -6,6 +6,9 @@ import { usersMock } from '../mock-data/mocks';  // agora todos os mocks vêm do
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
+export interface Estado  { id: number; nome: string; sigla: string; }
+export interface Cidade { id: number; nome: string; }
+
 export interface LoginResponse {
   token: string;
   user: User;
@@ -15,6 +18,7 @@ export interface LoginResponse {
 })
 
 export class AuthService {
+  private locationUrl = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados';
   public currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
@@ -69,8 +73,8 @@ export class AuthService {
       reputationScore: 0,
       createdAt: new Date(),
       products: [],        // Interface agora espera Product[]
-      bio: userData.bio ?? '',
-      location: userData.location ?? '',
+      city: userData.city ?? '',
+      state: userData.state ?? '',
       phone: userData.phone ?? ''
     };
 
@@ -101,5 +105,15 @@ export class AuthService {
       `${environment.apiUrl}/users/`,
       data
     );
+  }
+
+  getEstados(): Observable<Estado[]> {
+    return this.http.get<Estado[]>(this.locationUrl)
+      .pipe(map(estados => estados.sort((a, b) => a.nome.localeCompare(b.nome))));
+  }
+
+  getCidades(estadoId: number): Observable<Cidade[]> {
+    return this.http.get<Cidade[]>(`${this.locationUrl}/${estadoId}/municipios`)
+      .pipe(map(cidades => cidades.sort((a, b) => a.nome.localeCompare(b.nome))));
   }
 }

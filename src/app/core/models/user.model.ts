@@ -9,8 +9,8 @@ export interface User {
   reputationLevel: number;
   reputationScore: number;
   createdAt: Date;
-  bio?: string;
-  location?: string;
+  city?: string;
+  state?: string;
   phone?: string;
   products?: Product[];
   password?: string;

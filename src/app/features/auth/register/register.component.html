@@ -53,6 +53,34 @@
         </mat-error>
       </mat-form-field>
 
+      <div class="form-row" style="display: flex; flex-direction: row; align-items: center;">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="estado" (selectionChange)="onEstadoChange($event.value)">
+            <mat-option value="">– selecione –</mat-option>
+            <mat-option *ngFor="let e of estados" [value]="e">
+              {{ e.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registerForm.get('estado')?.hasError('required')">
+            Estado é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field" style="margin-left: 20px">
+          <mat-label>Cidade</mat-label>
+          <mat-select formControlName="cidade" [disabled]="!cidades.length">
+            <mat-option value="">– selecione –</mat-option>
+            <mat-option *ngFor="let c of cidades" [value]="c">
+              {{ c.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registerForm.get('cidade')?.hasError('required')">
+            Cidade é obrigatória
+          </mat-error>
+        </mat-form-field>
+      </div>
+
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Senha</mat-label>
         <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Sua senha">
@@ -81,14 +109,14 @@
       </mat-form-field>
 
       <div class="form-row"
-        style="margin-top: 20px; margin-bottom: 20px; display: flex; align-items: center; flex-direction: column;">
+        style="margin-top: 10px; margin-bottom: 20px; display: flex; align-items: center; flex-direction: column;">
         <span style="margin-bottom: 15px;">Foto de perfil</span>
         <div class="avatar-upload" (click)="fileInput.click()">
           <ng-container *ngIf="previewUrl; else placeholder">
             <img [src]="previewUrl" alt="Preview do avatar" class="avatar-preview">
           </ng-container>
           <ng-template #placeholder>
-            
+
           </ng-template>
           <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
         </div>
