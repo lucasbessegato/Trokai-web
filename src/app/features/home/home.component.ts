@@ -16,8 +16,10 @@ export class HomeComponent implements OnInit {
   }
 
   onGetStarted(): void {
-    console.log('Get Started button clicked');
-    // Direciona para a página de login
+    this.router.navigate(['/auth/register']);
+  }
+
+  login(): void {
     this.router.navigate(['/auth/login']);
   }
 }
