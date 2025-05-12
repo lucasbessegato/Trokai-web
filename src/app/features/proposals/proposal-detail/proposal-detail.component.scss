@@ -6,18 +6,18 @@
 
 .back-link {
   margin-bottom: 16px;
-  
+
   a {
     display: inline-flex;
     align-items: center;
     color: #3f51b5;
     text-decoration: none;
     font-weight: 500;
-    
+
     mat-icon {
       margin-right: 4px;
     }
-    
+
     &:hover {
       text-decoration: underline;
     }
@@ -39,40 +39,40 @@
   margin-bottom: 24px;
   padding-bottom: 16px;
   border-bottom: 1px solid #f0f0f0;
-  
+
   h1 {
     margin: 0;
     font-size: 1.5rem;
     font-weight: 600;
     color: #212121;
   }
-  
+
   .proposal-status-badge {
     padding: 6px 12px;
     border-radius: 16px;
     font-size: 0.9rem;
     font-weight: 500;
-    
+
     &.status-pending {
       background-color: #e3f2fd;
       color: #1976d2;
     }
-    
+
     &.status-accepted {
       background-color: #e8f5e9;
       color: #43a047;
     }
-    
+
     &.status-rejected {
       background-color: #ffebee;
       color: #e53935;
     }
-    
+
     &.status-completed {
       background-color: #e0f2f1;
       color: #00897b;
     }
-    
+
     &.status-canceled {
       background-color: #f5f5f5;
       color: #757575;
@@ -84,29 +84,29 @@
   display: flex;
   align-items: center;
   margin-bottom: 24px;
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 16px;
   }
-  
+
   .product-card {
     flex: 1;
     display: flex;
     flex-direction: column;
-    
+
     .product-image {
       margin-bottom: 12px;
       border-radius: 8px;
       overflow: hidden;
-      
+
       img {
         width: 100%;
         height: 200px;
         object-fit: cover;
       }
     }
-    
+
     .product-info {
       h2 {
         margin: 0 0 12px;
@@ -114,12 +114,12 @@
         font-weight: 500;
         color: #212121;
       }
-      
+
       .owner-info {
         display: flex;
         align-items: center;
         margin: 0;
-        
+
         .owner-avatar {
           width: 24px;
           height: 24px;
@@ -127,7 +127,7 @@
           margin-right: 8px;
           object-fit: cover;
         }
-        
+
         span {
           font-size: 0.9rem;
           margin-right: 8px;
@@ -136,20 +136,20 @@
       }
     }
   }
-  
+
   .exchange-icon {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 24px;
-    
+
     mat-icon {
       font-size: 32px;
       width: 32px;
       height: 32px;
       color: #3f51b5;
     }
-    
+
     @media (max-width: 768px) {
       transform: rotate(90deg);
       padding: 8px 0;
@@ -162,17 +162,17 @@
   padding: 16px;
   background-color: #f9f9f9;
   border-radius: 8px;
-  
+
   .proposal-message {
     margin-bottom: 16px;
-    
+
     h3 {
       font-size: 1rem;
       font-weight: 500;
       color: #424242;
       margin-bottom: 8px;
     }
-    
+
     p {
       margin: 0;
       color: #616161;
@@ -180,16 +180,16 @@
       white-space: pre-line;
     }
   }
-  
+
   .proposal-metadata {
     color: #757575;
     font-size: 0.9rem;
-    
+
     .meta-item {
       display: flex;
       align-items: center;
       margin: 0 0 4px;
-      
+
       mat-icon {
         font-size: 16px;
         width: 16px;
@@ -205,26 +205,37 @@
   flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 24px;
-  
+
   @media (max-width: 576px) {
     flex-direction: column;
   }
-  
+
   .action-buttons {
     display: flex;
     gap: 12px;
     flex: 1;
-    
+
     @media (max-width: 576px) {
       flex-direction: column;
     }
   }
-  
+
+  .fa-whatsapp{
+    font-size: 20px;
+    margin-right: 6px;
+  }
+
   button {
     display: flex;
     align-items: center;
+    border: 2px solid #3f51b5;
+    color: #3f51b5;
+    display: flex;
+    align-items: center;
+    background: white;
+    height: 45px;
     padding: 8px 16px;
-    
+
     mat-icon {
       margin-right: 8px;
     }
@@ -237,28 +248,28 @@
   padding: 16px;
   border-radius: 8px;
   background-color: #f5f5f5;
-  
+
   .success-icon {
     color: #4caf50;
     font-size: 24px;
     margin-right: 16px;
   }
-  
+
   .rejected-icon {
     color: #f44336;
     font-size: 24px;
     margin-right: 16px;
   }
-  
+
   .status-message {
     flex: 1;
-    
+
     h3 {
       margin: 0 0 8px;
       font-size: 1.1rem;
       font-weight: 500;
     }
-    
+
     p {
       margin: 0;
       color: #616161;
@@ -272,16 +283,18 @@
   align-items: center;
   justify-content: center;
   min-height: 400px;
-  
+
   p {
     margin-top: 16px;
     color: #757575;
   }
 }
-.ex-buttons-container{
+
+.ex-buttons-container {
   display: flex;
 }
-.ex-buttons-container button{
+
+.ex-buttons-container button {
   margin-right: 12px;
   flex: 1;
 }

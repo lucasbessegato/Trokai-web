@@ -34,7 +34,7 @@
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -277,7 +277,7 @@
   
   .product-actions {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 16px;
     
     @media (max-width: 576px) {
@@ -306,6 +306,9 @@
       
       &.contact-btn {
         border: 2px solid #3f51b5;
+        color: #3f51b5;
+        display: flex;
+        align-items: center;
         
         &:hover {
           background: rgba(63, 81, 181, 0.05);
@@ -313,6 +316,11 @@
       }
     }
   }
+}
+
+.fa-whatsapp{
+  font-size: 20px;
+  margin-right: 6px;
 }
 
 .exchange-form-container {

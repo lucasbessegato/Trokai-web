@@ -98,12 +98,12 @@
             <mat-icon>done_all</mat-icon> Concluir Troca
           </button>
         </div>
-        <button
-          mat-flat-button
-          color="accent"
+        <button class="contact-btn" 
+          mat-stroked-button color="accent"
           (click)="contactViaWhatsApp()"
           *ngIf="proposal.status !== ProposalStatus.REJECTED">
-          <mat-icon>chat</mat-icon> Contatar via WhatsApp
+           <i class="fa-brands fa-whatsapp"></i>
+            Contatar via WhatsApp
         </button>
       </div>
       
