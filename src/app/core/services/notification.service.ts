@@ -20,7 +20,7 @@ export class NotificationService {
     }
     const userNotifications = this.notifications
       .filter(n => n.user.id === currentUser.id)
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      .sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
     return of(userNotifications).pipe(delay(300));
   }
 
@@ -82,7 +82,7 @@ export class NotificationService {
       title: data.title,
       message: data.message,
       read: false,
-      createdAt: new Date(),
+      created_at: new Date(),
       relatedId: data.relatedId,
       linkTo: data.linkTo
     };

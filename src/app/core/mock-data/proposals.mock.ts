@@ -19,7 +19,7 @@ export const proposalsMock: Proposal[] = [
     toUserReputationLevel: 3,
     message: 'Olá John! Estou interessado no seu fone de ouvido. Meu relógio está em ótimo estado e acho que seria uma troca justa. O que você acha?',
     status: ProposalStatus.PENDING,
-    createdAt: new Date('2023-06-20'),
+    created_at: new Date('2023-06-20'),
     updatedAt: new Date('2023-06-20')
   },
   {
@@ -40,7 +40,7 @@ export const proposalsMock: Proposal[] = [
     toUserReputationLevel: 4,
     message: 'Oi Maria! Adorei seu kit de maquiagem e gostaria de propor uma troca pelo meu kit de skincare. Os produtos são de ótima qualidade e combinam muito com maquiagem.',
     status: ProposalStatus.ACCEPTED,
-    createdAt: new Date('2023-06-22'),
+    created_at: new Date('2023-06-22'),
     updatedAt: new Date('2023-06-23')
   },
   {
@@ -61,7 +61,7 @@ export const proposalsMock: Proposal[] = [
     toUserReputationLevel: 2,
     message: 'Olá Lucas! Vi que você tem um tênis para corrida e gostaria de propor uma troca pela minha raquete de tênis que está em excelente estado. Sou tenista amador e estou mudando para corrida agora.',
     status: ProposalStatus.REJECTED,
-    createdAt: new Date('2023-06-25'),
+    created_at: new Date('2023-06-25'),
     updatedAt: new Date('2023-06-26')
   },
   {
@@ -82,7 +82,7 @@ export const proposalsMock: Proposal[] = [
     toUserReputationLevel: 1,
     message: 'Oi Ana! Adorei seu caderno de anotações e gostaria de propor uma troca pela minha luminária de mesa. Ela é articulada e perfeita para estudos e leitura!',
     status: ProposalStatus.COMPLETED,
-    createdAt: new Date('2023-06-28'),
+    created_at: new Date('2023-06-28'),
     updatedAt: new Date('2023-06-30')
   },
   {
@@ -103,7 +103,7 @@ export const proposalsMock: Proposal[] = [
     toUserReputationLevel: 4,
     message: 'Olá Maria! Minha namorada se interessou pelo seu vestido de festa e gostaria de oferecer minha jaqueta jeans em troca. Ela está em perfeito estado e é de marca.',
     status: ProposalStatus.PENDING,
-    createdAt: new Date('2023-07-02'),
+    created_at: new Date('2023-07-02'),
     updatedAt: new Date('2023-07-02')
   },
   {
@@ -124,7 +124,7 @@ export const proposalsMock: Proposal[] = [
     toUserReputationLevel: 2,
     message: 'Olá Pedro! Estou interessada na sua câmera digital e gostaria de propor uma troca pelo meu tablet. O tablet está em perfeito estado, com poucos meses de uso.',
     status: ProposalStatus.ACCEPTED,
-    createdAt: new Date('2023-07-05'),
+    created_at: new Date('2023-07-05'),
     updatedAt: new Date('2023-07-06')
   }
 ];

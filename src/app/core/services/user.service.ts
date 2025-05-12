@@ -59,7 +59,7 @@ export class UserService {
       toUser: targetUser,
       rating,
       comment,
-      createdAt: new Date()
+      created_at: new Date()
     };
     this.ratings.push(newRating);
 
@@ -68,16 +68,16 @@ export class UserService {
     const totalScore = userRatings.reduce((acc, r) => acc + r.rating, 0);
     const averageScore = totalScore / userRatings.length;
     const userIdx = this.users.findIndex(u => u.id === userId);
-    this.users[userIdx].reputationScore = Math.round(averageScore * 10) / 10;
+    this.users[userIdx].reputation_score = Math.round(averageScore * 10) / 10;
 
     if (userRatings.length >= 10 && averageScore >= 4.5) {
-      this.users[userIdx].reputationLevel = 4; // Mestre
+      this.users[userIdx].reputation_level = 4; // Mestre
     } else if (userRatings.length >= 5 && averageScore >= 4) {
-      this.users[userIdx].reputationLevel = 3; // Expert
+      this.users[userIdx].reputation_level = 3; // Expert
     } else if (userRatings.length >= 3 && averageScore >= 3) {
-      this.users[userIdx].reputationLevel = 2; // Intermediário
+      this.users[userIdx].reputation_level = 2; // Intermediário
     } else {
-      this.users[userIdx].reputationLevel = 1; // Iniciante
+      this.users[userIdx].reputation_level = 1; // Iniciante
     }
 
     return of(newRating).pipe(delay(500));

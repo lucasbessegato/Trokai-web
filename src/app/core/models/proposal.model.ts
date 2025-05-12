@@ -17,6 +17,6 @@ export interface Proposal {
   toUser: User;                    // relacionamento com User
   message: string;
   status: ProposalStatus;
-  createdAt: Date;
+  created_at: Date;
   updatedAt: Date;
 }

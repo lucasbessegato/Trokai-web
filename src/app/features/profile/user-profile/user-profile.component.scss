@@ -27,6 +27,20 @@
   object-fit: cover;
 }
 
+.fas{
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+.info{
+  color: #303f9f;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  text-decoration: none;
+  margin-top: 16px;
+}
+
 .profile-info {
   padding: 60px 24px 20px;
 }

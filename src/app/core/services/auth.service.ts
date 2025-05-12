@@ -69,9 +69,9 @@ export class AuthService {
       email: userData.email ?? '',
       fullName: userData.fullName ?? '',
       avatar: userData.avatar ?? 'https://images.unsplash.com/photo-1630910561339-4e22c7150093',
-      reputationLevel: 1,
-      reputationScore: 0,
-      createdAt: new Date(),
+      reputation_level: 1,
+      reputation_score: 0,
+      created_at: new Date(),
       products: [],        // Interface agora espera Product[]
       city: userData.city ?? '',
       state: userData.state ?? '',

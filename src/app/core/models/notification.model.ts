@@ -7,7 +7,7 @@ export interface Notification {
   title: string;
   message: string;
   read: boolean;
-  createdAt: Date;
+  created_at: Date;
   linkTo?: string;
   relatedId?: number;
 }

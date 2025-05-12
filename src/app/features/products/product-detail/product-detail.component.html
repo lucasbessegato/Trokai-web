@@ -47,7 +47,7 @@
           <img [src]="product.user.avatar" [alt]="product.user.fullName" class="owner-avatar">
           <div class="owner-details">
             <span class="owner-name">{{ product.user.fullName }}</span>
-            <app-reputation-badge [level]="product.user.reputationLevel"></app-reputation-badge>
+            <app-reputation-badge [level]="product.user.reputation_level"></app-reputation-badge>
           </div>
         </div>
 
@@ -63,10 +63,10 @@
         <div class="product-meta">
           <span class="meta-item">
             <mat-icon>event</mat-icon>
-            Anunciado em {{ product.createdAt | date:'dd/MM/yyyy' }}
+            Anunciado em {{ product.created_at | date:'dd/MM/yyyy' }}
           </span>
 
-          <span class="meta-item" *ngIf="product.updatedAt !== product.createdAt">
+          <span class="meta-item" *ngIf="product.updatedAt !== product.created_at">
             <mat-icon>update</mat-icon>
             Atualizado em {{ product.updatedAt | date:'dd/MM/yyyy' }}
           </span>

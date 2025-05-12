@@ -6,9 +6,9 @@ export interface User {
   email: string;
   fullName: string;
   avatar: string;
-  reputationLevel: number;
-  reputationScore: number;
-  createdAt: Date;
+  reputation_level: number;
+  reputation_score: number;
+  created_at: Date;
   city?: string;
   state?: string;
   phone?: string;
@@ -21,5 +21,5 @@ export interface UserRating {
   toUser: User;                    // relacionamento com User
   rating: number;                  // 1–5
   comment: string;
-  createdAt: Date;
+  created_at: Date;
 }

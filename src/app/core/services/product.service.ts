@@ -56,7 +56,7 @@ export class ProductService {
       user: currentUser,
       acceptableExchanges: productData.acceptableExchanges ?? [],
       status: ProductStatus.AVAILABLE,
-      createdAt: new Date(),
+      created_at: new Date(),
       updatedAt: new Date()
     };
 

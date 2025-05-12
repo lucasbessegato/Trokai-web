@@ -32,13 +32,13 @@
         <div class="notification-content">
           <div class="notification-header">
             <h3>{{ notification.title }}</h3>
-            <span class="notification-time">{{ notification.createdAt | date:'shortTime' }}</span>
+            <span class="notification-time">{{ notification.created_at | date:'shortTime' }}</span>
           </div>
           
           <p>{{ notification.message }}</p>
           
           <div class="notification-meta">
-            <span class="notification-date">{{ notification.createdAt | date:'dd/MM/yyyy' }}</span>
+            <span class="notification-date">{{ notification.created_at | date:'dd/MM/yyyy' }}</span>
             
             <div class="notification-actions">
               <button 

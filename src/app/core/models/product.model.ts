@@ -22,7 +22,7 @@ export interface Product {
   user: User;                      // relacionamento com User (dono)
   acceptableExchanges: string[];
   status: ProductStatus;
-  createdAt: Date;
+  created_at: Date;
   updatedAt: Date;
 }
 

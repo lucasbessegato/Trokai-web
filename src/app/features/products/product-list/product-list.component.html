@@ -114,10 +114,10 @@
                   <div class="owner-details">
                     <span class="owner-name">{{ product.user.fullName }}</span>
                     <div class="reputation-stars">
-                      <span class="star filled" *ngFor="let star of getReputationStars(product.user.reputationLevel)">
+                      <span class="star filled" *ngFor="let star of getReputationStars(product.user.reputation_level)">
                         ★
                       </span>
-                      <span class="star" *ngFor="let star of getEmptyStars(product.user.reputationLevel)">
+                      <span class="star" *ngFor="let star of getEmptyStars(product.user.reputation_level)">
                         ☆
                       </span>
                     </div>

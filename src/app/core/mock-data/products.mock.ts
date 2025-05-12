@@ -12,7 +12,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 3,
     acceptableExchanges: ['Smartwatch', 'Caixa de som portátil', 'Teclado mecânico'],
-    createdAt: new Date('2023-05-10'),
+    created_at: new Date('2023-05-10'),
     updatedAt: new Date('2023-05-10'),
     status: ProductStatus.AVAILABLE
   },
@@ -27,7 +27,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 4,
     acceptableExchanges: ['Perfumes', 'Produtos para cabelo', 'Acessórios femininos'],
-    createdAt: new Date('2023-05-15'),
+    created_at: new Date('2023-05-15'),
     updatedAt: new Date('2023-05-15'),
     status: ProductStatus.AVAILABLE
   },
@@ -42,7 +42,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 2,
     acceptableExchanges: ['Óculos de sol', 'Fone de ouvido', 'Smartwatch'],
-    createdAt: new Date('2023-05-20'),
+    created_at: new Date('2023-05-20'),
     updatedAt: new Date('2023-05-20'),
     status: ProductStatus.AVAILABLE
   },
@@ -57,7 +57,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 1,
     acceptableExchanges: ['Canetas', 'Livros', 'Marca-textos'],
-    createdAt: new Date('2023-05-22'),
+    created_at: new Date('2023-05-22'),
     updatedAt: new Date('2023-05-22'),
     status: ProductStatus.AVAILABLE
   },
@@ -72,7 +72,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 3,
     acceptableExchanges: ['Bola de basquete', 'Luvas de boxe', 'Kettlebell'],
-    createdAt: new Date('2023-05-25'),
+    created_at: new Date('2023-05-25'),
     updatedAt: new Date('2023-05-25'),
     status: ProductStatus.AVAILABLE
   },
@@ -87,7 +87,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 4,
     acceptableExchanges: ['Bolsa de festa', 'Sapatos femininos', 'Acessórios'],
-    createdAt: new Date('2023-05-27'),
+    created_at: new Date('2023-05-27'),
     updatedAt: new Date('2023-05-27'),
     status: ProductStatus.AVAILABLE
   },
@@ -102,7 +102,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 2,
     acceptableExchanges: ['Tablet', 'Tripé para câmera', 'Fone de ouvido bluetooth'],
-    createdAt: new Date('2023-05-30'),
+    created_at: new Date('2023-05-30'),
     updatedAt: new Date('2023-05-30'),
     status: ProductStatus.AVAILABLE
   },
@@ -117,7 +117,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 1,
     acceptableExchanges: ['Maquiagem', 'Perfumes', 'Produtos para cabelo'],
-    createdAt: new Date('2023-06-02'),
+    created_at: new Date('2023-06-02'),
     updatedAt: new Date('2023-06-02'),
     status: ProductStatus.AVAILABLE
   },
@@ -132,7 +132,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 3,
     acceptableExchanges: ['Relógio', 'Bolsa', 'Carteira em couro'],
-    createdAt: new Date('2023-06-05'),
+    created_at: new Date('2023-06-05'),
     updatedAt: new Date('2023-06-05'),
     status: ProductStatus.AVAILABLE
   },
@@ -147,7 +147,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 4,
     acceptableExchanges: ['Organizadores de mesa', 'Porta-canetas', 'Agenda'],
-    createdAt: new Date('2023-06-08'),
+    created_at: new Date('2023-06-08'),
     updatedAt: new Date('2023-06-08'),
     status: ProductStatus.AVAILABLE
   },
@@ -162,7 +162,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 2,
     acceptableExchanges: ['Camiseta esportiva', 'Bermuda fitness', 'Garrafa térmica'],
-    createdAt: new Date('2023-06-10'),
+    created_at: new Date('2023-06-10'),
     updatedAt: new Date('2023-06-10'),
     status: ProductStatus.AVAILABLE
   },
@@ -177,7 +177,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 2,
     acceptableExchanges: ['Camiseta', 'Calça jeans', 'Tênis casual'],
-    createdAt: new Date('2023-06-12'),
+    created_at: new Date('2023-06-12'),
     updatedAt: new Date('2023-06-12'),
     status: ProductStatus.AVAILABLE
   },
@@ -192,7 +192,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 3,
     acceptableExchanges: ['Fone de ouvido bluetooth', 'Smartwatch', 'E-reader'],
-    createdAt: new Date('2023-06-15'),
+    created_at: new Date('2023-06-15'),
     updatedAt: new Date('2023-06-15'),
     status: ProductStatus.AVAILABLE
   },
@@ -207,7 +207,7 @@ export const productsMock: Product[] = [
     ownerAvatar: 'assets/images/placeholder.svg',
     ownerReputationLevel: 3,
     acceptableExchanges: ['Paleta de sombras', 'Batom', 'Produtos para sobrancelha'],
-    createdAt: new Date('2023-06-18'),
+    created_at: new Date('2023-06-18'),
     updatedAt: new Date('2023-06-18'),
     status: ProductStatus.RESERVED
   }

@@ -83,7 +83,7 @@ export class ProposalService {
       toUser,
       message: data.message,
       status: ProposalStatus.PENDING,
-      createdAt: new Date(),
+      created_at: new Date(),
       updatedAt: new Date()
     };
     this.proposals.push(newProposal);

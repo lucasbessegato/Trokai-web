@@ -13,12 +13,12 @@ export const categoriesMock: Category[] = [
 ];
 
 export const usersMock: User[] = [
-    { id: 1, username: 'johndoe', email: 'johndoe@example.com', fullName: 'John Doe', avatar: 'assets/images/placeholder.svg', reputationLevel: 3, reputationScore: 120, createdAt: new Date('2023-05-01') },
-    { id: 2, username: 'mariasantos', email: 'maria.santos@example.com', fullName: 'Maria Santos', avatar: 'assets/images/placeholder.svg', reputationLevel: 4, reputationScore: 200, createdAt: new Date('2023-05-05') },
-    { id: 3, username: 'pedrosilva', email: 'pedro.silva@example.com', fullName: 'Pedro Silva', avatar: 'assets/images/placeholder.svg', reputationLevel: 2, reputationScore: 80, createdAt: new Date('2023-05-10') },
-    { id: 4, username: 'anamartins', email: 'ana.martins@example.com', fullName: 'Ana Martins', avatar: 'assets/images/placeholder.svg', reputationLevel: 1, reputationScore: 50, createdAt: new Date('2023-05-15') },
-    { id: 5, username: 'lucasoliveira', email: 'lucas.oliveira@example.com', fullName: 'Lucas Oliveira', avatar: 'assets/images/placeholder.svg', reputationLevel: 2, reputationScore: 90, createdAt: new Date('2023-05-20') },
-    { id: 6, username: 'carolinaferreira', email: 'carolina.ferreira@example.com', fullName: 'Carolina Ferreira', avatar: 'assets/images/placeholder.svg', reputationLevel: 3, reputationScore: 150, createdAt: new Date('2023-05-25') },
+    { id: 1, username: 'johndoe', email: 'johndoe@example.com', fullName: 'John Doe', avatar: 'assets/images/placeholder.svg', reputation_level: 3, reputation_score: 120, created_at: new Date('2023-05-01') },
+    { id: 2, username: 'mariasantos', email: 'maria.santos@example.com', fullName: 'Maria Santos', avatar: 'assets/images/placeholder.svg', reputation_level: 4, reputation_score: 200, created_at: new Date('2023-05-05') },
+    { id: 3, username: 'pedrosilva', email: 'pedro.silva@example.com', fullName: 'Pedro Silva', avatar: 'assets/images/placeholder.svg', reputation_level: 2, reputation_score: 80, created_at: new Date('2023-05-10') },
+    { id: 4, username: 'anamartins', email: 'ana.martins@example.com', fullName: 'Ana Martins', avatar: 'assets/images/placeholder.svg', reputation_level: 1, reputation_score: 50, created_at: new Date('2023-05-15') },
+    { id: 5, username: 'lucasoliveira', email: 'lucas.oliveira@example.com', fullName: 'Lucas Oliveira', avatar: 'assets/images/placeholder.svg', reputation_level: 2, reputation_score: 90, created_at: new Date('2023-05-20') },
+    { id: 6, username: 'carolinaferreira', email: 'carolina.ferreira@example.com', fullName: 'Carolina Ferreira', avatar: 'assets/images/placeholder.svg', reputation_level: 3, reputation_score: 150, created_at: new Date('2023-05-25') },
 ];
 
 export const notificationsMock: Notification[] = [
@@ -29,7 +29,7 @@ export const notificationsMock: Notification[] = [
         title: 'Nova proposta de troca',
         message: 'Pedro Silva ofereceu um Relógio de Pulso pelo seu Fone de Ouvido Bluetooth',
         read: false,
-        createdAt: new Date('2023-06-20'),
+        created_at: new Date('2023-06-20'),
         relatedId: 1,
         linkTo: '/proposals/1',
     },
@@ -40,7 +40,7 @@ export const notificationsMock: Notification[] = [
         title: 'Nova proposta de troca',
         message: 'Ana Martins ofereceu um Kit de Skincare pelo seu Kit de Maquiagem Novo',
         read: true,
-        createdAt: new Date('2023-06-22'),
+        created_at: new Date('2023-06-22'),
         relatedId: 2,
         linkTo: '/proposals/2',
     },
@@ -51,7 +51,7 @@ export const notificationsMock: Notification[] = [
         title: 'Nova proposta de troca',
         message: 'Lucas Oliveira ofereceu uma Jaqueta Jeans pelo seu Vestido de Festa',
         read: false,
-        createdAt: new Date('2023-07-02'),
+        created_at: new Date('2023-07-02'),
         relatedId: 5,
         linkTo: '/proposals/5',
     },
@@ -68,7 +68,7 @@ export const productsMock: Product[] = [
         user: usersMock[0],
         acceptableExchanges: ['Smartwatch', 'Caixa de som portátil', 'Teclado mecânico'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-05-10'),
+        created_at: new Date('2023-05-10'),
         updatedAt: new Date('2023-05-10'),
         images: []
     },
@@ -81,7 +81,7 @@ export const productsMock: Product[] = [
         user: usersMock[1],
         acceptableExchanges: ['Perfumes', 'Produtos para cabelo', 'Acessórios femininos'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-05-15'),
+        created_at: new Date('2023-05-15'),
         updatedAt: new Date('2023-05-15'),
         images: []
     },
@@ -94,7 +94,7 @@ export const productsMock: Product[] = [
         user: usersMock[1],
         acceptableExchanges: ['Óculos de sol', 'Fone de ouvido', 'Smartwatch'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-05-20'),
+        created_at: new Date('2023-05-20'),
         updatedAt: new Date('2023-05-20'),
         images: []
     },
@@ -107,7 +107,7 @@ export const productsMock: Product[] = [
         user: usersMock[1],
         acceptableExchanges: ['Canetas', 'Livros', 'Marca-textos'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-05-22'),
+        created_at: new Date('2023-05-22'),
         updatedAt: new Date('2023-05-22'),
         images: []
     },
@@ -120,7 +120,7 @@ export const productsMock: Product[] = [
         user: usersMock[1],
         acceptableExchanges: ['Bola de basquete', 'Luvas de boxe', 'Kettlebell'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-05-25'),
+        created_at: new Date('2023-05-25'),
         updatedAt: new Date('2023-05-25'),
         images: []
     },
@@ -133,7 +133,7 @@ export const productsMock: Product[] = [
         user: usersMock[0],
         acceptableExchanges: ['Bolsa de festa', 'Sapatos femininos', 'Acessórios'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-05-27'),
+        created_at: new Date('2023-05-27'),
         updatedAt: new Date('2023-05-27'),
         images: []
     },
@@ -146,7 +146,7 @@ export const productsMock: Product[] = [
         user: usersMock[2],
         acceptableExchanges: ['Tablet', 'Tripé para câmera', 'Fone de ouvido bluetooth'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-05-30'),
+        created_at: new Date('2023-05-30'),
         updatedAt: new Date('2023-05-30'),
         images: []
     },
@@ -159,7 +159,7 @@ export const productsMock: Product[] = [
         user: usersMock[3],
         acceptableExchanges: ['Maquiagem', 'Perfumes', 'Produtos para cabelo'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-06-02'),
+        created_at: new Date('2023-06-02'),
         updatedAt: new Date('2023-06-02'),
         images: []
     },
@@ -172,7 +172,7 @@ export const productsMock: Product[] = [
         user: usersMock[0],
         acceptableExchanges: ['Relógio', 'Bolsa', 'Carteira em couro'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-06-05'),
+        created_at: new Date('2023-06-05'),
         updatedAt: new Date('2023-06-05'),
         images: []
     },
@@ -185,7 +185,7 @@ export const productsMock: Product[] = [
         user: usersMock[1],
         acceptableExchanges: ['Organizadores de mesa', 'Porta-canetas', 'Agenda'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-06-08'),
+        created_at: new Date('2023-06-08'),
         updatedAt: new Date('2023-06-08'),
         images: []
     },
@@ -198,7 +198,7 @@ export const productsMock: Product[] = [
         user: usersMock[4],
         acceptableExchanges: ['Camiseta esportiva', 'Bermuda fitness', 'Garrafa térmica'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-06-10'),
+        created_at: new Date('2023-06-10'),
         updatedAt: new Date('2023-06-10'),
         images: []
     },
@@ -211,7 +211,7 @@ export const productsMock: Product[] = [
         user: usersMock[4],
         acceptableExchanges: ['Camiseta', 'Calça jeans', 'Tênis casual'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-06-12'),
+        created_at: new Date('2023-06-12'),
         updatedAt: new Date('2023-06-12'),
         images: []
     },
@@ -224,7 +224,7 @@ export const productsMock: Product[] = [
         user: usersMock[5],
         acceptableExchanges: ['Fone de ouvido bluetooth', 'Smartwatch', 'E-reader'],
         status: ProductStatus.AVAILABLE,
-        createdAt: new Date('2023-06-15'),
+        created_at: new Date('2023-06-15'),
         updatedAt: new Date('2023-06-15'),
         images: []
     },
@@ -237,7 +237,7 @@ export const productsMock: Product[] = [
         user: usersMock[5],
         acceptableExchanges: ['Paleta de sombras', 'Batom', 'Produtos para sobrancelha'],
         status: ProductStatus.RESERVED,
-        createdAt: new Date('2023-06-18'),
+        created_at: new Date('2023-06-18'),
         updatedAt: new Date('2023-06-18'),
         images: []
     }
@@ -252,7 +252,7 @@ export const proposalsMock: Proposal[] = [
     toUser: usersMock.find(u => u.id === 1)!,
     message: 'Olá John! Estou interessado no seu fone de ouvido. Meu relógio está em ótimo estado e acho que seria uma troca justa. O que você acha?',
     status: ProposalStatus.PENDING,
-    createdAt: new Date('2023-06-20'),
+    created_at: new Date('2023-06-20'),
     updatedAt: new Date('2023-06-20'),
   },
   {
@@ -263,7 +263,7 @@ export const proposalsMock: Proposal[] = [
     toUser: usersMock.find(u => u.id === 2)!,
     message: 'Oi Maria! Adorei seu kit de maquiagem e gostaria de propor uma troca pelo meu kit de skincare. Os produtos são de ótima qualidade e combinam muito com maquiagem.',
     status: ProposalStatus.ACCEPTED,
-    createdAt: new Date('2023-06-22'),
+    created_at: new Date('2023-06-22'),
     updatedAt: new Date('2023-06-23'),
   },
   {
@@ -274,7 +274,7 @@ export const proposalsMock: Proposal[] = [
     toUser: usersMock.find(u => u.id === 5)!,
     message: 'Olá Lucas! Vi que você tem um tênis para corrida e gostaria de propor uma troca pela minha raquete de tênis que está em excelente estado. Sou tenista amador e estou mudando para corrida agora.',
     status: ProposalStatus.REJECTED,
-    createdAt: new Date('2023-06-25'),
+    created_at: new Date('2023-06-25'),
     updatedAt: new Date('2023-06-26'),
   },
   {
@@ -285,7 +285,7 @@ export const proposalsMock: Proposal[] = [
     toUser: usersMock.find(u => u.id === 4)!,
     message: 'Oi Ana! Adorei seu caderno de anotações e gostaria de propor uma troca pela minha luminária de mesa. Ela é articulada e perfeita para estudos e leitura!',
     status: ProposalStatus.COMPLETED,
-    createdAt: new Date('2023-06-28'),
+    created_at: new Date('2023-06-28'),
     updatedAt: new Date('2023-06-30'),
   },
 ];

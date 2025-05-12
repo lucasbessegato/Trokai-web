@@ -84,6 +84,7 @@ export class UserProfileComponent implements OnInit {
     this.isLoading = true;
     
     this.user = this.authService.getCurrentUser();
+    console.log(JSON.stringify(this.user))
     
     if (!this.user) {
       this.router.navigate(['/auth/login']);
@@ -91,7 +92,7 @@ export class UserProfileComponent implements OnInit {
     }
     
     this.selectedAvatar = this.user.avatar;
-    this.reputationBadgeInfo = this.userService.getReputationBadgeInfo(this.user.reputationLevel);
+    this.reputationBadgeInfo = this.userService.getReputationBadgeInfo(this.user.reputation_level);
     
     this.profileForm.patchValue({
       fullName: this.user.fullName,

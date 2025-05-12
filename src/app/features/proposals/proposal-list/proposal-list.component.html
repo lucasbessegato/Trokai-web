@@ -16,7 +16,7 @@
                   <span class="proposal-status" [ngClass]="getStatusClass(proposal.status)">
                     {{ getStatusText(proposal.status) }}
                   </span>
-                  <span class="proposal-date">{{ proposal.createdAt | date:'dd/MM/yyyy' }}</span>
+                  <span class="proposal-date">{{ proposal.created_at | date:'dd/MM/yyyy' }}</span>
                 </div>
 
                 <div class="exchange-products">
@@ -47,7 +47,7 @@
                   <img [src]="proposal.fromUser.avatar" [alt]="proposal.fromUser.fullName" class="user-avatar">
                   <div class="user-info">
                     <span class="user-name">{{ proposal.fromUser.fullName }}</span>
-                    <app-reputation-badge [level]="proposal.fromUser.reputationLevel" [small]="true">
+                    <app-reputation-badge [level]="proposal.fromUser.reputation_level" [small]="true">
                     </app-reputation-badge>
                   </div>
                 </div>
@@ -112,7 +112,7 @@
                   <span class="proposal-status" [ngClass]="getStatusClass(proposal.status)">
                     {{ getStatusText(proposal.status) }}
                   </span>
-                  <span class="proposal-date">{{ proposal.createdAt | date:'dd/MM/yyyy' }}</span>
+                  <span class="proposal-date">{{ proposal.created_at | date:'dd/MM/yyyy' }}</span>
                 </div>
 
                 <div class="exchange-products">
@@ -143,7 +143,7 @@
                   <img [src]="proposal.toUser.avatar" [alt]="proposal.toUser.fullName" class="user-avatar">
                   <div class="user-info">
                     <span class="user-name">{{ proposal.toUser.fullName }}</span>
-                    <app-reputation-badge [level]="proposal.toUser.reputationLevel" [small]="true">
+                    <app-reputation-badge [level]="proposal.toUser.reputation_level" [small]="true">
                     </app-reputation-badge>
                   </div>
                 </div>

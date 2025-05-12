@@ -32,7 +32,7 @@
                 class="owner-avatar">
               <span>{{ proposal.fromUser.fullName }}</span>
               <app-reputation-badge
-                [level]="proposal.fromUser.reputationLevel"
+                [level]="proposal.fromUser.reputation_level"
                 [small]="true">
               </app-reputation-badge>
             </p>
@@ -59,7 +59,7 @@
                 class="owner-avatar">
               <span>{{ proposal.toUser.fullName }}</span>
               <app-reputation-badge
-                [level]="proposal.toUser.reputationLevel"
+                [level]="proposal.toUser.reputation_level"
                 [small]="true">
               </app-reputation-badge>
             </p>
@@ -75,9 +75,9 @@
         <div class="proposal-metadata">
           <p class="meta-item">
             <mat-icon>event</mat-icon>
-            Enviada em {{ proposal.createdAt | date:'dd/MM/yyyy' }}
+            Enviada em {{ proposal.created_at | date:'dd/MM/yyyy' }}
           </p>
-          <p class="meta-item" *ngIf="proposal.updatedAt !== proposal.createdAt">
+          <p class="meta-item" *ngIf="proposal.updatedAt !== proposal.created_at">
             <mat-icon>update</mat-icon>
             Atualizada em {{ proposal.updatedAt | date:'dd/MM/yyyy' }}
           </p>

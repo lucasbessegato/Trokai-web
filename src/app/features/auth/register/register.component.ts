@@ -126,7 +126,7 @@ export class RegisterComponent implements OnInit {
       .register(fd)
       .subscribe({
         next: user => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/auth/login']);
           this.snackBar.open('Cadastro realizado com sucesso!', 'Fechar', {
             duration: 5000,
             panelClass: ['success-snackbar']
