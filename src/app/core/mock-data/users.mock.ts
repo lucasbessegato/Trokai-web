@@ -10,8 +10,8 @@ export const usersMock: User[] = [
     reputationLevel: 3,
     reputationScore: 4.2,
     createdAt: new Date('2023-01-15'),
-    bio: 'Entusiasta de tecnologia e produtos sustentáveis. Adoro trocar itens ao invés de comprar novos!',
-    location: 'São Paulo, SP',
+    city: 'São Paulo',
+    state: 'SP',
     phone: '11999887766',
     products: [1, 5, 9]
   },
@@ -24,8 +24,8 @@ export const usersMock: User[] = [
     reputationLevel: 4,
     reputationScore: 4.8,
     createdAt: new Date('2022-11-22'),
-    bio: 'Amo ler, trocar livros e acessórios. Sempre em busca de novos itens interessantes!',
-    location: 'Rio de Janeiro, RJ',
+    city: 'Rio de Janeiro',
+    state: 'RJ',
     phone: '21988776655',
     products: [2, 6, 10]
   },
@@ -38,8 +38,8 @@ export const usersMock: User[] = [
     reputationLevel: 2,
     reputationScore: 3.6,
     createdAt: new Date('2023-03-10'),
-    bio: 'Colecionador de gadgets e apaixonado por tecnologia. Estou sempre procurando itens para trocar.',
-    location: 'Belo Horizonte, MG',
+    city: 'Belo Horizonte',
+    state: 'MG',
     phone: '31977665544',
     products: [3, 7]
   },
@@ -52,8 +52,8 @@ export const usersMock: User[] = [
     reputationLevel: 1,
     reputationScore: 0,
     createdAt: new Date('2023-05-05'),
-    bio: 'Nova na plataforma! Adoro artigos feitos à mão e produtos para casa.',
-    location: 'Curitiba, PR',
+    city: 'Curitiba',
+    state: 'PR',
     phone: '41966554433',
     products: [4, 8]
   },
@@ -66,8 +66,8 @@ export const usersMock: User[] = [
     reputationLevel: 2,
     reputationScore: 3.2,
     createdAt: new Date('2023-02-20'),
-    bio: 'Gosto de esportes e eletrônicos. Procuro sempre itens em bom estado para trocar.',
-    location: 'Salvador, BA',
+    city: 'Salvador',
+    state: 'BA',
     phone: '71955443322',
     products: [11, 12]
   },
@@ -80,8 +80,8 @@ export const usersMock: User[] = [
     reputationLevel: 3,
     reputationScore: 4.0,
     createdAt: new Date('2022-10-15'),
-    bio: 'Adoro moda, cosméticos e decoração. Busco sempre produtos interessantes para trocar!',
-    location: 'Fortaleza, CE',
+    city: 'Fortaleza',
+    state: 'CE',
     phone: '85944332211',
     products: [13, 14]
   }

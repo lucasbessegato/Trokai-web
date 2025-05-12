@@ -74,8 +74,8 @@ export class UserProfileComponent implements OnInit {
       fullName: ['', [Validators.required, Validators.minLength(3)]],
       username: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9_-]*$')]],
       email: [{ value: '', disabled: true }],
-      bio: ['', [Validators.maxLength(500)]],
-      location: [''],
+      city: [''],
+      state: [''],
       phone: ['', [Validators.pattern('^[0-9]+$')]]
     });
   }
@@ -97,8 +97,8 @@ export class UserProfileComponent implements OnInit {
       fullName: this.user.fullName,
       username: this.user.username,
       email: this.user.email,
-      bio: this.user.bio || '',
-      location: this.user.location || '',
+      city: this.user.city || '',
+      state: this.user.state || '',
       phone: this.user.phone || ''
     });
     
@@ -188,10 +188,5 @@ export class UserProfileComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
-  }
-  
-  formBioLength(): string {
-    const bioLength = this.profileForm.get('bio')?.value?.length || 0;
-    return `${bioLength}/500`;
   }
 }
