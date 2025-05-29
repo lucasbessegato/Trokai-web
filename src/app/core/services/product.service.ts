@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { Product, Category, ProductStatus } from '../models/product.model';
+import { Product, Category, ProductStatus, ProductImage } from '../models/product.model';
 import { productsMock } from '../mock-data/mocks';
 import { categoriesMock } from '../mock-data/mocks';
 import { AuthService } from './auth.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +15,18 @@ export class ProductService {
   private products: Product[] = productsMock;
   private categories: Category[] = categoriesMock;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private http: HttpClient) { }
 
   getAllProducts(): Observable<Product[]> {
-    return of(this.products).pipe(delay(500));
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${token}`
+    });
+
+    return this.http.get<Product[]>(
+      `${environment.apiUrl}/products/`,
+      { headers }
+    );
   }
 
   getProductsByCategory(categoryId: number): Observable<Product[]> {
@@ -25,10 +35,15 @@ export class ProductService {
   }
 
   getProductById(id: number): Observable<Product> {
-    const product = this.products.find(p => p.id === id);
-    return product
-      ? of(product).pipe(delay(300))
-      : throwError(() => new Error('Produto não encontrado'));
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${token}`
+    });
+
+    return this.http.get<Product>(
+      `${environment.apiUrl}/products/${id}/`,
+      { headers }
+    );
   }
 
   getProductsByUser(userId: number): Observable<Product[]> {
@@ -41,28 +56,40 @@ export class ProductService {
   }
 
   createProduct(productData: Partial<Product>): Observable<Product> {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      return throwError(() => new Error('Usuário não autenticado'));
-    }
-
-    const newProduct: Product = {
-      id: this.products.length + 1,
+    const newProduct = {
       title: productData.title ?? '',
       description: productData.description ?? '',
-      imageUrl: productData.imageUrl ?? '',
-      images: productData.images ?? [],
-      category: productData.category ?? this.categories[0],
-      user: currentUser,
-      acceptableExchanges: productData.acceptableExchanges ?? [],
+      category: productData.category ?? this.categories[0].id,
+      acceptable_exchanges: productData.acceptableExchanges ?? [],
       status: ProductStatus.AVAILABLE,
-      created_at: new Date(),
-      updatedAt: new Date()
     };
 
-    this.products.push(newProduct);
-    return of(newProduct).pipe(delay(800));
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${token}`
+    });
+
+    return this.http.post<Product>(
+      `${environment.apiUrl}/products/`,
+      newProduct,
+      { headers }
+    );
   }
+
+  uploadProductImage(productId: number, form: FormData): Observable<ProductImage> {
+    const token = this.authService.getToken();
+    return this.http.post<ProductImage>(
+      `${environment.apiUrl}/products/${productId}/images/`,
+      form,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Token ${token}`
+        })
+      }
+    );
+  }
+
+
 
   updateProductStatus(productId: number, status: ProductStatus): Observable<Product> {
     const idx = this.products.findIndex(p => p.id === productId);

@@ -122,4 +122,8 @@ export class AuthService {
     return this.http.get<Cidade[]>(`${this.locationUrl}/${estadoId}/municipios`)
       .pipe(map(cidades => cidades.sort((a, b) => a.nome.localeCompare(b.nome))));
   }
+
+  getToken() {
+    return localStorage.getItem('auth_token')
+  }
 }

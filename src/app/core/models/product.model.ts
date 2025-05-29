@@ -18,7 +18,7 @@ export interface Product {
   description: string;
   imageUrl: string;
   images?: ProductImage[];         // todas as imagens
-  category: Category;              // relacionamento com Category
+  category: any;              // relacionamento com Category
   user: User;                      // relacionamento com User (dono)
   acceptableExchanges: string[];
   status: ProductStatus;

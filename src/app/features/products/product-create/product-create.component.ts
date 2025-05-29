@@ -15,8 +15,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { forkJoin } from 'rxjs';
+import { switchMap, mapTo } from 'rxjs/operators';
+
 import { ProductService } from '../../../core/services/product.service';
-import { Category, ProductImage } from '../../../core/models/product.model';
+import { Category, ProductImage, ProductStatus } from '../../../core/models/product.model';
+
+interface UploadImage {
+  file: File;
+  isMain: boolean;
+  previewUrl: string;
+}
 
 @Component({
   selector: 'app-product-create',
@@ -42,31 +51,31 @@ export class ProductCreateComponent implements OnInit {
   categories: Category[] = [];
   isLoading = false;
   isSubmitting = false;
-  
+
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   acceptableExchanges: string[] = [];
-  
+
   // Gerenciamento de imagens
-  uploadedImages: ProductImage[] = [];
+  uploadedImages: UploadImage[] = [];
   mainImageIndex: number = 0;
   imagePreviewUrls: string[] = [];
-  
+
   // Variáveis para controle de upload
   dragAreaClass: string = 'dragarea';
   maxFiles: number = 5;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
     private router: Router,
     private snackBar: MatSnackBar
-  ) {}
-  
+  ) { }
+
   ngOnInit(): void {
     this.initForm();
     this.loadCategories();
   }
-  
+
   initForm(): void {
     this.productForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
@@ -75,7 +84,7 @@ export class ProductCreateComponent implements OnInit {
       imageUrl: ['', Validators.required]
     });
   }
-  
+
   loadCategories(): void {
     this.isLoading = true;
     this.productService.getAllCategories().subscribe({
@@ -94,25 +103,25 @@ export class ProductCreateComponent implements OnInit {
       }
     });
   }
-  
+
   addExchangeItem(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    
+
     if (value) {
       this.acceptableExchanges.push(value);
     }
-    
+
     event.chipInput!.clear();
   }
-  
+
   removeExchangeItem(item: string): void {
     const index = this.acceptableExchanges.indexOf(item);
-    
+
     if (index >= 0) {
       this.acceptableExchanges.splice(index, 1);
     }
   }
-  
+
   // Métodos para gerenciamento de imagens
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -120,86 +129,74 @@ export class ProductCreateComponent implements OnInit {
       this.handleFiles(input.files);
     }
   }
-  
+
   onDragOver(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
     this.dragAreaClass = 'dragarea dragover';
   }
-  
+
   onDragLeave(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
     this.dragAreaClass = 'dragarea';
   }
-  
+
   onDrop(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
     this.dragAreaClass = 'dragarea';
-    
+
     if (event.dataTransfer && event.dataTransfer.files.length) {
       this.handleFiles(event.dataTransfer.files);
     }
   }
-  
+
   handleFiles(files: FileList): void {
     if (this.uploadedImages.length + files.length > this.maxFiles) {
-      this.snackBar.open(`Você pode enviar no máximo ${this.maxFiles} imagens`, 'Fechar', { 
-        duration: 3000 
+      this.snackBar.open(`Você pode enviar no máximo ${this.maxFiles} imagens`, 'Fechar', {
+        duration: 3000
       });
       return;
     }
-    
+
     Array.from(files).forEach(file => {
       if (!file.type.match(/image\/(jpeg|jpg|png|gif|webp)/)) {
-        this.snackBar.open('Somente imagens são permitidas (JPEG, PNG, GIF, WEBP)', 'Fechar', { 
-          duration: 3000 
+        this.snackBar.open('Somente imagens são permitidas (JPEG, PNG, GIF, WEBP)', 'Fechar', {
+          duration: 3000
         });
         return;
       }
-      
+
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        if (e.target && e.target.result) {
-          const imageUrl = e.target.result as string;
-          const isMain = this.uploadedImages.length === 0;
-          
-          this.uploadedImages.push({
-            url: imageUrl,
-            isMain
-          });
-          
-          this.imagePreviewUrls.push(imageUrl);
-          
-          if (isMain) {
-            this.setMainImage(0);
-          }
+        const preview = e.target?.result as string;
+        const isMain = this.uploadedImages.length === 0;
+
+        this.uploadedImages.push({ file, isMain, previewUrl: preview });
+        this.imagePreviewUrls.push(preview);
+
+        if (isMain) {
+          this.setMainImage(0);
         }
       };
       reader.readAsDataURL(file);
     });
   }
-  
+
   setMainImage(index: number): void {
-    // Remover a marca de principal de todas as imagens
     this.uploadedImages.forEach(img => img.isMain = false);
-    
-    // Definir a imagem selecionada como principal
     this.uploadedImages[index].isMain = true;
     this.mainImageIndex = index;
-    
-    // Atualizar o campo do formulário com a URL da imagem principal
-    this.productForm.patchValue({ 
-      imageUrl: this.uploadedImages[index].url 
+    this.productForm.patchValue({
+      imageUrl: this.uploadedImages[index].previewUrl
     });
   }
-  
+
   removeImage(index: number): void {
     this.uploadedImages.splice(index, 1);
     this.imagePreviewUrls.splice(index, 1);
-    
-    // Se removemos a imagem principal, precisamos redefinir
+
     if (index === this.mainImageIndex) {
       if (this.uploadedImages.length > 0) {
         this.setMainImage(0);
@@ -208,25 +205,22 @@ export class ProductCreateComponent implements OnInit {
         this.productForm.patchValue({ imageUrl: '' });
       }
     } else if (index < this.mainImageIndex) {
-      // Ajustar o índice da imagem principal se removemos uma imagem antes dela
       this.mainImageIndex--;
     }
   }
-  
+
   onSubmit(): void {
     if (this.productForm.invalid || this.isSubmitting) {
       return;
     }
-    
+
     if (this.acceptableExchanges.length === 0) {
       this.snackBar.open('Por favor, adicione pelo menos um item que você aceitaria em troca.', 'Fechar', {
         duration: 5000
       });
       return;
     }
-    
-    this.isSubmitting = true;
-    
+
     if (this.uploadedImages.length === 0) {
       this.snackBar.open('Por favor, adicione pelo menos uma imagem do produto.', 'Fechar', {
         duration: 5000
@@ -234,13 +228,30 @@ export class ProductCreateComponent implements OnInit {
       return;
     }
 
+    this.isSubmitting = true;
+
     const productData = {
-      ...this.productForm.value,
+      title: this.productForm.value.title,
+      description: this.productForm.value.description,
+      category: this.productForm.value.categoryId,
       acceptableExchanges: this.acceptableExchanges,
-      images: this.uploadedImages
+      status: ProductStatus.AVAILABLE
     };
-    
-    this.productService.createProduct(productData).subscribe({
+
+    console.log(this.uploadedImages)
+
+    this.productService.createProduct(productData).pipe(
+      switchMap(product =>
+        forkJoin(
+          this.uploadedImages.map(img => {
+            const form = new FormData();
+            form.append('image_file', img.file);
+            form.append('is_main', String(img.isMain));
+            return this.productService.uploadProductImage(product.id, form);
+          })
+        ).pipe(mapTo(product))
+      )
+    ).subscribe({
       next: (product) => {
         this.isSubmitting = false;
         this.snackBar.open('Produto anunciado com sucesso!', 'Fechar', {
