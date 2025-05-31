@@ -78,12 +78,12 @@
               <p class="exchange-label">Aceita troca por:</p>
               <div class="exchange-items">
                 <span class="exchange-tag" *ngFor="
-                    let ex of getFirstExchanges(product.acceptableExchanges, 2)
+                    let ex of getFirstExchanges(product.acceptable_exchanges, 2)
                   ">
                   {{ ex }}
                 </span>
-                <span class="exchange-more" *ngIf="product.acceptableExchanges.length > 2">
-                  +{{ product.acceptableExchanges.length - 2 }}
+                <span class="exchange-more" *ngIf="product.acceptable_exchanges.length > 2">
+                  +{{ product.acceptable_exchanges.length - 2 }}
                 </span>
               </div>
             </div>

@@ -66,10 +66,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[0],
         user: usersMock[0],
-        acceptableExchanges: ['Smartwatch', 'Caixa de som portátil', 'Teclado mecânico'],
+        acceptable_exchanges: ['Smartwatch', 'Caixa de som portátil', 'Teclado mecânico'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-05-10'),
-        updatedAt: new Date('2023-05-10'),
+        updated_at: new Date('2023-05-10'),
         images: []
     },
     {
@@ -79,10 +79,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[1],
         user: usersMock[1],
-        acceptableExchanges: ['Perfumes', 'Produtos para cabelo', 'Acessórios femininos'],
+        acceptable_exchanges: ['Perfumes', 'Produtos para cabelo', 'Acessórios femininos'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-05-15'),
-        updatedAt: new Date('2023-05-15'),
+        updated_at: new Date('2023-05-15'),
         images: []
     },
     {
@@ -92,10 +92,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[2],
         user: usersMock[3],
-        acceptableExchanges: ['Óculos de sol', 'Fone de ouvido', 'Smartwatch'],
+        acceptable_exchanges: ['Óculos de sol', 'Fone de ouvido', 'Smartwatch'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-05-20'),
-        updatedAt: new Date('2023-05-20'),
+        updated_at: new Date('2023-05-20'),
         images: []
     },
     {
@@ -105,10 +105,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[3],
         user: usersMock[3],
-        acceptableExchanges: ['Canetas', 'Livros', 'Marca-textos'],
+        acceptable_exchanges: ['Canetas', 'Livros', 'Marca-textos'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-05-22'),
-        updatedAt: new Date('2023-05-22'),
+        updated_at: new Date('2023-05-22'),
         images: []
     },
     {
@@ -118,10 +118,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[4],
         user: usersMock[3],
-        acceptableExchanges: ['Bola de basquete', 'Luvas de boxe', 'Kettlebell'],
+        acceptable_exchanges: ['Bola de basquete', 'Luvas de boxe', 'Kettlebell'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-05-25'),
-        updatedAt: new Date('2023-05-25'),
+        updated_at: new Date('2023-05-25'),
         images: []
     },
     {
@@ -131,10 +131,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[5],
         user: usersMock[0],
-        acceptableExchanges: ['Bolsa de festa', 'Sapatos femininos', 'Acessórios'],
+        acceptable_exchanges: ['Bolsa de festa', 'Sapatos femininos', 'Acessórios'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-05-27'),
-        updatedAt: new Date('2023-05-27'),
+        updated_at: new Date('2023-05-27'),
         images: []
     },
     {
@@ -144,10 +144,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[0],
         user: usersMock[2],
-        acceptableExchanges: ['Tablet', 'Tripé para câmera', 'Fone de ouvido bluetooth'],
+        acceptable_exchanges: ['Tablet', 'Tripé para câmera', 'Fone de ouvido bluetooth'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-05-30'),
-        updatedAt: new Date('2023-05-30'),
+        updated_at: new Date('2023-05-30'),
         images: []
     },
     {
@@ -157,10 +157,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[1],
         user: usersMock[3],
-        acceptableExchanges: ['Maquiagem', 'Perfumes', 'Produtos para cabelo'],
+        acceptable_exchanges: ['Maquiagem', 'Perfumes', 'Produtos para cabelo'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-06-02'),
-        updatedAt: new Date('2023-06-02'),
+        updated_at: new Date('2023-06-02'),
         images: []
     },
     {
@@ -170,10 +170,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[2],
         user: usersMock[0],
-        acceptableExchanges: ['Relógio', 'Bolsa', 'Carteira em couro'],
+        acceptable_exchanges: ['Relógio', 'Bolsa', 'Carteira em couro'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-06-05'),
-        updatedAt: new Date('2023-06-05'),
+        updated_at: new Date('2023-06-05'),
         images: []
     },
     {
@@ -183,10 +183,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[3],
         user: usersMock[3],
-        acceptableExchanges: ['Organizadores de mesa', 'Porta-canetas', 'Agenda'],
+        acceptable_exchanges: ['Organizadores de mesa', 'Porta-canetas', 'Agenda'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-06-08'),
-        updatedAt: new Date('2023-06-08'),
+        updated_at: new Date('2023-06-08'),
         images: []
     },
     {
@@ -196,10 +196,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[4],
         user: usersMock[4],
-        acceptableExchanges: ['Camiseta esportiva', 'Bermuda fitness', 'Garrafa térmica'],
+        acceptable_exchanges: ['Camiseta esportiva', 'Bermuda fitness', 'Garrafa térmica'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-06-10'),
-        updatedAt: new Date('2023-06-10'),
+        updated_at: new Date('2023-06-10'),
         images: []
     },
     {
@@ -209,10 +209,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[5],
         user: usersMock[4],
-        acceptableExchanges: ['Camiseta', 'Calça jeans', 'Tênis casual'],
+        acceptable_exchanges: ['Camiseta', 'Calça jeans', 'Tênis casual'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-06-12'),
-        updatedAt: new Date('2023-06-12'),
+        updated_at: new Date('2023-06-12'),
         images: []
     },
     {
@@ -222,10 +222,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[0],
         user: usersMock[5],
-        acceptableExchanges: ['Fone de ouvido bluetooth', 'Smartwatch', 'E-reader'],
+        acceptable_exchanges: ['Fone de ouvido bluetooth', 'Smartwatch', 'E-reader'],
         status: ProductStatus.AVAILABLE,
         created_at: new Date('2023-06-15'),
-        updatedAt: new Date('2023-06-15'),
+        updated_at: new Date('2023-06-15'),
         images: []
     },
     {
@@ -235,10 +235,10 @@ export const productsMock: Product[] = [
         imageUrl: 'assets/images/placeholder.svg',
         category: categoriesMock[1],
         user: usersMock[5],
-        acceptableExchanges: ['Paleta de sombras', 'Batom', 'Produtos para sobrancelha'],
+        acceptable_exchanges: ['Paleta de sombras', 'Batom', 'Produtos para sobrancelha'],
         status: ProductStatus.RESERVED,
         created_at: new Date('2023-06-18'),
-        updatedAt: new Date('2023-06-18'),
+        updated_at: new Date('2023-06-18'),
         images: []
     }
 ];

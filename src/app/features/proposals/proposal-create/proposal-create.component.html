@@ -48,16 +48,16 @@
           <mat-icon>swap_horiz</mat-icon>
         </div>
         
-        <div class="product-requested">
+        <div class="product-requested" *ngIf="productRequested">
           <h3>Produto solicitado</h3>
           <div class="requested-product-card">
             <img [src]="productRequested.imageUrl" [alt]="productRequested.title" class="product-image">
             <div class="product-info">
               <h4>{{ productRequested.title }}</h4>
               <p class="owner-info">
-                <img [src]="productRequested.ownerAvatar" [alt]="productRequested.ownerName" class="owner-avatar">
-                <span>{{ productRequested.ownerName }}</span>
-                <app-reputation-badge [level]="productRequested.ownerReputationLevel" [small]="true"></app-reputation-badge>
+                <img [src]="productRequested.user.avatar" [alt]="productRequested.user.fullName" class="owner-avatar">
+                <span>{{ productRequested.user.fullName }}</span>
+                <app-reputation-badge [level]="productRequested.user.reputation_level" [small]="true"></app-reputation-badge>
               </p>
             </div>
           </div>

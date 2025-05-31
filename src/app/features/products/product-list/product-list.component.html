@@ -72,7 +72,7 @@
             </div>
 
             <div class="product-image">
-              <img [src]="product.imageUrl" [alt]="product.title">
+              <img [src]="product.images?.[0]?.url" [alt]="product.title">
               <div class="product-actions">
                 <button class="quick-view-btn" [routerLink]="['/products', product.id]">
                   <mat-icon>visibility</mat-icon>
@@ -97,11 +97,11 @@
               <div class="exchange-tags">
                 <p class="exchange-label">Aceita troca por:</p>
                 <div class="exchange-items">
-                  <span class="exchange-tag" *ngFor="let ex of getFirstExchanges(product.acceptableExchanges, 2)">
+                  <span class="exchange-tag" *ngFor="let ex of getFirstExchanges(product.acceptable_exchanges, 2)">
                     {{ ex }}
                   </span>
-                  <span class="exchange-more" *ngIf="product.acceptableExchanges.length > 2">
-                    +{{ product.acceptableExchanges.length - 2 }}
+                  <span class="exchange-more" *ngIf="product.acceptable_exchanges.length > 2">
+                    +{{ product.acceptable_exchanges.length - 2 }}
                   </span>
                 </div>
               </div>

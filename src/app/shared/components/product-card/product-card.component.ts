@@ -2,11 +2,20 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '../../../core/models/product.model';
 import { AuthService } from '../../../core/services/auth.service';
+import { ReputationBadgeComponent } from '../reputation-badge/reputation-badge.component';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from '../../shared.module';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
-  styleUrls: ['./product-card.component.scss']
+  styleUrls: ['./product-card.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReputationBadgeComponent,
+    SharedModule,
+  ]
 })
 export class ProductCardComponent {
   @Input() product!: Product;

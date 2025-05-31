@@ -4,7 +4,8 @@ import { UserService } from '../../../core/services/user.service';
 @Component({
   selector: 'app-reputation-badge',
   templateUrl: './reputation-badge.component.html',
-  styleUrls: ['./reputation-badge.component.scss']
+  styleUrls: ['./reputation-badge.component.scss'],
+  standalone: true,
 })
 export class ReputationBadgeComponent implements OnInit {
   @Input() level = 1;

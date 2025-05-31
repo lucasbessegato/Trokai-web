@@ -1,17 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { ReputationBadgeComponent } from 'src/app/shared/components/reputation-badge/reputation-badge.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { Product } from '../../../core/models/product.model';
-import { ProductService } from '../../../core/services/product.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { ProductService } from '../../../core/services/product.service';
 import { ProposalService } from '../../../core/services/proposal.service';
 
 @Component({
   selector: 'app-proposal-create',
   templateUrl: './proposal-create.component.html',
-  styleUrls: ['./proposal-create.component.scss']
+  styleUrls: ['./proposal-create.component.scss'],
+  standalone: true,
+  imports: [
+    SharedModule,
+    ReputationBadgeComponent,
+  ]
 })
 export class ProposalCreateComponent implements OnInit {
   proposalForm!: FormGroup;
@@ -57,7 +64,7 @@ export class ProposalCreateComponent implements OnInit {
         
         const currentUser = this.authService.getCurrentUser();
         
-        if (currentUser && product.userId === currentUser.id) {
+        if (currentUser && product.user.id === currentUser.id) {
           this.snackBar.open('Você não pode propor troca para seu próprio produto', 'Fechar', {
             duration: 5000
           });

@@ -56,7 +56,7 @@
         <div class="exchange-info">
           <h2>Aceita trocar por:</h2>
           <div class="exchange-tags">
-            <span class="exchange-tag" *ngFor="let tag of product.acceptableExchanges">{{ tag }}</span>
+            <span class="exchange-tag" *ngFor="let tag of product.acceptable_exchanges">{{ tag }}</span>
           </div>
         </div>
 
@@ -66,9 +66,9 @@
             Anunciado em {{ product.created_at | date:'dd/MM/yyyy' }}
           </span>
 
-          <span class="meta-item" *ngIf="product.updatedAt !== product.created_at">
+          <span class="meta-item" *ngIf="product.updated_at !== product.created_at">
             <mat-icon>update</mat-icon>
-            Atualizado em {{ product.updatedAt | date:'dd/MM/yyyy' }}
+            Atualizado em {{ product.updated_at | date:'dd/MM/yyyy' }}
           </span>
         </div>
 

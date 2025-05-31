@@ -20,10 +20,10 @@ export interface Product {
   images?: ProductImage[];         // todas as imagens
   category: any;              // relacionamento com Category
   user: User;                      // relacionamento com User (dono)
-  acceptableExchanges: string[];
+  acceptable_exchanges: string[];
   status: ProductStatus;
   created_at: Date;
-  updatedAt: Date;
+  updated_at: Date;
 }
 
 export interface Category {

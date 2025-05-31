@@ -13,15 +13,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    // Os componentes standalone não precisam ser declarados
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    ProductListComponent, // Importar o componente standalone ao invés de declará-lo
-    ProductDetailComponent, // Importando o componente ProductDetailComponent
-    ProductCreateComponent // Importando o componente ProductCreateComponent
   ]
 })
 export class ProductsModule { }

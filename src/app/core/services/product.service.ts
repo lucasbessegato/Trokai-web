@@ -60,7 +60,7 @@ export class ProductService {
       title: productData.title ?? '',
       description: productData.description ?? '',
       category: productData.category ?? this.categories[0].id,
-      acceptable_exchanges: productData.acceptableExchanges ?? [],
+      acceptable_exchanges: productData.acceptable_exchanges ?? [],
       status: ProductStatus.AVAILABLE,
     };
 
@@ -100,7 +100,7 @@ export class ProductService {
     this.products[idx] = {
       ...this.products[idx],
       status,
-      updatedAt: new Date()
+      updated_at: new Date()
     };
 
     return of(this.products[idx]).pipe(delay(300));

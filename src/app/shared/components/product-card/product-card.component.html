@@ -14,10 +14,10 @@
       '' }}</p>
 
     <div class="product-owner">
-      <img [src]="product.ownerAvatar" [alt]="product.ownerName" class="owner-avatar">
+      <img [src]="product.user.avatar" [alt]="product.user.fullName" class="owner-avatar">
       <div class="owner-info">
-        <span class="owner-name">{{ product.ownerName }}</span>
-        <app-reputation-badge [level]="product.ownerReputationLevel" [small]="true"></app-reputation-badge>
+        <span class="owner-name">{{ product.user.fullName }}</span>
+        <app-reputation-badge [level]="product.user.reputation_level" [small]="true"></app-reputation-badge>
       </div>
     </div>
   </div>
@@ -26,8 +26,8 @@
     <div class="exchange-info">
       <h4>Aceita trocar por:</h4>
       <div class="exchange-tags">
-        <span class="exchange-tag" *ngFor="let tag of product.acceptableExchanges.slice(0, 3)">{{ tag }}</span>
-        <span class="more-tag" *ngIf="product.acceptableExchanges.length > 3">+{{ product.acceptableExchanges.length - 3
+        <span class="exchange-tag" *ngFor="let tag of product.acceptable_exchanges.slice(0, 3)">{{ tag }}</span>
+        <span class="more-tag" *ngIf="product.acceptable_exchanges.length > 3">+{{ product.acceptable_exchanges.length - 3
           }}</span>
       </div>
     </div>
