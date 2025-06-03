@@ -151,7 +151,7 @@ export class UserProfileComponent implements OnInit {
   loadUserProducts(): void {
     if (!this.user) return;
 
-    this.productService.getProductsByUser(4).subscribe({
+    this.productService.getProductsByUser(this.user.id).subscribe({
       next: (products) => {
         this.products = products;
         this.isLoading = false;

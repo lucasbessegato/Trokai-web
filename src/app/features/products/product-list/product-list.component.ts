@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../../core/services/product.service';
-import { Product, ProductStatus } from '../../../core/models/product.model';
+import { Product, ProductImage, ProductStatus } from '../../../core/models/product.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -24,11 +24,11 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   allProducts: Product[] = [];
-  
+
   isLoading = true;
   error: string | null = null;
   productStatus = ProductStatus;
-  
+
   searchText: string = '';
   selectedCategory: string = '';
   selectedCondition: string = '';
@@ -42,7 +42,7 @@ export class ProductListComponent implements OnInit {
   loadProducts(): void {
     this.isLoading = true;
     this.error = null;
-    
+
     this.productService.getAllProducts().subscribe({
       next: (products) => {
         this.allProducts = products.filter(p => p.status === ProductStatus.AVAILABLE);
@@ -56,26 +56,25 @@ export class ProductListComponent implements OnInit {
       }
     });
   }
-  
-  applyFilters(): void {
-    this.filteredProducts = this.allProducts.filter(product => {
-      const matchesText = this.searchText
-        ? product.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
-          product.description.toLowerCase().includes(this.searchText.toLowerCase())
-        : true;
-      
-      const matchesCategory = this.selectedCategory
-        ? product.category.id.toString() === this.selectedCategory
-        : true;
-      
-      const matchesCondition = true; // sem campo 'condition' por enquanto
-      
-      return matchesText && matchesCategory && matchesCondition;
-    });
-    
-    this.products = [...this.filteredProducts];
+
+  async applyFilters(): Promise<void> {
+    let filters = {
+      category: this.selectedCategory || '',
+      search: this.searchText || ''
+    }
+    this.productService.getAllProducts(filters).subscribe(data => {
+      this.products = data
+    })
   }
-  
+
+  getMainImageUrl(images: ProductImage[] | undefined): string {
+    if (!images || images.length === 0) {
+      return ''; // ou algum placeholder fixo
+    }
+    const mainImg = images.find(img => img.is_main);
+    return mainImg ? mainImg.url : images[0].url;
+  }
+
   clearFilters(): void {
     this.searchText = '';
     this.selectedCategory = '';

@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div class="filter-group">
+      <!-- <div class="filter-group">
         <label for="condition">Estado</label>
         <div class="select-wrapper">
           <select id="condition" [(ngModel)]="selectedCondition">
@@ -47,7 +47,7 @@
           </select>
           <mat-icon class="select-icon">expand_more</mat-icon>
         </div>
-      </div>
+      </div> -->
 
       <div class="filter-divider"></div>
 
@@ -72,7 +72,7 @@
             </div>
 
             <div class="product-image">
-              <img [src]="product.images?.[0]?.url" [alt]="product.title">
+              <img [src]="getMainImageUrl(product.images)" [alt]="product.title">
               <div class="product-actions">
                 <button class="quick-view-btn" [routerLink]="['/products', product.id]">
                   <mat-icon>visibility</mat-icon>

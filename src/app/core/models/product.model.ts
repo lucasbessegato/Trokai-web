@@ -9,7 +9,7 @@ export enum ProductStatus {
 export interface ProductImage {
   id?: number;
   url: string;
-  isMain: boolean;
+  is_main: boolean;
 }
 
 export interface Product {

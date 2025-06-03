@@ -5,7 +5,7 @@ import { Product, Category, ProductStatus, ProductImage } from '../models/produc
 import { productsMock } from '../mock-data/mocks';
 import { categoriesMock } from '../mock-data/mocks';
 import { AuthService } from './auth.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -17,15 +17,23 @@ export class ProductService {
 
   constructor(private authService: AuthService, private http: HttpClient) { }
 
-  getAllProducts(): Observable<Product[]> {
+  getAllProducts(filters?: any): Observable<Product[]> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
-      'Authorization': `Token ${token}`
+      Authorization: `Token ${token}`
     });
+
+    let params = new HttpParams();
+    if (filters?.category != null) {
+      params = params.set('category', filters.category.toString());
+    }
+    if (filters?.search) {
+      params = params.set('search', filters.search);
+    }
 
     return this.http.get<Product[]>(
       `${environment.apiUrl}/products/`,
-      { headers }
+      { headers, params }
     );
   }
 
@@ -47,20 +55,32 @@ export class ProductService {
   }
 
   getProductsByUser(userId: number): Observable<Product[]> {
-    const userProducts = this.products.filter(p => p.user.id === userId);
-    return of(userProducts).pipe(delay(300));
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Token ${token}`
+    });
+
+    let params = new HttpParams();
+    if (userId) {
+      params = params.set('user', userId);
+    }
+
+    return this.http.get<Product[]>(
+      `${environment.apiUrl}/products/`,
+      { headers, params }
+    );
   }
 
   getAllCategories(): Observable<Category[]> {
     return of(this.categories).pipe(delay(300));
   }
 
-  createProduct(productData: Partial<Product>): Observable<Product> {
+  createProduct(productData: any): Observable<Product> {
     const newProduct = {
       title: productData.title ?? '',
       description: productData.description ?? '',
       category: productData.category ?? this.categories[0].id,
-      acceptable_exchanges: productData.acceptable_exchanges ?? [],
+      acceptable_exchanges: productData.acceptableExchanges ?? [],
       status: ProductStatus.AVAILABLE,
     };
 
@@ -100,7 +120,6 @@ export class ProductService {
     this.products[idx] = {
       ...this.products[idx],
       status,
-      updated_at: new Date()
     };
 
     return of(this.products[idx]).pipe(delay(300));
