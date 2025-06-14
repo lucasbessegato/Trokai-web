@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
-import { Product, Category, ProductStatus } from '../../../core/models/product.model';
+import { Product, Category, ProductStatus, ProductImage } from '../../../core/models/product.model';
 import { User } from '../../../core/models/user.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
@@ -222,5 +222,29 @@ export class UserProfileComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
+  }
+
+  editProduct(p: Product): void {
+    sessionStorage.setItem('currentProduct', JSON.stringify(p))
+    console.log(JSON.stringify(p))
+    this.router.navigate(['/products/create'])
+  }
+
+  deleteProduct(id: number): void {
+    this.productService.deleteProduct(id).subscribe(data => {
+      this.snackBar.open('Produto exluído com sucesso!', 'Fechar', {
+        duration: 3000,
+        panelClass: ['success-snackbar']
+      });
+      this.loadUserProducts()
+    })
+  }
+
+  getMainImageUrl(images: ProductImage[] | undefined): string {
+    if (!images || images.length === 0) {
+      return ''; // ou algum placeholder fixo
+    }
+    const mainImg = images.find(img => img.is_main);
+    return mainImg ? mainImg.url : images[0].url;
   }
 }

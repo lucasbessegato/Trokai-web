@@ -22,7 +22,8 @@
         </p>
 
         <!-- E-mail, telefone e data de criação -->
-        <a class="info" href="mailto:{{ user.email }}?subject=Olá" title="Enviar e-mail para {{ user.fullName }}" class="email info">
+        <a class="info" href="mailto:{{ user.email }}?subject=Olá" title="Enviar e-mail para {{ user.fullName }}"
+          class="email info">
           <i class="fas fa-envelope"></i>
           {{ user.email }}
         </a>
@@ -51,10 +52,18 @@
           </div>
 
           <div class="product-image">
-            <img [src]="product.imageUrl" [alt]="product.title" />
+            <img [src]="getMainImageUrl(product.images)" [alt]="product.title">
             <div class="product-actions">
               <button class="quick-view-btn" [routerLink]="['/products', product.id]">
                 <mat-icon>visibility</mat-icon>
+              </button>
+              <button *ngIf="product.user.id == user.id" style="margin-left: 15px;" class="quick-view-btn"
+                (click)="editProduct(product)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button *ngIf="product.user.id == user.id" style="margin-left: 15px;" class="quick-view-btn"
+                (click)="deleteProduct(product.id)">
+                <mat-icon>delete</mat-icon>
               </button>
             </div>
           </div>

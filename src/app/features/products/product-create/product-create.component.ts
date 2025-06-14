@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -46,7 +46,7 @@ interface UploadImage {
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ProductCreateComponent implements OnInit {
+export class ProductCreateComponent implements OnInit, OnDestroy {
   productForm!: FormGroup;
   categories: Category[] = [];
   isLoading = false;
@@ -63,6 +63,7 @@ export class ProductCreateComponent implements OnInit {
   // Variáveis para controle de upload
   dragAreaClass: string = 'dragarea';
   maxFiles: number = 5;
+  editingProduct: any = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -72,8 +73,17 @@ export class ProductCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const storedProduct = sessionStorage.getItem('currentProduct');
+    if (storedProduct) {
+      this.editingProduct = JSON.parse(storedProduct);
+    }
+
     this.initForm();
     this.loadCategories();
+  }
+
+  ngOnDestroy(): void {
+    sessionStorage.removeItem('currentProduct')
   }
 
   initForm(): void {
@@ -90,8 +100,25 @@ export class ProductCreateComponent implements OnInit {
     this.productService.getAllCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
-        if (categories.length > 0) {
+        if (categories.length > 0 && !this.editingProduct) {
           this.productForm.patchValue({ categoryId: categories[0].id });
+        }
+        if (this.editingProduct) {
+          this.acceptableExchanges = this.editingProduct.acceptable_exchanges;
+
+          // Aguarda conversão das imagens
+          this.convertImagesFromUrls(this.editingProduct.images).then((converted) => {
+            this.uploadedImages = converted;
+            this.imagePreviewUrls = converted.map(img => img.previewUrl);
+            this.mainImageIndex = this.uploadedImages.findIndex(img => img.isMain) || 0;
+
+            this.productForm.patchValue({
+              title: this.editingProduct.title,
+              description: this.editingProduct.description,
+              categoryId: this.editingProduct.category.id,
+              imageUrl: converted[this.mainImageIndex]?.previewUrl || ''
+            });
+          });
         }
         this.isLoading = false;
       },
@@ -238,35 +265,87 @@ export class ProductCreateComponent implements OnInit {
       status: ProductStatus.AVAILABLE
     };
 
-    console.log(this.uploadedImages)
+    if (this.editingProduct) {
+      this.productService.updateProduct(productData, this.editingProduct.id).pipe(
+        switchMap(product =>
+          forkJoin(
+            this.uploadedImages.map(img => {
+              const form = new FormData();
+              form.append('image_file', img.file);
+              form.append('is_main', String(img.isMain));
+              return this.productService.uploadProductImage(product.id, form);
+            })
+          ).pipe(mapTo(product))
+        )
+      ).subscribe({
+        next: (product) => {
+          this.isSubmitting = false;
+          this.snackBar.open('Produto anunciado com sucesso!', 'Fechar', {
+            duration: 3000,
+            panelClass: ['success-snackbar']
+          });
+          this.router.navigate(['/products', product.id]);
+        },
+        error: (error) => {
+          this.isSubmitting = false;
+          this.snackBar.open('Erro ao anunciar produto: ' + error.message, 'Fechar', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      });
+      sessionStorage.removeItem('currentProduct')
+    }
+    else {
+      this.productService.createProduct(productData).pipe(
+        switchMap(product =>
+          forkJoin(
+            this.uploadedImages.map(img => {
+              const form = new FormData();
+              form.append('image_file', img.file);
+              form.append('is_main', String(img.isMain));
+              return this.productService.uploadProductImage(product.id, form);
+            })
+          ).pipe(mapTo(product))
+        )
+      ).subscribe({
+        next: (product) => {
+          this.isSubmitting = false;
+          this.snackBar.open('Produto anunciado com sucesso!', 'Fechar', {
+            duration: 3000,
+            panelClass: ['success-snackbar']
+          });
+          this.router.navigate(['/products', product.id]);
+        },
+        error: (error) => {
+          this.isSubmitting = false;
+          this.snackBar.open('Erro ao anunciar produto: ' + error.message, 'Fechar', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      });
+    }
+  }
 
-    this.productService.createProduct(productData).pipe(
-      switchMap(product =>
-        forkJoin(
-          this.uploadedImages.map(img => {
-            const form = new FormData();
-            form.append('image_file', img.file);
-            form.append('is_main', String(img.isMain));
-            return this.productService.uploadProductImage(product.id, form);
-          })
-        ).pipe(mapTo(product))
-      )
-    ).subscribe({
-      next: (product) => {
-        this.isSubmitting = false;
-        this.snackBar.open('Produto anunciado com sucesso!', 'Fechar', {
-          duration: 3000,
-          panelClass: ['success-snackbar']
-        });
-        this.router.navigate(['/products', product.id]);
-      },
-      error: (error) => {
-        this.isSubmitting = false;
-        this.snackBar.open('Erro ao anunciar produto: ' + error.message, 'Fechar', {
-          duration: 5000,
-          panelClass: ['error-snackbar']
-        });
-      }
-    });
+  async urlToFile(url: string, filename: string): Promise<File> {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    const file = new File([blob], filename, { type: blob.type });
+    return file;
+  }
+
+  async convertImagesFromUrls(images: any[]): Promise<UploadImage[]> {
+    const converted = await Promise.all(
+      images.map(async (img, index) => {
+        const file = await this.urlToFile(img.url, `image${index + 1}.jpg`);
+        return {
+          file,
+          isMain: img.is_main,
+          previewUrl: img.url
+        };
+      })
+    );
+    return converted;
   }
 }

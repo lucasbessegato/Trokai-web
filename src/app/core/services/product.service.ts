@@ -96,6 +96,40 @@ export class ProductService {
     );
   }
 
+  updateProduct(productData: any, id: number): Observable<Product> {
+    const newProduct = {
+      title: productData.title ?? '',
+      description: productData.description ?? '',
+      category: productData.category ?? this.categories[0].id,
+      acceptable_exchanges: productData.acceptableExchanges ?? [],
+      status: ProductStatus.AVAILABLE,
+    };
+
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${token}`
+    });
+
+    return this.http.put<Product>(
+      `${environment.apiUrl}/products/${id}/`,
+      newProduct,
+      { headers }
+    );
+  }
+
+
+  deleteProduct(id: number): Observable<Product> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${token}`
+    });
+
+    return this.http.delete<Product>(
+      `${environment.apiUrl}/products/${id}/`,
+      { headers }
+    );
+  }
+
   uploadProductImage(productId: number, form: FormData): Observable<ProductImage> {
     const token = this.authService.getToken();
     return this.http.post<ProductImage>(

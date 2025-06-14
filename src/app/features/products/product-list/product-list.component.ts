@@ -6,6 +6,9 @@ import { ProductService } from '../../../core/services/product.service';
 import { Product, ProductImage, ProductStatus } from '../../../core/models/product.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-list',
@@ -33,10 +36,18 @@ export class ProductListComponent implements OnInit {
   selectedCategory: string = '';
   selectedCondition: string = '';
 
-  constructor(private productService: ProductService) { }
+  currentUserId: any = null;
+
+  constructor(
+    private productService: ProductService,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.loadProducts();
+    this.currentUserId = this.authService.getCurrentUser()?.id
   }
 
   loadProducts(): void {
@@ -95,5 +106,21 @@ export class ProductListComponent implements OnInit {
 
   getEmptyStars(level: number): number[] {
     return Array(Math.max(0, 5 - level)).fill(0);
+  }
+
+  editProduct(p: Product): void {
+    sessionStorage.setItem('currentProduct', JSON.stringify(p))
+    console.log(JSON.stringify(p))
+    this.router.navigate(['/products/create'])
+  }
+
+  deleteProduct(id: number): void {
+    this.productService.deleteProduct(id).subscribe(data => {
+      this.snackBar.open('Produto exluído com sucesso!', 'Fechar', {
+        duration: 3000,
+        panelClass: ['success-snackbar']
+      });
+      this.loadProducts();
+    })
   }
 }

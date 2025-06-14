@@ -77,6 +77,12 @@
                 <button class="quick-view-btn" [routerLink]="['/products', product.id]">
                   <mat-icon>visibility</mat-icon>
                 </button>
+                <button *ngIf="product.user.id == currentUserId" style="margin-left: 15px;" class="quick-view-btn" (click)="editProduct(product)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button *ngIf="product.user.id == currentUserId" style="margin-left: 15px;" class="quick-view-btn" (click)="deleteProduct(product.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
               </div>
             </div>
 
