@@ -39,8 +39,7 @@
         </p>
 
         <div class="actions" *ngIf="isCurrentUser">
-          <button class="btn dark">Editar perfil</button>
-          <button class="btn light">Settings</button>
+          <button class="btn dark" (click)="editProfile()">Editar perfil</button>
         </div>
       </div>
 
@@ -57,11 +56,11 @@
               <button class="quick-view-btn" [routerLink]="['/products', product.id]">
                 <mat-icon>visibility</mat-icon>
               </button>
-              <button *ngIf="product.user.id == user.id" style="margin-left: 15px;" class="quick-view-btn"
+              <button *ngIf="isCurrentUser" style="margin-left: 15px;" class="quick-view-btn"
                 (click)="editProduct(product)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button *ngIf="product.user.id == user.id" style="margin-left: 15px;" class="quick-view-btn"
+              <button *ngIf="isCurrentUser" style="margin-left: 15px;" class="quick-view-btn"
                 (click)="deleteProduct(product.id)">
                 <mat-icon>delete</mat-icon>
               </button>

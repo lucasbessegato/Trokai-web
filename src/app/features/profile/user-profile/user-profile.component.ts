@@ -15,6 +15,8 @@ import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { ProductService } from '../../../core/services/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { EditProfileModalComponent } from '../../edit-profile/edit-profile.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -65,7 +67,8 @@ export class UserProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -246,5 +249,17 @@ export class UserProfileComponent implements OnInit {
     }
     const mainImg = images.find(img => img.is_main);
     return mainImg ? mainImg.url : images[0].url;
+  }
+
+  editProfile(): void {
+    const dialogRef = this.dialog.open(EditProfileModalComponent, {
+      width: '650px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.loadCurrentUser();
+      }
+    });
   }
 }

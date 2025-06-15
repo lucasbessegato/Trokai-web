@@ -1,7 +1,11 @@
 <div class="product-create-container">
-  <div class="page-header">
+  <div *ngIf="!editingProduct" class="page-header">
     <h1>Anunciar um Produto</h1>
     <p>Cadastre seu produto para troca na plataforma</p>
+  </div>
+  <div *ngIf="editingProduct" class="page-header">
+    <h1>Editar Produto</h1>
+    <p>Atualize as informações do seu produto</p>
   </div>
 
   <div class="form-container mat-elevation-z2">

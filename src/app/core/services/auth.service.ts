@@ -107,6 +107,13 @@ export class AuthService {
     );
   }
 
+  updateUser(data: FormData, id: number): Observable<User> {
+    return this.http.patch<User>(
+      `${environment.apiUrl}/users/${id}/`,
+      data
+    );
+  }
+
   getUserById(id: number): Observable<User> {
     return this.http.get<User>(
       `${environment.apiUrl}/users/${id}/`
