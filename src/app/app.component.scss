@@ -167,3 +167,15 @@ mat-sidenav-content {
     color: #ffc107;
   }
 }
+
+.left-text{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 15px;
+  cursor: pointer;
+  padding-right: 10px;
+}
+.left-text span{
+  margin-right: 25px;
+}
