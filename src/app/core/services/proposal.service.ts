@@ -27,11 +27,7 @@ export class ProposalService {
   }
 
   getProposalById(id: number): Observable<Proposal> {
-    const proposal = this.proposals.find(p => p.id === id);
-    if (!proposal) {
-      return throwError(() => new Error('Proposta não encontrada'));
-    }
-    return of(proposal).pipe(delay(500));
+    return this.httpClient.get<Proposal>(`${environment.apiUrl}/proposal/${id}`);
   }
 
   getUserProposals(type: ProposalType): Observable<Proposal[]> {
