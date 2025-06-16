@@ -20,7 +20,7 @@ export const proposalsMock: Proposal[] = [
     message: 'Olá John! Estou interessado no seu fone de ouvido. Meu relógio está em ótimo estado e acho que seria uma troca justa. O que você acha?',
     status: ProposalStatus.PENDING,
     created_at: new Date('2023-06-20'),
-    updatedAt: new Date('2023-06-20')
+    updated_at: new Date('2023-06-20')
   },
   {
     id: 2,
@@ -41,7 +41,7 @@ export const proposalsMock: Proposal[] = [
     message: 'Oi Maria! Adorei seu kit de maquiagem e gostaria de propor uma troca pelo meu kit de skincare. Os produtos são de ótima qualidade e combinam muito com maquiagem.',
     status: ProposalStatus.ACCEPTED,
     created_at: new Date('2023-06-22'),
-    updatedAt: new Date('2023-06-23')
+    updated_at: new Date('2023-06-23')
   },
   {
     id: 3,
@@ -62,7 +62,7 @@ export const proposalsMock: Proposal[] = [
     message: 'Olá Lucas! Vi que você tem um tênis para corrida e gostaria de propor uma troca pela minha raquete de tênis que está em excelente estado. Sou tenista amador e estou mudando para corrida agora.',
     status: ProposalStatus.REJECTED,
     created_at: new Date('2023-06-25'),
-    updatedAt: new Date('2023-06-26')
+    updated_at: new Date('2023-06-26')
   },
   {
     id: 4,
@@ -83,7 +83,7 @@ export const proposalsMock: Proposal[] = [
     message: 'Oi Ana! Adorei seu caderno de anotações e gostaria de propor uma troca pela minha luminária de mesa. Ela é articulada e perfeita para estudos e leitura!',
     status: ProposalStatus.COMPLETED,
     created_at: new Date('2023-06-28'),
-    updatedAt: new Date('2023-06-30')
+    updated_at: new Date('2023-06-30')
   },
   {
     id: 5,
@@ -104,7 +104,7 @@ export const proposalsMock: Proposal[] = [
     message: 'Olá Maria! Minha namorada se interessou pelo seu vestido de festa e gostaria de oferecer minha jaqueta jeans em troca. Ela está em perfeito estado e é de marca.',
     status: ProposalStatus.PENDING,
     created_at: new Date('2023-07-02'),
-    updatedAt: new Date('2023-07-02')
+    updated_at: new Date('2023-07-02')
   },
   {
     id: 6,
@@ -125,6 +125,6 @@ export const proposalsMock: Proposal[] = [
     message: 'Olá Pedro! Estou interessada na sua câmera digital e gostaria de propor uma troca pelo meu tablet. O tablet está em perfeito estado, com poucos meses de uso.',
     status: ProposalStatus.ACCEPTED,
     created_at: new Date('2023-07-05'),
-    updatedAt: new Date('2023-07-06')
+    updated_at: new Date('2023-07-06')
   }
 ];

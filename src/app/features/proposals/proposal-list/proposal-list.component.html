@@ -21,11 +21,11 @@
 
                 <div class="exchange-products">
                   <div class="product-card">
-                    <img [src]="proposal.productRequested.imageUrl" [alt]="proposal.productRequested.title"
+                    <img [src]="proposal.product_requested.imageUrl" [alt]="proposal.product_requested.title"
                       class="product-image">
                     <div class="product-info">
                       <h3>Seu produto</h3>
-                      <p>{{ proposal.productRequested.title }}</p>
+                      <p>{{ proposal.product_requested.title }}</p>
                     </div>
                   </div>
 
@@ -34,20 +34,20 @@
                   </div>
 
                   <div class="product-card">
-                    <img [src]="proposal.productOffered.imageUrl" [alt]="proposal.productOffered.title"
+                    <img [src]="proposal.product_offered.imageUrl" [alt]="proposal.product_offered.title"
                       class="product-image">
                     <div class="product-info">
                       <h3>Produto oferecido</h3>
-                      <p>{{ proposal.productOffered.title }}</p>
+                      <p>{{ proposal.product_offered.title }}</p>
                     </div>
                   </div>
                 </div>
 
                 <div class="proposal-user">
-                  <img [src]="proposal.fromUser.avatar" [alt]="proposal.fromUser.fullName" class="user-avatar">
+                  <img [src]="proposal.from_user.avatar" [alt]="proposal.from_user.fullName" class="user-avatar">
                   <div class="user-info">
-                    <span class="user-name">{{ proposal.fromUser.fullName }}</span>
-                    <app-reputation-badge [level]="proposal.fromUser.reputation_level" [small]="true">
+                    <span class="user-name">{{ proposal.from_user.fullName }}</span>
+                    <app-reputation-badge [level]="proposal.from_user.reputation_level" [small]="true">
                     </app-reputation-badge>
                   </div>
                 </div>
@@ -117,11 +117,11 @@
 
                 <div class="exchange-products">
                   <div class="product-card">
-                    <img [src]="proposal.productOffered.imageUrl" [alt]="proposal.productOffered.title"
+                    <img [src]="proposal.product_offered.imageUrl" [alt]="proposal.product_offered.title"
                       class="product-image">
                     <div class="product-info">
                       <h3>Seu produto</h3>
-                      <p>{{ proposal.productOffered.title }}</p>
+                      <p>{{ proposal.product_offered.title }}</p>
                     </div>
                   </div>
 
@@ -130,20 +130,20 @@
                   </div>
 
                   <div class="product-card">
-                    <img [src]="proposal.productRequested.imageUrl" [alt]="proposal.productRequested.title"
+                    <img [src]="proposal.product_requested.imageUrl" [alt]="proposal.product_requested.title"
                       class="product-image">
                     <div class="product-info">
                       <h3>Produto solicitado</h3>
-                      <p>{{ proposal.productRequested.title }}</p>
+                      <p>{{ proposal.product_requested.title }}</p>
                     </div>
                   </div>
                 </div>
 
                 <div class="proposal-user">
-                  <img [src]="proposal.toUser.avatar" [alt]="proposal.toUser.fullName" class="user-avatar">
+                  <img [src]="proposal.to_user.avatar" [alt]="proposal.to_user.fullName" class="user-avatar">
                   <div class="user-info">
-                    <span class="user-name">{{ proposal.toUser.fullName }}</span>
-                    <app-reputation-badge [level]="proposal.toUser.reputation_level" [small]="true">
+                    <span class="user-name">{{ proposal.to_user.fullName }}</span>
+                    <app-reputation-badge [level]="proposal.to_user.reputation_level" [small]="true">
                     </app-reputation-badge>
                   </div>
                 </div>

@@ -2,21 +2,23 @@ import { Product } from "./product.model";
 import { User } from "./user.model";
 
 export enum ProposalStatus {
-  PENDING   = 'pending',
-  ACCEPTED  = 'accepted',
-  REJECTED  = 'rejected',
+  PENDING = 'pending',
+  ACCEPTED = 'accepted',
+  REJECTED = 'rejected',
   COMPLETED = 'completed',
-  CANCELED  = 'canceled'
+  CANCELED = 'canceled'
 }
 
 export interface Proposal {
   id: number;
-  productOffered: Product;         // relacionamento com Product
-  productRequested: Product;       // relacionamento com Product
-  fromUser: User;                  // relacionamento com User
-  toUser: User;                    // relacionamento com User
+  product_offered: Product;
+  product_requested: Product;
+  from_user: User;
+  to_user: User;
   message: string;
   status: ProposalStatus;
   created_at: Date;
-  updatedAt: Date;
+  updated_at: Date;
 }
+
+export type ProposalType = 'recebidas' | 'enviadas';

@@ -20,19 +20,19 @@
         <div class="product-card">
           <div class="product-image">
             <img
-              [src]="proposal.productOffered.imageUrl"
-              [alt]="proposal.productOffered.title">
+              [src]="proposal.product_offered.imageUrl"
+              [alt]="proposal.product_offered.title">
           </div>
           <div class="product-info">
-            <h2>{{ proposal.productOffered.title }}</h2>
+            <h2>{{ proposal.product_offered.title }}</h2>
             <p class="owner-info">
               <img
-                [src]="proposal.fromUser.avatar"
-                [alt]="proposal.fromUser.fullName"
+                [src]="proposal.from_user.avatar"
+                [alt]="proposal.from_user.fullName"
                 class="owner-avatar">
-              <span>{{ proposal.fromUser.fullName }}</span>
+              <span>{{ proposal.from_user.fullName }}</span>
               <app-reputation-badge
-                [level]="proposal.fromUser.reputation_level"
+                [level]="proposal.from_user.reputation_level"
                 [small]="true">
               </app-reputation-badge>
             </p>
@@ -47,19 +47,19 @@
         <div class="product-card">
           <div class="product-image">
             <img
-              [src]="proposal.productRequested.imageUrl"
-              [alt]="proposal.productRequested.title">
+              [src]="proposal.product_requested.imageUrl"
+              [alt]="proposal.product_requested.title">
           </div>
           <div class="product-info">
-            <h2>{{ proposal.productRequested.title }}</h2>
+            <h2>{{ proposal.product_requested.title }}</h2>
             <p class="owner-info">
               <img
-                [src]="proposal.toUser.avatar"
-                [alt]="proposal.toUser.fullName"
+                [src]="proposal.to_user.avatar"
+                [alt]="proposal.to_user.fullName"
                 class="owner-avatar">
-              <span>{{ proposal.toUser.fullName }}</span>
+              <span>{{ proposal.to_user.fullName }}</span>
               <app-reputation-badge
-                [level]="proposal.toUser.reputation_level"
+                [level]="proposal.to_user.reputation_level"
                 [small]="true">
               </app-reputation-badge>
             </p>
@@ -77,9 +77,9 @@
             <mat-icon>event</mat-icon>
             Enviada em {{ proposal.created_at | date:'dd/MM/yyyy' }}
           </p>
-          <p class="meta-item" *ngIf="proposal.updatedAt !== proposal.created_at">
+          <p class="meta-item" *ngIf="proposal.updated_at !== proposal.created_at">
             <mat-icon>update</mat-icon>
-            Atualizada em {{ proposal.updatedAt | date:'dd/MM/yyyy' }}
+            Atualizada em {{ proposal.updated_at | date:'dd/MM/yyyy' }}
           </p>
         </div>
       </div>

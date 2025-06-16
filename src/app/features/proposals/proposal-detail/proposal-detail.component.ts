@@ -62,8 +62,8 @@ export class ProposalDetailComponent implements OnInit {
         this.proposal = p;
         const me = this.authService.getCurrentUser();
         if (me && p) {
-          this.isCurrentUserSender   = me.id === p.fromUser.id;
-          this.isCurrentUserReceiver = me.id === p.toUser.id;
+          this.isCurrentUserSender   = me.id === p.from_user.id;
+          this.isCurrentUserReceiver = me.id === p.to_user.id;
         }
         this.isLoading = false;
       },
@@ -120,10 +120,10 @@ export class ProposalDetailComponent implements OnInit {
   contactViaWhatsApp(): void {
     if (!this.proposal) return;
     const rec = this.isCurrentUserSender
-      ? this.proposal.toUser.fullName
-      : this.proposal.fromUser.fullName;
-    const offered   = this.proposal.productOffered.title;
-    const requested = this.proposal.productRequested.title;
+      ? this.proposal.to_user.fullName
+      : this.proposal.from_user.fullName;
+    const offered   = this.proposal.product_offered.title;
+    const requested = this.proposal.product_requested.title;
     const msg = encodeURIComponent(
       `Olá ${rec}! Estou falando sobre a proposta de trocar ${offered} por ${requested} no Trokaí.`
     );

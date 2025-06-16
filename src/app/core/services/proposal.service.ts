@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { Proposal, ProposalStatus } from '../models/proposal.model';
+import { Proposal, ProposalStatus, ProposalType } from '../models/proposal.model';
 import { proposalsMock, productsMock, usersMock } from '../mock-data/mocks';
 import { AuthService } from './auth.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ import { AuthService } from './auth.service';
 export class ProposalService {
   private proposals: Proposal[] = proposalsMock;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private httpClient: HttpClient) {}
 
   getPendingProposalsCount(): Observable<number> {
     const currentUser = this.authService.getCurrentUser();
@@ -19,7 +21,7 @@ export class ProposalService {
       return throwError(() => new Error('Usuário não autenticado'));
     }
     const count = this.proposals.filter(
-      p => p.toUser.id === currentUser.id && p.status === ProposalStatus.PENDING
+      p => p.to_user.id === currentUser.id && p.status === ProposalStatus.PENDING
     ).length;
     return of(count).pipe(delay(200));
   }
@@ -32,22 +34,18 @@ export class ProposalService {
     return of(proposal).pipe(delay(500));
   }
 
-  getUserReceivedProposals(): Observable<Proposal[]> {
+  getUserProposals(type: ProposalType): Observable<Proposal[]> {
     const currentUser = this.authService.getCurrentUser();
     if (!currentUser) {
       return throwError(() => new Error('Usuário não autenticado'));
     }
-    const received = this.proposals.filter(p => p.toUser.id === currentUser.id);
-    return of(received).pipe(delay(500));
-  }
 
-  getUserSentProposals(): Observable<Proposal[]> {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      return throwError(() => new Error('Usuário não autenticado'));
-    }
-    const sent = this.proposals.filter(p => p.fromUser.id === currentUser.id);
-    return of(sent).pipe(delay(500));
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${token}`
+    });
+
+    return this.httpClient.get<Proposal[]>(`${environment.apiUrl}/proposal/?tab=${type}`, { headers });
   }
 
   updateProposalStatus(proposalId: number, status: ProposalStatus): Observable<Proposal> {
@@ -58,7 +56,7 @@ export class ProposalService {
     this.proposals[idx] = {
       ...this.proposals[idx],
       status,
-      updatedAt: new Date()
+      updated_at: new Date()
     };
     return of(this.proposals[idx]).pipe(delay(700));
   }
@@ -77,14 +75,14 @@ export class ProposalService {
     const toUser = requested.user;
     const newProposal: Proposal = {
       id: this.proposals.length + 1,
-      productOffered: offered,
-      productRequested: requested,
-      fromUser: currentUser,
-      toUser,
+      product_offered: offered,
+      product_requested: requested,
+      from_user: currentUser,
+      to_user: toUser,
       message: data.message,
       status: ProposalStatus.PENDING,
       created_at: new Date(),
-      updatedAt: new Date()
+      updated_at: new Date()
     };
     this.proposals.push(newProposal);
     return of(newProposal).pipe(delay(800));

@@ -38,7 +38,6 @@ export class ProposalListComponent implements OnInit {
   isLoadingReceived = true;
   isLoadingSent = true;
   
-  // For display
   ProposalStatus = ProposalStatus;
   
   constructor(
@@ -54,7 +53,7 @@ export class ProposalListComponent implements OnInit {
   
   loadReceivedProposals(): void {
     this.isLoadingReceived = true;
-    this.proposalService.getUserReceivedProposals().subscribe({
+    this.proposalService.getUserProposals('recebidas').subscribe({
       next: (proposals) => {
         this.receivedProposals = proposals;
         this.isLoadingReceived = false;
@@ -70,7 +69,7 @@ export class ProposalListComponent implements OnInit {
   
   loadSentProposals(): void {
     this.isLoadingSent = true;
-    this.proposalService.getUserSentProposals().subscribe({
+    this.proposalService.getUserProposals('enviadas').subscribe({
       next: (proposals) => {
         this.sentProposals = proposals;
         this.isLoadingSent = false;
