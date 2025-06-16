@@ -35,17 +35,7 @@ export class ProposalService {
   }
 
   getUserProposals(type: ProposalType): Observable<Proposal[]> {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      return throwError(() => new Error('Usuário não autenticado'));
-    }
-
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${token}`
-    });
-
-    return this.httpClient.get<Proposal[]>(`${environment.apiUrl}/proposal/?tab=${type}`, { headers });
+    return this.httpClient.get<Proposal[]>(`${environment.apiUrl}/proposal/?tab=${type}`);
   }
 
   updateProposalStatus(proposalId: number, status: ProposalStatus): Observable<Proposal> {
