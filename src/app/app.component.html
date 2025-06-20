@@ -5,15 +5,34 @@
       <mat-icon>menu</mat-icon>
     </button>
     <img class="logo-img" src="assets/images/logo-4.png" alt="" srcset="">
+    <button mat-icon-button [matMenuTriggerFor]="notifMenu" aria-label="Notificações">
+      <mat-icon class="small-badge" [matBadge]="unreadCount" matBadgeColor="warn" [matBadgeHidden]="unreadCount === 0">
+        notifications
+      </mat-icon>
+    </button>
     <div class="left-text">
       <span>Suporte</span>
       <span>Sobre Nós</span>
     </div>
   </mat-toolbar>
-  
+
+  <mat-menu #notifMenu="matMenu" panelClass="notification-panel" xPosition="after" yPosition="below"
+    [overlapTrigger]="false" hasBackdrop="true">
+    <div class="notification-container">
+      <mat-card *ngFor="let notif of notifications" class="notification-card">
+        <div class="card-header">
+          <span class="title">{{ notif.title }}</span>
+          <span *ngIf="!notif.read" class="unread-dot"></span>
+        </div>
+        <div class="message">{{ notif.message }}</div>
+      </mat-card>
+      <p class="empty" *ngIf="notifications.length === 0">Sem notificações</p>
+    </div>
+  </mat-menu>
+
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav mode="over" class="sidenav">
-      
+
       <div class="nav-section">
         <h2 class="nav-section-title">Navegação</h2>
         <mat-nav-list>
@@ -21,15 +40,16 @@
             <mat-icon>storefront</mat-icon>
             <span>Produtos</span>
           </a>
-          <a mat-list-item *ngIf="isLoggedIn" routerLink="/proposals" routerLinkActive="active" (click)="sidenav.close()">
+          <a mat-list-item *ngIf="isLoggedIn" routerLink="/proposals" routerLinkActive="active"
+            (click)="sidenav.close()">
             <mat-icon>swap_horiz</mat-icon>
             <span>Propostas</span>
           </a>
         </mat-nav-list>
       </div>
-      
+
       <div class="sidenav-divider"></div>
-      
+
       <div class="nav-section" *ngIf="!isLoggedIn">
         <h2 class="nav-section-title">Acesso</h2>
         <mat-nav-list>
@@ -43,7 +63,7 @@
           </a>
         </mat-nav-list>
       </div>
-      
+
       <div class="nav-section" *ngIf="isLoggedIn">
         <h2 class="nav-section-title">Minha Conta</h2>
         <mat-nav-list>
@@ -57,17 +77,17 @@
           </a>
         </mat-nav-list>
       </div>
-      
+
       <div class="sidenav-footer">
         <p>Versão 1.0.0</p>
       </div>
     </mat-sidenav>
-    
+
     <mat-sidenav-content>
       <main class="app-content" [ngClass]="{'no-header': !showHeader}">
         <router-outlet></router-outlet>
       </main>
-      
+
       <footer class="app-footer">
         <p>&copy; 2025 Trokaí - Product Exchange Platform</p>
       </footer>
