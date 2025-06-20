@@ -17,6 +17,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './features/home/home.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { MatIcon } from '@angular/material/icon';
+import { MatBadgeModule }   from '@angular/material/badge'; 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCard } from '@angular/material/card';
+
 
 @NgModule({
   declarations: [
@@ -36,14 +41,11 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     MatListModule,
     MatToolbarModule,
     MatButtonModule,
-    MatDialogModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
+    MatDialogModule,
+    MatIcon,
+    MatBadgeModule,
+    MatMenuModule,
+    MatCard
   ],
   bootstrap: [AppComponent]
 })
