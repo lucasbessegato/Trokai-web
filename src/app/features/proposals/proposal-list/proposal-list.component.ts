@@ -12,6 +12,8 @@ import { MatDividerModule } from '@angular/material/divider';
 
 import { Proposal, ProposalStatus } from '../../../core/models/proposal.model';
 import { ProposalService } from '../../../core/services/proposal.service';
+import { ProductImagePipe } from 'src/app/shared/pipes/product-image.pipe';
+import { UserImagePipe } from 'src/app/shared/pipes/user-image.pipe';
 
 @Component({
   selector: 'app-proposal-list',
@@ -28,6 +30,8 @@ import { ProposalService } from '../../../core/services/proposal.service';
     MatProgressSpinnerModule,
     MatChipsModule,
     MatDividerModule,
+    ProductImagePipe,
+    UserImagePipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] // Permite uso de elementos desconhecidos no template
 })

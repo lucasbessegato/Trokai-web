@@ -17,6 +17,8 @@ import { ProductService } from '../../../core/services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileModalComponent } from '../../edit-profile/edit-profile.component';
+import { ProductCardComponent } from 'src/app/shared/components/product-card/product-card.component';
+import { UserImagePipe } from 'src/app/shared/pipes/user-image.pipe';
 
 @Component({
   selector: 'app-user-profile',
@@ -32,7 +34,9 @@ import { EditProfileModalComponent } from '../../edit-profile/edit-profile.compo
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatDividerModule
+    MatDividerModule,
+    ProductCardComponent,
+    UserImagePipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -229,7 +233,6 @@ export class UserProfileComponent implements OnInit {
 
   editProduct(p: Product): void {
     sessionStorage.setItem('currentProduct', JSON.stringify(p))
-    console.log(JSON.stringify(p))
     this.router.navigate(['/products/create'])
   }
 

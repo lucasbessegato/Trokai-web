@@ -21,7 +21,7 @@
 
                 <div class="exchange-products">
                   <div class="product-card">
-                    <img [src]="proposal.product_requested.imageUrl" [alt]="proposal.product_requested.title"
+                    <img [src]="proposal.product_requested | productImage" [alt]="proposal.product_requested.title"
                       class="product-image">
                     <div class="product-info">
                       <h3>Seu produto</h3>
@@ -34,7 +34,7 @@
                   </div>
 
                   <div class="product-card">
-                    <img [src]="proposal.product_offered.imageUrl" [alt]="proposal.product_offered.title"
+                    <img [src]="proposal.product_offered | productImage" [alt]="proposal.product_offered.title"
                       class="product-image">
                     <div class="product-info">
                       <h3>Produto oferecido</h3>
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="proposal-user">
-                  <img [src]="proposal.from_user.avatar" [alt]="proposal.from_user.fullName" class="user-avatar">
+                  <img [src]="proposal.from_user | userImage" [alt]="proposal.from_user.fullName" class="user-avatar">
                   <div class="user-info">
                     <span class="user-name">{{ proposal.from_user.fullName }}</span>
                     <app-reputation-badge [level]="proposal.from_user.reputation_level" [small]="true">
@@ -117,7 +117,7 @@
 
                 <div class="exchange-products">
                   <div class="product-card">
-                    <img [src]="proposal.product_offered.imageUrl" [alt]="proposal.product_offered.title"
+                    <img [src]="proposal.product_offered | productImage" [alt]="proposal.product_offered.title"
                       class="product-image">
                     <div class="product-info">
                       <h3>Seu produto</h3>
@@ -130,7 +130,7 @@
                   </div>
 
                   <div class="product-card">
-                    <img [src]="proposal.product_requested.imageUrl" [alt]="proposal.product_requested.title"
+                    <img [src]="proposal.product_requested | productImage" [alt]="proposal.product_requested.title"
                       class="product-image">
                     <div class="product-info">
                       <h3>Produto solicitado</h3>
@@ -140,7 +140,7 @@
                 </div>
 
                 <div class="proposal-user">
-                  <img [src]="proposal.to_user.avatar" [alt]="proposal.to_user.fullName" class="user-avatar">
+                  <img [src]="proposal.to_user | userImage" [alt]="proposal.to_user.fullName" class="user-avatar">
                   <div class="user-info">
                     <span class="user-name">{{ proposal.to_user.fullName }}</span>
                     <app-reputation-badge [level]="proposal.to_user.reputation_level" [small]="true">

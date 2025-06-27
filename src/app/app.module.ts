@@ -47,6 +47,9 @@ import { MatCard } from '@angular/material/card';
     MatMenuModule,
     MatCard
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ]
 })
 export class AppModule { }

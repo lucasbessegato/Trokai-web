@@ -18,6 +18,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
+import { ProductImagePipe } from 'src/app/shared/pipes/product-image.pipe';
+import { UserImagePipe } from 'src/app/shared/pipes/user-image.pipe';
 
 
 @Component({
@@ -36,7 +38,9 @@ import { MatChipsModule } from '@angular/material/chips';
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatChipsModule
+    MatChipsModule,
+    ProductImagePipe,
+    UserImagePipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -170,7 +174,7 @@ export class ProductDetailComponent implements OnInit {
       this.currentImageIndex = 0;
       this.currentImageUrl = this.product.images[0].url;
     } else {
-      this.currentImageUrl = this.product.imageUrl;
+      this.currentImageUrl = '../../../../assets/images/default-product-image.webp';
     }
   }
 

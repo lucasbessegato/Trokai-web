@@ -1,6 +1,19 @@
 <div class="product-card mat-elevation-z2">
-  <div class="product-image" (click)="navigateToDetail()">
-    <img [src]="product.imageUrl" [alt]="product.title">
+  <div class="product-image">
+    <img [src]="product | productImage" [alt]="product.title">
+
+    <div class="product-owner-actions">
+      <button class="quick-view-btn" (click)="navigateToDetail()">
+        <mat-icon>visibility</mat-icon>
+      </button>
+      <button *ngIf="product.user.id == currentUserId" style="margin-left: 15px;" class="quick-view-btn" (click)="editProduct.emit(product)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button *ngIf="product.user.id == currentUserId" style="margin-left: 15px;" class="quick-view-btn" (click)="deleteProduct.emit(product.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
     <div class="product-status" *ngIf="product.status !== 'available'">
       <span class="status-badge" [ngClass]="'status-' + product.status">
         {{ product.status === 'reserved' ? 'Reservado' : 'Trocado' }}
@@ -8,13 +21,13 @@
     </div>
   </div>
 
-  <div class="product-info" (click)="navigateToDetail()">
+  <div class="product-info">
     <h3 class="product-title">{{ product.title }}</h3>
     <p class="product-description">{{ product.description | slice:0:100 }}{{ product.description.length > 100 ? '...' :
       '' }}</p>
 
     <div class="product-owner">
-      <img [src]="product.user.avatar" [alt]="product.user.fullName" class="owner-avatar">
+      <img [src]="product.user | userImage" [alt]="product.user.fullName" class="owner-avatar">
       <div class="owner-info">
         <span class="owner-name">{{ product.user.fullName }}</span>
         <app-reputation-badge [level]="product.user.reputation_level" [small]="true"></app-reputation-badge>
@@ -33,13 +46,13 @@
     </div>
 
     <div class="action-buttons">
-      <button mat-stroked-button color="primary" class="exchange-btn" (click)="onProposeExchange()"
+      <button mat-stroked-button color="primary" class="exchange-btn" (click)="navigateToDetail()"
         [disabled]="product.status !== 'available'">
-        <mat-icon>swap_horiz</mat-icon>
-        Propor Troca
+        <mat-icon>visibility</mat-icon>
+        Ver detalhes
       </button>
 
-      <button mat-icon-button color="accent" class="whatsapp-btn" (click)="onContactOwner()"
+      <button mat-icon-button color="accent" class="whatsapp-btn" (click)="contactOwner()"
         title="Contatar via WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
       </button>

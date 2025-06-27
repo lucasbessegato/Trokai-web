@@ -16,7 +16,6 @@ export interface Product {
   id: number;
   title: string;
   description: string;
-  imageUrl: string;
   images?: ProductImage[];         // todas as imagens
   category: any;              // relacionamento com Category
   user: User;                      // relacionamento com User (dono)

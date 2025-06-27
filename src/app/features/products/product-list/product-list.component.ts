@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProductCardComponent } from 'src/app/shared/components/product-card/product-card.component';
 
 @Component({
   selector: 'app-product-list',
@@ -20,7 +21,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     RouterModule,
     MatProgressSpinnerModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    ProductCardComponent,
   ]
 })
 export class ProductListComponent implements OnInit {
@@ -100,17 +102,8 @@ export class ProductListComponent implements OnInit {
       : ['Qualquer item'];
   }
 
-  getReputationStars(level: number): number[] {
-    return Array(level).fill(0);
-  }
-
-  getEmptyStars(level: number): number[] {
-    return Array(Math.max(0, 5 - level)).fill(0);
-  }
-
   editProduct(p: Product): void {
     sessionStorage.setItem('currentProduct', JSON.stringify(p))
-    console.log(JSON.stringify(p))
     this.router.navigate(['/products/create'])
   }
 

@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { delay, map, tap } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { usersMock } from '../mock-data/mocks';  // agora todos os mocks vêm do mesmo arquivo
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 export interface Estado { id: number; nome: string; sigla: string; }
@@ -25,7 +25,8 @@ export class AuthService {
   public isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private handler: HttpBackend) {
+    this.http = new HttpClient(this.handler);
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
       const user: User = JSON.parse(storedUser);

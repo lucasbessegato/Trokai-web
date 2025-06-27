@@ -12,6 +12,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { AuthService } from '../../../core/services/auth.service';
 import { ProposalService } from '../../../core/services/proposal.service';
 import { Proposal, ProposalStatus } from '../../../core/models/proposal.model';
+import { UserImagePipe } from 'src/app/shared/pipes/user-image.pipe';
+import { ProductImagePipe } from 'src/app/shared/pipes/product-image.pipe';
 
 @Component({
   selector: 'app-proposal-detail',
@@ -26,7 +28,9 @@ import { Proposal, ProposalStatus } from '../../../core/models/proposal.model';
     MatIconModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    MatChipsModule
+    MatChipsModule,
+    UserImagePipe,
+    ProductImagePipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -20,14 +20,14 @@
         <div class="product-card">
           <div class="product-image">
             <img
-              [src]="proposal.product_offered.imageUrl"
+              [src]="proposal.product_offered | productImage"
               [alt]="proposal.product_offered.title">
           </div>
           <div class="product-info">
             <h2>{{ proposal.product_offered.title }}</h2>
             <p class="owner-info">
               <img
-                [src]="proposal.from_user.avatar"
+                [src]="proposal.from_user | userImage"
                 [alt]="proposal.from_user.fullName"
                 class="owner-avatar">
               <span>{{ proposal.from_user.fullName }}</span>
@@ -47,14 +47,14 @@
         <div class="product-card">
           <div class="product-image">
             <img
-              [src]="proposal.product_requested.imageUrl"
+              [src]="proposal.product_requested | productImage"
               [alt]="proposal.product_requested.title">
           </div>
           <div class="product-info">
             <h2>{{ proposal.product_requested.title }}</h2>
             <p class="owner-info">
               <img
-                [src]="proposal.to_user.avatar"
+                [src]="proposal.to_user | userImage"
                 [alt]="proposal.to_user.fullName"
                 class="owner-avatar">
               <span>{{ proposal.to_user.fullName }}</span>

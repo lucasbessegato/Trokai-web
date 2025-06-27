@@ -44,7 +44,7 @@
         <h1 class="product-title">{{ product.title }}</h1>
 
         <div (click)="viewUser(product.user.id)" class="owner-info">
-          <img [src]="product.user.avatar" [alt]="product.user.fullName" class="owner-avatar">
+          <img [src]="product.user | userImage" [alt]="product.user.fullName" class="owner-avatar">
           <div class="owner-details">
             <span class="owner-name">{{ product.user.fullName }}</span>
             <app-reputation-badge [level]="product.user.reputation_level"></app-reputation-badge>
@@ -105,7 +105,7 @@
         <div class="user-products-grid">
           <div *ngFor="let userProduct of userProducts" class="user-product-card"
             [class.selected]="selectedProductForExchange === userProduct.id" (click)="selectProduct(userProduct.id)">
-            <img [src]="userProduct.imageUrl" [alt]="userProduct.title" class="user-product-image">
+            <img [src]="userProduct | productImage" [alt]="userProduct.title" class="user-product-image">
             <div class="user-product-info">
               <h4>{{ userProduct.title }}</h4>
             </div>

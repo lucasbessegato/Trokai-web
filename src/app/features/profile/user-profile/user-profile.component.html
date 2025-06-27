@@ -4,7 +4,7 @@
       <div class="profile-banner"></div>
 
       <!-- Avatar dinâmico -->
-      <img [src]="user.avatar || 'assets/images/blank-user.png'" [alt]="user.fullName" class="avatar" />
+      <img [src]="user | userImage" [alt]="user.fullName" class="avatar" />
 
       <div class="profile-info">
         <!-- Nome -->
@@ -45,84 +45,12 @@
 
       <!-- Grade de produtos (mantida igual, ainda mockada) -->
       <div class="products-grid">
-        <div class="product-card" *ngFor="let product of products">
-          <div class="product-status-badge" *ngIf="product.status !== productStatus.AVAILABLE">
-            {{ product.status === productStatus.RESERVED ? 'Reservado' : 'Trocado' }}
-          </div>
-
-          <div class="product-image">
-            <img [src]="getMainImageUrl(product.images)" [alt]="product.title">
-            <div class="product-actions">
-              <button class="quick-view-btn" [routerLink]="['/products', product.id]">
-                <mat-icon>visibility</mat-icon>
-              </button>
-              <button *ngIf="isCurrentUser" style="margin-left: 15px;" class="quick-view-btn"
-                (click)="editProduct(product)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button *ngIf="isCurrentUser" style="margin-left: 15px;" class="quick-view-btn"
-                (click)="deleteProduct(product.id)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <div class="product-category">
-              <span class="category-tag">
-                <mat-icon class="category-icon">category</mat-icon>
-                {{ product.category.name }}
-              </span>
-            </div>
-
-            <h3 class="product-name">{{ product.title }}</h3>
-
-            <p class="product-description">
-              {{ product.description | slice:0:100 }}
-              {{ product.description.length > 100 ? '…' : '' }}
-            </p>
-
-            <div class="exchange-tags">
-              <p class="exchange-label">Aceita troca por:</p>
-              <div class="exchange-items">
-                <span class="exchange-tag" *ngFor="
-                    let ex of getFirstExchanges(product.acceptable_exchanges, 2)
-                  ">
-                  {{ ex }}
-                </span>
-                <span class="exchange-more" *ngIf="product.acceptable_exchanges.length > 2">
-                  +{{ product.acceptable_exchanges.length - 2 }}
-                </span>
-              </div>
-            </div>
-
-            <div class="card-footer">
-              <div class="owner-info">
-                <div class="owner-avatar">
-                  <img [src]="product.user.avatar" [alt]="product.user.fullName" class="avatar-image" />
-                </div>
-                <div class="owner-details">
-                  <span class="owner-name">{{ product.user.fullName }}</span>
-                  <div class="reputation-stars">
-                    <span class="star filled" *ngFor="
-                        let star of getReputationStars(
-                          product.user.reputation_level
-                        )
-                      ">★</span>
-                    <span class="star" *ngFor="
-                        let star of getEmptyStars(
-                          product.user.reputation_level
-                        )
-                      ">☆</span>
-                  </div>
-                </div>
-              </div>
-              <button class="view-details-btn" [routerLink]="['/products', product.id]">
-                Ver Detalhes
-              </button>
-            </div>
-          </div>
-        </div>
+        <app-product-card
+          *ngFor="let product of products" 
+          [product]="product" 
+          (deleteProduct)="deleteProduct($event)"
+          (editProduct)="editProduct($event)">
+        </app-product-card>
       </div>
       <!-- Fim da products-grid -->
     </div>

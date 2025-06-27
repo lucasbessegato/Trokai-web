@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,13 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
   standalone: false
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   
   constructor(private router: Router) {}
-  
-  ngOnInit(): void {
-    console.log('Home component initialized');
-  }
 
   onGetStarted(): void {
     this.router.navigate(['/auth/register']);

@@ -1,6 +1,8 @@
-<div class="reputation-badge" [class.small]="small" [matTooltip]="badgeInfo.description" [matTooltipDisabled]="!showTooltip">
-  <span class="badge-level">{{ badgeInfo.title }}</span>
-  <div class="badge-icon" [ngClass]="'level-' + level">
-    <img [src]="badgeInfo.imageUrl" [alt]="badgeInfo.title">
-  </div>
+<div class="reputation-stars">
+  <span class="star filled" *ngFor="let star of filledStars">
+    ★
+  </span>
+  <span class="star" *ngFor="let star of emptyStars">
+    ☆
+  </span>
 </div>
