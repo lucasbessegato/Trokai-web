@@ -89,7 +89,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
   initForm(): void {
     this.productForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(1000)]],
+      description: ['', [Validators.required]],
       categoryId: ['', Validators.required],
       imageUrl: ['', Validators.required]
     });
