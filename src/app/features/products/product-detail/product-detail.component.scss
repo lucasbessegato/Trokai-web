@@ -226,6 +226,8 @@
     color: #666;
     margin-bottom: 32px;
     white-space: pre-line;
+    max-height: 180px;
+    overflow-y: auto;
   }
   
   .exchange-info {
