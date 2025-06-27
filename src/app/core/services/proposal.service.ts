@@ -7,6 +7,13 @@ import { AuthService } from './auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
+export interface CreateProposalInput {
+  product_offered_id: number;
+  product_requested_id: number; 
+  to_user_id: number,
+  message: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -47,30 +54,7 @@ export class ProposalService {
     return of(this.proposals[idx]).pipe(delay(700));
   }
 
-  createProposal(data: {
-    productOfferedId: number;
-    productRequestedId: number;
-    message: string;
-  }): Observable<Proposal> {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      return throwError(() => new Error('Usuário não autenticado'));
-    }
-    const offered = productsMock.find(p => p.id === data.productOfferedId)!;
-    const requested = productsMock.find(p => p.id === data.productRequestedId)!;
-    const toUser = requested.user;
-    const newProposal: Proposal = {
-      id: this.proposals.length + 1,
-      product_offered: offered,
-      product_requested: requested,
-      from_user: currentUser,
-      to_user: toUser,
-      message: data.message,
-      status: ProposalStatus.PENDING,
-      created_at: new Date(),
-      updated_at: new Date()
-    };
-    this.proposals.push(newProposal);
-    return of(newProposal).pipe(delay(800));
+  createProposal(input: CreateProposalInput): Observable<Proposal> {
+    return this.httpClient.post<Proposal>(`${environment.apiUrl}/proposal/`, input);
   }
 }

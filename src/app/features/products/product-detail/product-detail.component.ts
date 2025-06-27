@@ -8,7 +8,7 @@ import { User } from '../../../core/models/user.model';
 import { ProductService } from '../../../core/services/product.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
-import { ProposalService } from '../../../core/services/proposal.service';
+import { CreateProposalInput, ProposalService } from '../../../core/services/proposal.service';
 import { forkJoin } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -154,8 +154,16 @@ export class ProductDetailComponent implements OnInit {
 
   submitProposal(): void {
     if (!this.product || this.exchangeForm.invalid) return;
+    
     const { productOfferedId, message } = this.exchangeForm.value;
-    this.proposalService.createProposal({ productOfferedId, productRequestedId: this.product.id, message })
+    const input = {
+      message,
+      product_offered_id: productOfferedId,
+      product_requested_id: this.product.id,
+      to_user_id: this.product.user.id
+    } as CreateProposalInput;
+
+    this.proposalService.createProposal(input)
       .subscribe({
         next: () => {
           this.snackBar.open('Proposta enviada com sucesso!', 'Fechar', { duration: 3000, panelClass: ['success-snackbar'] });
