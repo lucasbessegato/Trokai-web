@@ -4,6 +4,8 @@ import { delay } from 'rxjs/operators';
 import { Notification, NotificationType } from '../models/notification.model';
 import { notificationsMock, usersMock } from '../mock-data/mocks';
 import { AuthService } from './auth.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,43 +13,17 @@ import { AuthService } from './auth.service';
 export class NotificationService {
   private notifications: Notification[] = notificationsMock;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private httpClient: HttpClient) { }
 
   getNotifications(): Observable<Notification[]> {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      return throwError(() => new Error('Usuário não autenticado'));
-    }
-    const userNotifications = this.notifications
-      .filter(n => n.user.id === currentUser.id)
-      .sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
-    return of(userNotifications).pipe(delay(300));
-  }
-
-  getUnreadCount(): Observable<number> {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      return throwError(() => new Error('Usuário não autenticado'));
-    }
-    const count = this.notifications
-      .filter(n => n.user.id === currentUser.id && !n.read)
-      .length;
-    return of(count).pipe(delay(200));
+    return this.httpClient.get<Notification[]>(`${environment.apiUrl}/notifications/`);
   }
 
   markAsRead(notificationId: number): Observable<Notification> {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      return throwError(() => new Error('Usuário não autenticado'));
-    }
-    const idx = this.notifications.findIndex(
-      n => n.id === notificationId && n.user.id === currentUser.id
+    return this.httpClient.patch<Notification>(
+      `${environment.apiUrl}/notifications/${notificationId}/`,
+      { read: true }
     );
-    if (idx === -1) {
-      return throwError(() => new Error('Notificação não encontrada'));
-    }
-    this.notifications[idx].read = true;
-    return of(this.notifications[idx]).pipe(delay(200));
   }
 
   markAllAsRead(): Observable<boolean> {

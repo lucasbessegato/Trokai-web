@@ -19,9 +19,9 @@
   <mat-menu #notifMenu="matMenu" panelClass="notification-panel" xPosition="after" yPosition="below"
     [overlapTrigger]="false" hasBackdrop="true">
     <div class="notification-container">
-      <mat-card *ngFor="let notif of notifications" class="notification-card">
+      <mat-card (click)="markAsRead(notif)" *ngFor="let notif of notifications" class="notification-card" [ngClass]="{ 'unread': !notif.read }">
         <div class="card-header">
-          <span class="title">{{ notif.title }}</span>
+          <span class="title" [ngClass]="{ 'unread-title': !notif.read }">{{ notif.title }}</span>
           <span *ngIf="!notif.read" class="unread-dot"></span>
         </div>
         <div class="message">{{ notif.message }}</div>
