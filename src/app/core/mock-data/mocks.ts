@@ -30,7 +30,7 @@ export const notificationsMock: Notification[] = [
         read: false,
         created_at: new Date('2023-06-20'),
         relatedId: 1,
-        linkTo: '/proposals/1',
+        link_to: '/proposals/1',
     },
     {
         id: 2,
@@ -41,7 +41,7 @@ export const notificationsMock: Notification[] = [
         read: true,
         created_at: new Date('2023-06-22'),
         relatedId: 2,
-        linkTo: '/proposals/2',
+        link_to: '/proposals/2',
     },
     {
         id: 3,
@@ -52,7 +52,7 @@ export const notificationsMock: Notification[] = [
         read: false,
         created_at: new Date('2023-07-02'),
         relatedId: 5,
-        linkTo: '/proposals/5',
+        link_to: '/proposals/5',
     },
     // ... siga o mesmo padrão para os demais ...
 ];

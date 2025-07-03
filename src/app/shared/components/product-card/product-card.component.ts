@@ -49,6 +49,6 @@ export class ProductCardComponent {
     const msg = encodeURIComponent(
       `Olá! Vi seu produto "${this.product.title}" no Trokaí e tenho interesse. Podemos conversar sobre ele?`
     );
-    window.open(`https://wa.me/?text=${msg}`, '_blank');
+    window.open(`https://wa.me/${this.product.user.phone}?text=${msg}`, '_blank');
   }
 }

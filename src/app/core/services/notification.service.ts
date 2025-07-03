@@ -45,7 +45,7 @@ export class NotificationService {
     title: string;
     message: string;
     relatedId?: number;
-    linkTo?: string;
+    link_to?: string;
   }): Observable<Notification> {
     const user = usersMock.find(u => u.id === data.userId);
     if (!user) {
@@ -60,7 +60,7 @@ export class NotificationService {
       read: false,
       created_at: new Date(),
       relatedId: data.relatedId,
-      linkTo: data.linkTo
+      link_to: data.link_to
     };
     this.notifications.push(newNotification);
     return of(newNotification).pipe(delay(300));

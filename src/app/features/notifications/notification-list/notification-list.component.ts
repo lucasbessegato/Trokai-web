@@ -107,8 +107,8 @@ export class NotificationListComponent implements OnInit {
     this.markAsRead(notification);
     
     // Navigate to the specified link if available
-    if (notification.linkTo) {
-      this.router.navigateByUrl(notification.linkTo);
+    if (notification.link_to) {
+      this.router.navigateByUrl(notification.link_to);
     }
   }
   

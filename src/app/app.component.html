@@ -16,12 +16,17 @@
   <mat-menu #notifMenu="matMenu" panelClass="notification-panel" xPosition="after" yPosition="below"
     [overlapTrigger]="false" hasBackdrop="true">
     <div class="notification-container">
-      <mat-card (click)="markAsRead(notif)" *ngFor="let notif of notifications" class="notification-card" [ngClass]="{ 'unread': !notif.read }">
+      <mat-card (click)="markAsRead(notif)" *ngFor="let notif of notifications" class="notification-card"
+        [ngClass]="{ 'unread': !notif.read }">
         <div class="card-header">
           <span class="title" [ngClass]="{ 'unread-title': !notif.read }">{{ notif.title }}</span>
           <span *ngIf="!notif.read" class="unread-dot"></span>
         </div>
         <div class="message">{{ notif.message }}</div>
+        <button class="contact-btn" *ngIf="notif.type === 'proposal_accepted'" (click)="contactUser(notif.link_to)">
+          <i class="fa-brands fa-whatsapp"></i>
+          Contatar
+        </button>
       </mat-card>
       <p class="empty" *ngIf="notifications.length === 0">Sem notificações</p>
     </div>

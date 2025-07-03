@@ -61,13 +61,19 @@ export class AppComponent implements OnInit {
     })
   }
 
-  markAsRead(notification: Notification){
-    this.notificationService.markAsRead(notification.id).subscribe(data=>{
-      if(data){
+  markAsRead(notification: Notification) {
+    this.notificationService.markAsRead(notification.id).subscribe(data => {
+      if (data) {
         notification.read = true;
         this.unreadCount = this.notifications.filter(n => !n.read).length;
-        this.router.navigate(['/proposals']);
+        if (notification.type !== 'proposal_accepted') {
+          this.router.navigate(['/proposals']);
+        }
       }
     })
+  }
+
+  contactUser(link: any) {
+    window.open(link);
   }
 }

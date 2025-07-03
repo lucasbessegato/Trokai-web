@@ -10,7 +10,7 @@ export const notificationsMock: Notification[] = [
     read: false,
     created_at: new Date('2023-06-20'),
     relatedId: 1,
-    linkTo: '/proposals/1'
+    link_to: '/proposals/1'
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ export const notificationsMock: Notification[] = [
     read: true,
     created_at: new Date('2023-06-22'),
     relatedId: 2,
-    linkTo: '/proposals/2'
+    link_to: '/proposals/2'
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ export const notificationsMock: Notification[] = [
     read: false,
     created_at: new Date('2023-07-02'),
     relatedId: 5,
-    linkTo: '/proposals/5'
+    link_to: '/proposals/5'
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ export const notificationsMock: Notification[] = [
     read: true,
     created_at: new Date('2023-06-23'),
     relatedId: 2,
-    linkTo: '/proposals/2'
+    link_to: '/proposals/2'
   },
   {
     id: 5,
@@ -54,7 +54,7 @@ export const notificationsMock: Notification[] = [
     read: false,
     created_at: new Date('2023-07-05'),
     relatedId: 6,
-    linkTo: '/proposals/6'
+    link_to: '/proposals/6'
   },
   {
     id: 6,
@@ -65,7 +65,7 @@ export const notificationsMock: Notification[] = [
     read: true,
     created_at: new Date('2023-07-06'),
     relatedId: 6,
-    linkTo: '/proposals/6'
+    link_to: '/proposals/6'
   },
   {
     id: 7,
@@ -76,7 +76,7 @@ export const notificationsMock: Notification[] = [
     read: false,
     created_at: new Date('2023-06-25'),
     relatedId: 3,
-    linkTo: '/proposals/3'
+    link_to: '/proposals/3'
   },
   {
     id: 8,
@@ -87,7 +87,7 @@ export const notificationsMock: Notification[] = [
     read: true,
     created_at: new Date('2023-06-26'),
     relatedId: 3,
-    linkTo: '/proposals/3'
+    link_to: '/proposals/3'
   },
   {
     id: 9,
@@ -98,7 +98,7 @@ export const notificationsMock: Notification[] = [
     read: true,
     created_at: new Date('2023-06-28'),
     relatedId: 4,
-    linkTo: '/proposals/4'
+    link_to: '/proposals/4'
   },
   {
     id: 10,
@@ -109,7 +109,7 @@ export const notificationsMock: Notification[] = [
     read: false,
     created_at: new Date('2023-06-30'),
     relatedId: 4,
-    linkTo: '/proposals/4'
+    link_to: '/proposals/4'
   },
   {
     id: 11,
@@ -120,7 +120,7 @@ export const notificationsMock: Notification[] = [
     read: false,
     created_at: new Date('2023-07-06'),
     relatedId: 6,
-    linkTo: '/proposals/6'
+    link_to: '/proposals/6'
   },
   {
     id: 12,
@@ -130,6 +130,6 @@ export const notificationsMock: Notification[] = [
     message: 'Parabéns! Você alcançou o nível Intermediário no sistema de reputação',
     read: false,
     created_at: new Date('2023-07-10'),
-    linkTo: '/profile'
+    link_to: '/profile'
   }
 ];

@@ -8,7 +8,7 @@ export interface Notification {
   message: string;
   read: boolean;
   created_at: Date;
-  linkTo?: string;
+  link_to?: string;
   relatedId?: number;
 }
 
