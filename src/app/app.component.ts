@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   title = 'Trokaí';
   isLoggedIn = false;
   showHeader = true;
+  loggedUser: any
   unreadCount: number = 0;
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
@@ -35,6 +36,7 @@ export class AppComponent implements OnInit {
 
         if (isLoggedIn) {
           this.getNotifcations();
+          this.loggedUser = this.authService.getCurrentUser();
         } else {
           this.notifications = [];
           this.unreadCount = 0;

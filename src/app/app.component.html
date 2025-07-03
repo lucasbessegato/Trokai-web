@@ -35,6 +35,13 @@
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav mode="over" class="sidenav">
 
+      <div class="nav-section" *ngIf="loggedUser">
+        <div class="user-profile">
+          <img class="user-avatar" [src]="loggedUser.avatar" [alt]="loggedUser.fullName" />
+          <p class="user-name">{{ loggedUser.fullName }}</p>
+        </div>
+      </div>
+
       <div class="nav-section">
         <h2 class="nav-section-title">Navegação</h2>
         <mat-nav-list>
