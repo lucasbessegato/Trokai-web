@@ -10,8 +10,7 @@
         <div class="tab-content">
           <ng-container *ngIf="!isLoadingReceived; else loadingReceivedTemplate">
             <div class="proposals-list" *ngIf="receivedProposals.length > 0; else noReceivedProposals">
-              <div class="proposal-card" *ngFor="let proposal of receivedProposals"
-                (click)="viewProposalDetails(proposal.id)">
+              <div class="proposal-card" *ngFor="let proposal of receivedProposals">
                 <div class="proposal-header">
                   <span class="proposal-status" [ngClass]="getStatusClass(proposal.status)">
                     {{ getStatusText(proposal.status) }}
@@ -21,11 +20,11 @@
 
                 <div class="exchange-products">
                   <div class="product-card">
-                    <img [src]="proposal.product_requested | productImage" [alt]="proposal.product_requested.title"
+                    <img [src]="proposal.product_offered | productImage" [alt]="proposal.product_offered.title"
                       class="product-image">
                     <div class="product-info">
-                      <h3>Seu produto</h3>
-                      <p>{{ proposal.product_requested.title }}</p>
+                      <h3>Produto oferecido</h3>
+                      <p>{{ proposal.product_offered.title }}</p>
                     </div>
                   </div>
 
@@ -34,11 +33,11 @@
                   </div>
 
                   <div class="product-card">
-                    <img [src]="proposal.product_offered | productImage" [alt]="proposal.product_offered.title"
+                    <img [src]="proposal.product_requested | productImage" [alt]="proposal.product_requested.title"
                       class="product-image">
                     <div class="product-info">
-                      <h3>Produto oferecido</h3>
-                      <p>{{ proposal.product_offered.title }}</p>
+                      <h3>Seu produto</h3>
+                      <p>{{ proposal.product_requested.title }}</p>
                     </div>
                   </div>
                 </div>
@@ -57,23 +56,17 @@
                 </div>
 
                 <div class="proposal-actions" *ngIf="proposal.status === ProposalStatus.PENDING">
-                  <button mat-flat-button color="primary" (click)="acceptProposal(proposal, $event)">
+                  <button mat-flat-button color="primary" (click)="acceptProposal(proposal)">
                     Aceitar
                   </button>
-                  <button mat-stroked-button color="warn" (click)="rejectProposal(proposal, $event)">
+                  <button mat-stroked-button color="warn" (click)="rejectProposal(proposal)">
                     Recusar
                   </button>
                 </div>
 
-                <div class="proposal-actions" *ngIf="proposal.status === ProposalStatus.ACCEPTED">
-                  <button mat-flat-button color="primary" (click)="completeExchange(proposal, $event)">
-                    Concluir Troca
-                  </button>
-                </div>
-
                 <div class="proposal-footer">
-                  <button mat-button color="accent" class="details-btn" (click)="viewProposalDetails(proposal.id)">
-                    Ver Detalhes
+                  <button mat-button color="primary" class="details-btn" (click)="viewProductFromReceivedProposal(proposal)">
+                    Ver Detalhes do Produto Oferecido
                     <mat-icon>arrow_forward</mat-icon>
                   </button>
                 </div>
@@ -106,13 +99,24 @@
         <div class="tab-content">
           <ng-container *ngIf="!isLoadingSent; else loadingSentTemplate">
             <div class="proposals-list" *ngIf="sentProposals.length > 0; else noSentProposals">
-              <div class="proposal-card" *ngFor="let proposal of sentProposals"
-                (click)="viewProposalDetails(proposal.id)">
-                <div class="proposal-header">
+              <div class="proposal-card" *ngFor="let proposal of sentProposals">
+                <div class="proposal-header" style="display: flex; justify-content: space-between; align-items: center;">
                   <span class="proposal-status" [ngClass]="getStatusClass(proposal.status)">
                     {{ getStatusText(proposal.status) }}
                   </span>
-                  <span class="proposal-date">{{ proposal.created_at | date:'dd/MM/yyyy' }}</span>
+                  <span 
+                    class="proposal-date" 
+                    *ngIf="proposal.status === ProposalStatus.COMPLETED; else deleteHeaderTemplate">
+                    {{ proposal.created_at | date:'dd/MM/yyyy' }}
+                  </span>
+                  <ng-template #deleteHeaderTemplate>
+                    <div class="proposal-header-actions">
+                      <span class="proposal-date">{{ proposal.created_at | date:'dd/MM/yyyy' }}</span>
+                      <button mat-icon-button color="warn" aria-label="Excluir proposta" (click)="deleteProposal(proposal)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </ng-template>
                 </div>
 
                 <div class="exchange-products">
@@ -152,9 +156,15 @@
                   <p>{{ proposal.message }}</p>
                 </div>
 
+                <div class="proposal-actions" *ngIf="proposal.status === ProposalStatus.ACCEPTED">
+                  <button mat-flat-button color="primary" (click)="completeExchange(proposal)">
+                    Concluir Troca
+                  </button>
+                </div>
+
                 <div class="proposal-footer">
-                  <button mat-button color="accent" class="details-btn" (click)="viewProposalDetails(proposal.id)">
-                    Ver Detalhes
+                  <button mat-button color="primary" class="details-btn" (click)="viewProductFromSendProposal(proposal)">
+                    Ver Detalhes do Produto Solicitado
                     <mat-icon>arrow_forward</mat-icon>
                   </button>
                 </div>

@@ -14,6 +14,7 @@ import { Proposal, ProposalStatus } from '../../../core/models/proposal.model';
 import { ProposalService } from '../../../core/services/proposal.service';
 import { ProductImagePipe } from 'src/app/shared/pipes/product-image.pipe';
 import { UserImagePipe } from 'src/app/shared/pipes/user-image.pipe';
+import { delay, forkJoin, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-proposal-list',
@@ -87,8 +88,12 @@ export class ProposalListComponent implements OnInit {
     });
   }
   
-  viewProposalDetails(proposalId: number): void {
-    this.router.navigate(['/proposals', proposalId]);
+  viewProductFromSendProposal(proposal: Proposal) {
+     this.router.navigate(['/products', proposal.product_requested.id]);
+  }
+
+  viewProductFromReceivedProposal(proposal: Proposal) {
+     this.router.navigate(['/products', proposal.product_offered.id]);
   }
   
   getStatusClass(status: ProposalStatus): string {
@@ -125,9 +130,7 @@ export class ProposalListComponent implements OnInit {
     }
   }
   
-  acceptProposal(proposal: Proposal, event: Event): void {
-    event.stopPropagation();
-    
+  acceptProposal(proposal: Proposal): void {    
     if (proposal.status !== ProposalStatus.PENDING) return;
     
     this.proposalService.updateProposalStatus(proposal.id, ProposalStatus.ACCEPTED).subscribe({
@@ -147,9 +150,7 @@ export class ProposalListComponent implements OnInit {
     });
   }
   
-  rejectProposal(proposal: Proposal, event: Event): void {
-    event.stopPropagation();
-    
+  rejectProposal(proposal: Proposal): void {    
     if (proposal.status !== ProposalStatus.PENDING) return;
     
     this.proposalService.updateProposalStatus(proposal.id, ProposalStatus.REJECTED).subscribe({
@@ -168,9 +169,7 @@ export class ProposalListComponent implements OnInit {
     });
   }
   
-  completeExchange(proposal: Proposal, event: Event): void {
-    event.stopPropagation();
-    
+  completeExchange(proposal: Proposal): void {    
     if (proposal.status !== ProposalStatus.ACCEPTED) return;
     
     this.proposalService.updateProposalStatus(proposal.id, ProposalStatus.COMPLETED).subscribe({
@@ -179,10 +178,31 @@ export class ProposalListComponent implements OnInit {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
-        this.loadReceivedProposals();
+        this.loadSentProposals();
       },
       error: (error) => {
         this.snackBar.open('Erro ao concluir troca: ' + error.message, 'Fechar', {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
+      }
+    });
+  }
+
+  deleteProposal(proposal: Proposal): void {
+    this.proposalService.updateProposalStatus(proposal.id, ProposalStatus.CANCELED).pipe(
+      delay(1000),
+      switchMap(() => this.proposalService.deleteProposal(proposal.id))
+    ).subscribe({
+      next: () => {
+        this.snackBar.open('Proposta excluída com sucesso.', 'Fechar', {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
+        this.loadSentProposals();
+      },
+      error: (error) => {
+        this.snackBar.open('Erro ao excluir proposta: ' + error.message, 'Fechar', {
           duration: 5000,
           panelClass: ['error-snackbar']
         });

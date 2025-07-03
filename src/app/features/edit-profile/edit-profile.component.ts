@@ -1,18 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { AuthService, Cidade, Estado } from 'src/app/core/services/auth.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from 'src/app/core/models/user.model';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { AuthService, Cidade, Estado } from 'src/app/core/services/auth.service';
 
 @Component({
     selector: 'app-edit-profile-modal',
@@ -30,7 +28,6 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
         MatProgressSpinnerModule,
         MatSnackBarModule,
         NgxMaskDirective,
-        NgxMaskPipe
     ],
     providers: [
         provideNgxMask()  // <-- adicione isso aqui

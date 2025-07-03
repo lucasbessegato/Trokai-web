@@ -45,7 +45,8 @@ import { MatCard } from '@angular/material/card';
     MatIcon,
     MatBadgeModule,
     MatMenuModule,
-    MatCard
+    MatCard,
+    RouterModule
   ],
   bootstrap: [AppComponent],
   providers: [

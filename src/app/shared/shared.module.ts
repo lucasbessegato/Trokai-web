@@ -44,9 +44,6 @@ const MATERIAL_MODULES = [
   MatAutocompleteModule
 ];
 
-/**
- * Módulo simplificado - sem componentes
- */
 @NgModule({
   declarations: [],
   imports: [
@@ -57,7 +54,6 @@ const MATERIAL_MODULES = [
     ...MATERIAL_MODULES
   ],
   exports: [
-    // Re-export modules
     CommonModule,
     RouterModule,
     FormsModule,

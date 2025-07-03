@@ -1,18 +1,15 @@
 <div class="app-container">
-  <!-- Header só aparece quando necessário -->
   <mat-toolbar class="app-header" *ngIf="showHeader" color="primary">
     <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
       <mat-icon>menu</mat-icon>
     </button>
-    <img class="logo-img" src="assets/images/logo-4.png" alt="" srcset="">
     <button mat-icon-button [matMenuTriggerFor]="notifMenu" aria-label="Notificações">
       <mat-icon class="small-badge" [matBadge]="unreadCount" matBadgeColor="warn" [matBadgeHidden]="unreadCount === 0">
         notifications
       </mat-icon>
     </button>
     <div class="left-text">
-      <span>Suporte</span>
-      <span>Sobre Nós</span>
+      <img class="logo-img" src="assets/images/logo-4.png" alt="" srcset="">
     </div>
   </mat-toolbar>
 

@@ -42,19 +42,14 @@ export class ProposalService {
   }
 
   updateProposalStatus(proposalId: number, status: ProposalStatus): Observable<Proposal> {
-    const idx = this.proposals.findIndex(p => p.id === proposalId);
-    if (idx === -1) {
-      return throwError(() => new Error('Proposta não encontrada'));
-    }
-    this.proposals[idx] = {
-      ...this.proposals[idx],
-      status,
-      updated_at: new Date()
-    };
-    return of(this.proposals[idx]).pipe(delay(700));
+    return this.httpClient.patch<Proposal>(`${environment.apiUrl}/proposal/${proposalId}/`, { status });
   }
 
   createProposal(input: CreateProposalInput): Observable<Proposal> {
     return this.httpClient.post<Proposal>(`${environment.apiUrl}/proposal/`, input);
+  }
+
+  deleteProposal(proposalId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${environment.apiUrl}/proposal/${proposalId}/`);
   }
 }
