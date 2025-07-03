@@ -42,7 +42,7 @@
                   </div>
                 </div>
 
-                <div class="proposal-user">
+                <div class="proposal-user" (click)="viewProfile(proposal.from_user.id)">
                   <img [src]="proposal.from_user | userImage" [alt]="proposal.from_user.fullName" class="user-avatar">
                   <div class="user-info">
                     <span class="user-name">{{ proposal.from_user.fullName }}</span>
@@ -65,7 +65,8 @@
                 </div>
 
                 <div class="proposal-footer">
-                  <button mat-button color="primary" class="details-btn" (click)="viewProductFromReceivedProposal(proposal)">
+                  <button mat-button color="primary" class="details-btn"
+                    (click)="viewProductFromReceivedProposal(proposal)">
                     Ver Detalhes do Produto Oferecido
                     <mat-icon>arrow_forward</mat-icon>
                   </button>
@@ -100,19 +101,20 @@
           <ng-container *ngIf="!isLoadingSent; else loadingSentTemplate">
             <div class="proposals-list" *ngIf="sentProposals.length > 0; else noSentProposals">
               <div class="proposal-card" *ngFor="let proposal of sentProposals">
-                <div class="proposal-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="proposal-header"
+                  style="display: flex; justify-content: space-between; align-items: center;">
                   <span class="proposal-status" [ngClass]="getStatusClass(proposal.status)">
                     {{ getStatusText(proposal.status) }}
                   </span>
-                  <span 
-                    class="proposal-date" 
+                  <span class="proposal-date"
                     *ngIf="proposal.status === ProposalStatus.COMPLETED; else deleteHeaderTemplate">
                     {{ proposal.created_at | date:'dd/MM/yyyy' }}
                   </span>
                   <ng-template #deleteHeaderTemplate>
                     <div class="proposal-header-actions">
                       <span class="proposal-date">{{ proposal.created_at | date:'dd/MM/yyyy' }}</span>
-                      <button mat-icon-button color="warn" aria-label="Excluir proposta" (click)="deleteProposal(proposal)">
+                      <button mat-icon-button color="warn" aria-label="Excluir proposta"
+                        (click)="deleteProposal(proposal)">
                         <mat-icon>delete</mat-icon>
                       </button>
                     </div>
@@ -163,7 +165,8 @@
                 </div>
 
                 <div class="proposal-footer">
-                  <button mat-button color="primary" class="details-btn" (click)="viewProductFromSendProposal(proposal)">
+                  <button mat-button color="primary" class="details-btn"
+                    (click)="viewProductFromSendProposal(proposal)">
                     Ver Detalhes do Produto Solicitado
                     <mat-icon>arrow_forward</mat-icon>
                   </button>
@@ -195,3 +198,28 @@
     </mat-tab-group>
   </div>
 </div>
+
+<ng-template #acceptedDialog let-data>
+  <button mat-icon-button mat-dialog-close class="close-button">
+    <mat-icon>close</mat-icon>
+  </button>
+  <h2 style="text-align: center; margin-bottom: 10px;" mat-dialog-title>Parabéns!</h2>
+  <mat-dialog-content class="dialog-content">
+    <div class="user-info">
+      <img class="avatar" [src]="data.user.avatar" [alt]="data.user.fullName" />
+      <p style="width: 80%; color: black">Você aceitou a proposta de <strong>{{ data.user.fullName }}</strong> pelo seu
+        produto.</p>
+      <p style="font-size: 14px;"><em>{{ data.user.fullName }} será notificado pela plataforma.</em></p>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center" style="margin-bottom: 10px !important;">
+    <button class="custom-m-btn" mat-flat-button color="primary" (click)="messageUser(data)">
+      <i class="fa-brands fa-whatsapp"></i>
+      Contatar
+    </button>
+    <button class="custom-m-btn p-btn" mat-flat-button color="primary" (click)="viewProfile(data.user.id)">
+      <i style="font-size: 15px;" class="fa-solid fa-user"></i>
+      Ver perfil
+    </button>
+  </mat-dialog-actions>
+</ng-template>

@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild, TemplateRef } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,6 +15,7 @@ import { ProposalService } from '../../../core/services/proposal.service';
 import { ProductImagePipe } from 'src/app/shared/pipes/product-image.pipe';
 import { UserImagePipe } from 'src/app/shared/pipes/user-image.pipe';
 import { delay, forkJoin, switchMap } from 'rxjs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-proposal-list',
@@ -33,29 +34,32 @@ import { delay, forkJoin, switchMap } from 'rxjs';
     MatDividerModule,
     ProductImagePipe,
     UserImagePipe,
+    MatDialogModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] // Permite uso de elementos desconhecidos no template
 })
 export class ProposalListComponent implements OnInit {
+  @ViewChild('acceptedDialog') acceptedDialogTpl!: TemplateRef<any>;
   receivedProposals: Proposal[] = [];
   sentProposals: Proposal[] = [];
   activeTab = 0;
   isLoadingReceived = true;
   isLoadingSent = true;
-  
+
   ProposalStatus = ProposalStatus;
-  
+
   constructor(
     private proposalService: ProposalService,
     private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
-  
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+  ) { }
+
   ngOnInit(): void {
     this.loadReceivedProposals();
     this.loadSentProposals();
   }
-  
+
   loadReceivedProposals(): void {
     this.isLoadingReceived = true;
     this.proposalService.getUserProposals('recebidas').subscribe({
@@ -71,7 +75,7 @@ export class ProposalListComponent implements OnInit {
       }
     });
   }
-  
+
   loadSentProposals(): void {
     this.isLoadingSent = true;
     this.proposalService.getUserProposals('enviadas').subscribe({
@@ -87,15 +91,15 @@ export class ProposalListComponent implements OnInit {
       }
     });
   }
-  
+
   viewProductFromSendProposal(proposal: Proposal) {
-     this.router.navigate(['/products', proposal.product_requested.id]);
+    this.router.navigate(['/products', proposal.product_requested.id]);
   }
 
   viewProductFromReceivedProposal(proposal: Proposal) {
-     this.router.navigate(['/products', proposal.product_offered.id]);
+    this.router.navigate(['/products', proposal.product_offered.id]);
   }
-  
+
   getStatusClass(status: ProposalStatus): string {
     switch (status) {
       case ProposalStatus.PENDING:
@@ -112,7 +116,7 @@ export class ProposalListComponent implements OnInit {
         return '';
     }
   }
-  
+
   getStatusText(status: ProposalStatus): string {
     switch (status) {
       case ProposalStatus.PENDING:
@@ -129,30 +133,44 @@ export class ProposalListComponent implements OnInit {
         return 'Desconhecido';
     }
   }
-  
-  acceptProposal(proposal: Proposal): void {    
+
+  acceptProposal(proposal: Proposal): void {
     if (proposal.status !== ProposalStatus.PENDING) return;
-    
-    this.proposalService.updateProposalStatus(proposal.id, ProposalStatus.ACCEPTED).subscribe({
-      next: () => {
-        this.snackBar.open('Proposta aceita com sucesso!', 'Fechar', {
-          duration: 3000,
-          panelClass: ['success-snackbar']
-        });
-        this.loadReceivedProposals();
-      },
-      error: (error) => {
-        this.snackBar.open('Erro ao aceitar proposta: ' + error.message, 'Fechar', {
-          duration: 5000,
-          panelClass: ['error-snackbar']
-        });
-      }
-    });
+
+    this.proposalService.updateProposalStatus(proposal.id, ProposalStatus.ACCEPTED)
+      .subscribe({
+        next: () => {
+          // 1) feedback via snackbar
+          this.snackBar.open(
+            `Proposta aceita com sucesso!`,
+            'Fechar',
+            { duration: 3000, panelClass: ['success-snackbar'] }
+          );
+
+          // 2) recarrega lista
+          this.loadReceivedProposals();
+
+          // 3) abrir o modal passando os dados de from_user
+          this.dialog.open(this.acceptedDialogTpl, {
+            data: { user: proposal.from_user },
+            disableClose: true,
+            autoFocus: false,
+            panelClass: 'custom-dialog'
+          });
+        },
+        error: (error) => {
+          this.snackBar.open(
+            'Erro ao aceitar proposta: ' + error.message,
+            'Fechar',
+            { duration: 5000, panelClass: ['error-snackbar'] }
+          );
+        }
+      });
   }
-  
-  rejectProposal(proposal: Proposal): void {    
+
+  rejectProposal(proposal: Proposal): void {
     if (proposal.status !== ProposalStatus.PENDING) return;
-    
+
     this.proposalService.updateProposalStatus(proposal.id, ProposalStatus.REJECTED).subscribe({
       next: () => {
         this.snackBar.open('Proposta recusada.', 'Fechar', {
@@ -168,10 +186,10 @@ export class ProposalListComponent implements OnInit {
       }
     });
   }
-  
-  completeExchange(proposal: Proposal): void {    
+
+  completeExchange(proposal: Proposal): void {
     if (proposal.status !== ProposalStatus.ACCEPTED) return;
-    
+
     this.proposalService.updateProposalStatus(proposal.id, ProposalStatus.COMPLETED).subscribe({
       next: () => {
         this.snackBar.open('Troca concluída com sucesso!', 'Fechar', {
@@ -209,8 +227,21 @@ export class ProposalListComponent implements OnInit {
       }
     });
   }
-  
+
   tabChanged(index: number): void {
     this.activeTab = index;
+  }
+
+  messageUser(data: any) {
+    window.open(
+      'https://wa.me/' + data.user.phone +
+      '?text=' + encodeURIComponent('Olá ' + data.user.fullName + '!'),
+      '_blank'
+    )
+  }
+
+  viewProfile(id: any) {
+    const url = `${window.location.origin}/profile/${id}`;
+    window.open(url, '_blank');
   }
 }
