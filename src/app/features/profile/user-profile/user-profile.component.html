@@ -9,8 +9,7 @@
         <h2 style="margin-top: 10px;">{{ user.fullName }}</h2>
 
         <div class="reputation-stars">
-          <span class="star filled" *ngFor="let star of getReputationStars(user.reputation_level)">★</span>
-          <span class="star" *ngFor="let star of getEmptyStars(user.reputation_level)">☆</span>
+          <app-reputation-badge [level]="user.reputation_level"></app-reputation-badge>
         </div>
 
         <p class="location">

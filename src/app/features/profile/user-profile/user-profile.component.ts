@@ -18,6 +18,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { ProductService } from '../../../core/services/product.service';
 import { EditProfileModalComponent } from '../../edit-profile/edit-profile.component';
 import { RateUserDialogData, RateUserModalComponent } from '../../rate-user-modal/rate-user-modal.component';
+import { ReputationBadgeComponent } from 'src/app/shared/components/reputation-badge/reputation-badge.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -36,6 +37,7 @@ import { RateUserDialogData, RateUserModalComponent } from '../../rate-user-moda
     MatDividerModule,
     ProductCardComponent,
     UserImagePipe,
+    ReputationBadgeComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -175,14 +177,6 @@ export class UserProfileComponent implements OnInit {
     return exchanges.length
       ? exchanges.slice(0, count)
       : ['Qualquer item'];
-  }
-
-  getReputationStars(level: number): number[] {
-    return Array(level).fill(0);
-  }
-
-  getEmptyStars(level: number): number[] {
-    return Array(Math.max(0, 5 - level)).fill(0);
   }
 
   navigateToProduct(productId: number): void {
