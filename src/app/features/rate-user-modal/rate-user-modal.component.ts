@@ -68,8 +68,8 @@ export class RateUserModalComponent {
     this.isLoading = true;
 
     const input: RateUserInput = {
-      from_user: this.currentUser!,
-      to_user: this.dialogData.toUser,
+      from_user: this.currentUser!.id,
+      to_user: this.dialogData.toUser.id,
       comment: this.rateForm.value.comment,
       rating: this.rateForm.value.rating
     };

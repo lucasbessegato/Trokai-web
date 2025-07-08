@@ -5,8 +5,8 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 
 export interface RateUserInput {
-  from_user: User;
-  to_user: User; 
+  from_user: number;
+  to_user: number; 
   comment: string,
   rating: number;
 }
