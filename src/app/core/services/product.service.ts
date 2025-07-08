@@ -37,11 +37,6 @@ export class ProductService {
     );
   }
 
-  getProductsByCategory(categoryId: number): Observable<Product[]> {
-    const filtered = this.products.filter(p => p.category.id === categoryId);
-    return of(filtered).pipe(delay(500));
-  }
-
   getProductById(id: number): Observable<Product> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
@@ -141,30 +136,5 @@ export class ProductService {
         })
       }
     );
-  }
-
-
-
-  updateProductStatus(productId: number, status: ProductStatus): Observable<Product> {
-    const idx = this.products.findIndex(p => p.id === productId);
-    if (idx === -1) {
-      return throwError(() => new Error('Produto não encontrado'));
-    }
-
-    this.products[idx] = {
-      ...this.products[idx],
-      status,
-    };
-
-    return of(this.products[idx]).pipe(delay(300));
-  }
-
-  searchProducts(query: string): Observable<Product[]> {
-    const q = query.toLowerCase().trim();
-    const results = this.products.filter(p =>
-      p.title.toLowerCase().includes(q) ||
-      p.description.toLowerCase().includes(q)
-    );
-    return of(results).pipe(delay(300));
   }
 }

@@ -1,25 +1,23 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Product } from '../../../core/models/product.model';
-import { User } from '../../../core/models/user.model';
-import { ProductService } from '../../../core/services/product.service';
-import { AuthService } from '../../../core/services/auth.service';
-import { UserService } from '../../../core/services/user.service';
-import { CreateProposalInput, ProposalService } from '../../../core/services/proposal.service';
-import { forkJoin } from 'rxjs';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ProductImagePipe } from 'src/app/shared/pipes/product-image.pipe';
 import { UserImagePipe } from 'src/app/shared/pipes/user-image.pipe';
+import { Product } from '../../../core/models/product.model';
+import { User } from '../../../core/models/user.model';
+import { AuthService } from '../../../core/services/auth.service';
+import { ProductService } from '../../../core/services/product.service';
+import { CreateProposalInput, ProposalService } from '../../../core/services/proposal.service';
 
 
 @Component({
@@ -63,7 +61,6 @@ export class ProductDetailComponent implements OnInit {
     private router: Router,
     private productService: ProductService,
     private authService: AuthService,
-    private userService: UserService,
     private proposalService: ProposalService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar

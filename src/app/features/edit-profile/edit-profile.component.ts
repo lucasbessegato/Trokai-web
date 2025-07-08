@@ -76,7 +76,6 @@ export class EditProfileModalComponent implements OnInit {
                 });
                 this.previewUrl = this.currentUser.avatar;
 
-                // Agora carrega as cidades após o estado estar setado
                 if (estadoObj) {
                     this.authService.getCidades(estadoObj.id).subscribe(cidades => {
                         this.cidades = cidades;

@@ -8,15 +8,12 @@ const routes: Routes = [
   { path: '', component: UserProfileComponent, canActivate: [AuthGuard] }
 ];
 
-/**
- * Módulo modificado para usar UserProfileComponent como importação
- */
 @NgModule({
   declarations: [],
   imports: [
     SharedModule,
     RouterModule.forChild(routes),
-    UserProfileComponent // Importando componente standalone ao invés de declarar
+    UserProfileComponent
   ]
 })
 export class ProfileModule { }

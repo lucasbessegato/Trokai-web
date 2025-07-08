@@ -1,24 +1,23 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router, RouterModule } from '@angular/router';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDividerModule } from '@angular/material/divider';
-import { Product, Category, ProductStatus, ProductImage } from '../../../core/models/product.model';
-import { User } from '../../../core/models/user.model';
-import { AuthService } from '../../../core/services/auth.service';
-import { UserService } from '../../../core/services/user.service';
-import { ProductService } from '../../../core/services/product.service';
-import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { EditProfileModalComponent } from '../../edit-profile/edit-profile.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ProductCardComponent } from 'src/app/shared/components/product-card/product-card.component';
 import { UserImagePipe } from 'src/app/shared/pipes/user-image.pipe';
+import { Product, ProductImage, ProductStatus } from '../../../core/models/product.model';
+import { User } from '../../../core/models/user.model';
+import { AuthService } from '../../../core/services/auth.service';
+import { ProductService } from '../../../core/services/product.service';
+import { EditProfileModalComponent } from '../../edit-profile/edit-profile.component';
+import { RateUserDialogData, RateUserModalComponent } from '../../rate-user-modal/rate-user-modal.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -60,13 +59,11 @@ export class UserProfileComponent implements OnInit {
   ];
 
   selectedAvatar = '';
-  reputationBadgeInfo: any;
 
   isCurrentUser: boolean = true;
 
   constructor(
     private authService: AuthService,
-    private userService: UserService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
@@ -108,7 +105,6 @@ export class UserProfileComponent implements OnInit {
         this.isCurrentUser = false;
         this.isLoading = false;
         this.selectedAvatar = this.user.avatar;
-        this.reputationBadgeInfo = this.userService.getReputationBadgeInfo(this.user.reputation_level);
 
         this.profileForm.patchValue({
           fullName: this.user.fullName,
@@ -140,7 +136,6 @@ export class UserProfileComponent implements OnInit {
     }
 
     this.selectedAvatar = this.user.avatar;
-    this.reputationBadgeInfo = this.userService.getReputationBadgeInfo(this.user.reputation_level);
 
     this.profileForm.patchValue({
       fullName: this.user.fullName,
@@ -174,38 +169,6 @@ export class UserProfileComponent implements OnInit {
 
   selectAvatar(avatarUrl: string): void {
     this.selectedAvatar = avatarUrl;
-  }
-
-  saveProfile(): void {
-    if (this.profileForm.invalid || this.isSaving) {
-      return;
-    }
-
-    this.isSaving = true;
-
-    const updatedUserData = {
-      ...this.profileForm.getRawValue(),
-      avatar: this.selectedAvatar
-    };
-
-    this.userService.updateUserProfile(updatedUserData).subscribe({
-      next: (updatedUser) => {
-        this.user = updatedUser;
-        this.isSaving = false;
-        this.isEditMode = false;
-        this.snackBar.open('Perfil atualizado com sucesso!', 'Fechar', {
-          duration: 3000,
-          panelClass: ['success-snackbar']
-        });
-      },
-      error: (error) => {
-        this.isSaving = false;
-        this.snackBar.open('Erro ao atualizar perfil: ' + error.message, 'Fechar', {
-          duration: 5000,
-          panelClass: ['error-snackbar']
-        });
-      }
-    });
   }
 
   getFirstExchanges(exchanges: string[], count: number): string[] {
@@ -257,6 +220,19 @@ export class UserProfileComponent implements OnInit {
   editProfile(): void {
     const dialogRef = this.dialog.open(EditProfileModalComponent, {
       width: '650px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.loadCurrentUser();
+      }
+    });
+  }
+
+  rateUser(): void {
+    const dialogRef = this.dialog.open( RateUserModalComponent, {
+      width: '650px',
+      data: { toUser: this.user } as RateUserDialogData
     });
 
     dialogRef.afterClosed().subscribe(result => {

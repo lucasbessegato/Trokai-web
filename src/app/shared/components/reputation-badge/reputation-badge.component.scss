@@ -11,4 +11,12 @@
       color: #ffc107;
     }
   }
+
+  &.input-rate {
+    .star {
+      cursor: pointer;
+      font-size: 2rem;
+      transition: color 0.2s;
+    }
+  }
 }

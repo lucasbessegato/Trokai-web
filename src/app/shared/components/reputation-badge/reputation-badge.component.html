@@ -1,8 +1,25 @@
-<div class="reputation-stars">
-  <span class="star filled" *ngFor="let star of filledStars">
+<div class="reputation-stars input-rate" *ngIf="mode === 'input'; else viewTemplate">
+  <span
+    class="star"
+    *ngFor="let star of [1,2,3,4,5]; let i = index"
+    [class.filled]="i < hovered || i < selected"
+    (click)="onRate(i + 1)"
+    (mouseenter)="selected = i + 1"
+    (mouseleave)="selected = 0"
+    [ngStyle]="{'color': (selected ? (i < selected ? '#FFD600' : '#E0E0E0') : (i < hovered ? '#FFD600' : '#E0E0E0'))}"
+    matTooltipPosition="above"
+  >
     ★
   </span>
-  <span class="star" *ngFor="let star of emptyStars">
-    ☆
-  </span>
 </div>
+
+<ng-template #viewTemplate>
+  <div class="reputation-stars">
+    <span class="star filled" *ngFor="let star of filledStars">
+      ★
+    </span>
+    <span class="star" *ngFor="let star of emptyStars">
+      ☆
+    </span>
+  </div>
+</ng-template>

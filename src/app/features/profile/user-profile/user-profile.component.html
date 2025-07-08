@@ -3,25 +3,20 @@
     <div class="profile-card">
       <div class="profile-banner"></div>
 
-      <!-- Avatar dinâmico -->
       <img [src]="user | userImage" [alt]="user.fullName" class="avatar" />
 
       <div class="profile-info">
-        <!-- Nome -->
         <h2 style="margin-top: 10px;">{{ user.fullName }}</h2>
 
-        <!-- Estrelas de reputação -->
         <div class="reputation-stars">
           <span class="star filled" *ngFor="let star of getReputationStars(user.reputation_level)">★</span>
           <span class="star" *ngFor="let star of getEmptyStars(user.reputation_level)">☆</span>
         </div>
 
-        <!-- Localização -->
         <p class="location">
           {{ user.city }}, {{ user.state }}
         </p>
 
-        <!-- E-mail, telefone e data de criação -->
         <a class="info" href="mailto:{{ user.email }}?subject=Olá" title="Enviar e-mail para {{ user.fullName }}"
           class="email info">
           <i class="fas fa-envelope"></i>
@@ -41,9 +36,12 @@
         <div class="actions" *ngIf="isCurrentUser">
           <button class="btn dark" (click)="editProfile()">Editar perfil</button>
         </div>
+
+        <div class="actions" *ngIf="!isCurrentUser">
+          <button class="btn dark" (click)="rateUser()">Avaliar usuário</button>
+        </div>
       </div>
 
-      <!-- Grade de produtos (mantida igual, ainda mockada) -->
       <div class="products-grid">
         <app-product-card
           *ngFor="let product of products" 
@@ -52,7 +50,6 @@
           (editProduct)="editProduct($event)">
         </app-product-card>
       </div>
-      <!-- Fim da products-grid -->
     </div>
   </div>
 </div>
